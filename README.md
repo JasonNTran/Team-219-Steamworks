@@ -1,31 +1,13 @@
-# README #
-
-This README would normally document whatever steps are necessary to get your application up and running.
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
 #Steamworks 219 V1.0
 * * *
+This is Team 219 Impact's code for the 2017 FRC Steamworks game. If you use any of our code please credit use!
+##Authors
+
+-Jason Tran
+-Hans Missenheim
+-Joe Finnegan
+-Sam
+##About Us
+
+-Our programming team currently uses Java
+-Our vision procession is done with a raspberry pi coprocessor, Networktables, and opencv. Opencv is done in python
