@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Drive Train subsystem for Team 219's 2017 robot.
- *@author Jason Tran
  */
 public class DriveTrain extends Subsystem {
 

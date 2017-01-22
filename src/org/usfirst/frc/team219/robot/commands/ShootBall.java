@@ -5,14 +5,17 @@ import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command will make the robot climb up while the button is held. After it is released, the motor will stop.
+ * This command uses PID to speed the motor to a constant speed. 
+ * <br>
+ * THIS COMMAND IS CURRENTLY IMCOMPLETE.
+ * 
  */
-public class ClimbUp extends Command {
+public class ShootBall extends Command {
 
-    public ClimbUp() {
+    public ShootBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.climber);
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -21,23 +24,20 @@ public class ClimbUp extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.climber.startClimbing();
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.shooter.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.climber.stopMotor();
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

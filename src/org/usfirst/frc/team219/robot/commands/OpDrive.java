@@ -5,7 +5,7 @@ import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command allows the operator to control the robot rather than an autonomous command.
  */
 public class OpDrive extends Command {
 

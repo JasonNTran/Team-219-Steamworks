@@ -44,15 +44,18 @@ public class OI {
 	
 	private Button buttonA;
 	private Button buttonB;
+	private Button buttonC;
 	
 	public OI() {
 		mainDriver = new Joystick(1);
 		secondDriver = new Joystick(2);
 		buttonA = new JoystickButton(mainDriver, 0);
 		buttonB = new JoystickButton(mainDriver, 1);
+		buttonC = new JoystickButton(mainDriver, 2);
 		
 		buttonA.toggleWhenPressed(new ToggleCollector());
 		buttonB.whileHeld(new ClimbUp());
+		buttonC.whenPressed(new ShootBall());
 	}
 	
 	/**

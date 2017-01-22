@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is the climber subsystem for Team 219's 2017 robot.
- *@author Jason Tran
  */
 public class Climber extends Subsystem {
 

@@ -28,5 +28,10 @@ public class RobotMap {
 	
 	//climber ports
 	public static int CLIMBERMOTOR_PORT;
-
+	
+	//shooter ports
+	public static int SHOOTERMOTOR_PORT;
+	
+	//conveyor ports
+	public static int CONVEYORMOTOR_PORT;
 }

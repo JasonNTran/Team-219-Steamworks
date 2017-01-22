@@ -8,17 +8,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * The roller subsystem of Team 219's 2017 robot.
- *@author Jason Tran
+ * The harvester subsystem of Team 219's 2017 robot.
  */
-public class Roller extends Subsystem {
+public class Harvester extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
 	private CANTalon collectorMotor;
 	
-	public Roller()
+	public Harvester()
 	{
 		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
 	}

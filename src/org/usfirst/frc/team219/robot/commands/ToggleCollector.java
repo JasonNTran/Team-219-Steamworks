@@ -5,7 +5,7 @@ import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * This command toggles the ball collector.
  */
 public class ToggleCollector extends Command {
 
