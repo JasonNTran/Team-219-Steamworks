@@ -1,6 +1,6 @@
 #Steamworks 219 V1.0
 * * *
-This is Team 219 Impact's code for the 2017 FRC Steamworks game. If you use any of our code please credit use!
+This is Team 219 Impact's code for the 2017 FRC Steamworks game. If you use any of our code please credit!
 ##Authors
 
 * Jason Tran
