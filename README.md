@@ -6,7 +6,7 @@ This is Team 219 Impact's code for the 2017 FRC Steamworks game. If you use any 
 * Jason Tran
 * Hans Missenheim
 * Joe Finnegan
-* Sam
+* Sam Monico
 ##About Us
 
 * Our programming team currently uses Java
