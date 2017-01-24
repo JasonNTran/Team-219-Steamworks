@@ -31,7 +31,6 @@ public class Robot extends IterativeRobot {
 	public static Harvester roller;
 	public static Climber climber;
 	public static Shooter shooter;
-	public static AHRS imu;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -46,20 +45,7 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		climber = new Climber();
 		shooter = new Shooter();
-		
-        try {
-            // Try to connect to the navX imu.
-            imu = new AHRS(SPI.Port.kMXP);
 
-            // Report to both the logs and the dashboard.  We may not want to keep this permanently, but it's helpful for our initial testing.
-            DriverStation.reportError(String.format("Connected to navX MXP with FirmwareVersion %1$s", imu.getFirmwareVersion()), false);
-            SmartDashboard.putString("FirmwareVersion", imu.getFirmwareVersion());
-        } catch (Exception ex) {
-            // If there are any errors, null out the imu reference and report the error both to the logs and the dashboard.
-            SmartDashboard.putString("FirmwareVersion", "navX not connected");
-            DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-            imu = null;
-        }
 
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -94,7 +80,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		imu.reset();
 		
 		autonomousCommand = chooser.getSelected();
 
@@ -116,7 +101,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		sendIMUData();
 	}
 
 	@Override
@@ -144,50 +128,4 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	protected void sendIMUData() {
-        if (imu==null) {
-            // If we can't find the imu, report that to the dashboard and return.
-            SmartDashboard.putString("FirmwareVersion",      "navX not connected");
-            return;
-        }
-
-        // Display 6-axis Processed Angle Data
-        SmartDashboard.putBoolean("IMU/Connected", imu.isConnected());
-        SmartDashboard.putBoolean("IMU/IsCalibrating", imu.isCalibrating());
-        SmartDashboard.putNumber("IMU/Yaw", imu.getYaw());
-        SmartDashboard.putNumber("IMU/Pitch", imu.getPitch());
-        SmartDashboard.putNumber("IMU/Roll", imu.getRoll());
-
-        // Display tilt-corrected, Magnetometer-based heading (requires magnetometer calibration to be useful)
-        SmartDashboard.putNumber("IMU/CompassHeading", imu.getCompassHeading());
-
-        // Display 9-axis Heading (requires magnetometer calibration to be useful)
-        SmartDashboard.putNumber("IMU/FusedHeading", imu.getFusedHeading());
-
-
-        // These functions are compatible w/the WPI Gyro Class, providing a simple
-        // path for upgrading from the Kit-of-Parts gyro to the navx MXP
-        SmartDashboard.putNumber("IMU/TotalYaw", imu.getAngle());
-        SmartDashboard.putNumber("IMU/YawRateDPS", imu.getRate());
-
-        // Display Processed Acceleration Data (Linear Acceleration, Motion Detect)
-        SmartDashboard.putNumber("IMU/Accel_X", imu.getWorldLinearAccelX());
-        SmartDashboard.putNumber("IMU/Accel_Y", imu.getWorldLinearAccelY());
-        SmartDashboard.putBoolean("IMU/IsMoving", imu.isMoving());
-        SmartDashboard.putBoolean("IMU/IsRotating", imu.isRotating());
-
-        // Display estimates of velocity/displacement.  Note that these values are not expected to be accurate enough
-        // for estimating robot position on a FIRST FRC Robotics Field, due to accelerometer noise and the compounding
-        // of these errors due to single (velocity) integration and especially double (displacement) integration.
-        SmartDashboard.putNumber("IMU/Velocity_X", imu.getVelocityX());
-        SmartDashboard.putNumber("IMU/Velocity_Y", imu.getVelocityY());
-        SmartDashboard.putNumber("IMU/Displacement_X", imu.getDisplacementX());
-        SmartDashboard.putNumber("IMU/Displacement_Y", imu.getDisplacementY());
-
-        // Connectivity Debugging Support
-        SmartDashboard.putNumber("IMU/Byte_Count", imu.getByteCount());
-        SmartDashboard.putNumber("IMU/Byte_Count", imu.getByteCount());
-        SmartDashboard.putNumber("IMU/Update_Count", imu.getUpdateCount());
-    }
-
 }
