@@ -5,24 +5,33 @@ import org.usfirst.frc.team219.robot.commands.OpDrive;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Drive Train subsystem for Team 219's 2017 robot.
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDSource{
 
-    // Put methods for controlling this subsystem
+    private static final boolean driveByTime = false;
+	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 	private CANTalon motorBL, motorFL, motorBR, motorFR;
+    private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
+	turnController = new PIDController(0, 0, 0, 0, motorBL, motorBL);
+    int directionFactor = driveByTime || (inchesToDrive>=0) ? 1 : -1;
+
 	
 	public DriveTrain() {
 		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
-
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -44,5 +53,21 @@ public class DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
 
     }
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+        pidSourceType = pidSource;
+	}
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		return pidSourceType;
+
+	}
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+    
 }
 

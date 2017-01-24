@@ -2,6 +2,7 @@ package org.usfirst.frc.team219.robot.commands;
 
 import org.usfirst.frc.team219.robot.Robot;
 
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
  * THIS COMMAND IS CURRENTLY IMCOMPLETE.
  * 
  */
-public class ShootBall extends Command {
+public class ShootBall extends Command implements PIDOutput{
 
     public ShootBall() {
         // Use requires() here to declare subsystem dependencies
@@ -40,4 +41,10 @@ public class ShootBall extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		
+	}
 }
