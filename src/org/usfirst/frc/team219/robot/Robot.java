@@ -14,7 +14,7 @@ import org.usfirst.frc.team219.robot.commands.ExampleCommand;
 import org.usfirst.frc.team219.robot.subsystems.*;
 import org.usfirst.frc.team219.robot.subsystems.ExampleSubsystem;
 
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +28,7 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 	public static DriveTrain drivetrain;
-	public static Harvester roller;
+	public static Harvester harvester;
 	public static Climber climber;
 	public static Shooter shooter;
 
@@ -40,13 +40,13 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	@Override
-	public void robotInit() {
-		oi = new OI();
+	public void robotInit() 
+	{
 		drivetrain = new DriveTrain();
 		climber = new Climber();
 		shooter = new Shooter();
-
-
+		harvester = new Harvester();
+		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);

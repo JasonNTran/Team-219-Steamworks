@@ -12,17 +12,17 @@ public class ToggleCollector extends Command {
     public ToggleCollector() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.roller);
+    	requires(Robot.harvester);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.roller.startRoller();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
+    	Robot.harvester.startRoller();
     	
     }
 
@@ -33,7 +33,7 @@ public class ToggleCollector extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.roller.stopRoller();
+    	Robot.harvester.stopRoller();
     }
 
     // Called when another command which requires one or more of the same

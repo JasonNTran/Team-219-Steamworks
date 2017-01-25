@@ -16,6 +16,7 @@ public class Harvester extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon collectorMotor;
+	private CANTalon collectorMotor2;
 	
 	public Harvester()
 	{
@@ -30,6 +31,7 @@ public class Harvester extends Subsystem {
 	 */
 	public void startRoller() {
 		collectorMotor.set(1);
+		collectorMotor2.set(.5);
 		SmartDashboard.putString("Roller", "On");			
 	}	
 	/**

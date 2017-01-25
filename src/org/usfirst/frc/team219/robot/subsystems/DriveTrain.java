@@ -4,6 +4,7 @@ import org.usfirst.frc.team219.robot.RobotMap;
 import org.usfirst.frc.team219.robot.commands.OpDrive;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.PIDController;
@@ -29,6 +30,10 @@ public class DriveTrain extends Subsystem {
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
+		motorFR.changeControlMode(TalonControlMode.PercentVbus);
+		motorBR.changeControlMode(TalonControlMode.PercentVbus);
+		motorBL.changeControlMode(TalonControlMode.PercentVbus);
+		motorFL.changeControlMode(TalonControlMode.PercentVbus);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -43,8 +48,8 @@ public class DriveTrain extends Subsystem {
     public void tankDrive(double rightSpeed, double leftSpeed) {
     	motorFR.set(rightSpeed);
     	motorBR.set(rightSpeed);
-    	motorFL.set(leftSpeed);
-    	motorBL.set(leftSpeed);
+    	motorFL.set(-leftSpeed);
+    	motorBL.set(-leftSpeed);
     	
     	SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
     	SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
