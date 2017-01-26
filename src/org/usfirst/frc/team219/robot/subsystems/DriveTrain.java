@@ -46,11 +46,11 @@ public class DriveTrain extends Subsystem {
      * @param leftSpeed - The speed of the left motors of the robot.
      */
     public void tankDrive(double rightSpeed, double leftSpeed) {
-    	motorFR.set(rightSpeed);
-    	motorBR.set(rightSpeed);
-    	motorFL.set(-leftSpeed);
-    	motorBL.set(-leftSpeed);
-    	
+//    	motorFR.set(rightSpeed);
+//    	motorBR.set(rightSpeed);
+//    	motorFL.set(-leftSpeed);
+//    	motorBL.set(-leftSpeed);
+//    	
     	SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
     	SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
 
