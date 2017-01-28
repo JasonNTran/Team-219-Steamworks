@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team219.robot.commands.ExampleCommand;
 import org.usfirst.frc.team219.robot.subsystems.*;
-import org.usfirst.frc.team219.robot.subsystems.ExampleSubsystem;
 
 //import com.kauailabs.navx.frc.AHRS;
 
@@ -39,17 +38,21 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+	Auton auton;
 	@Override
 	public void robotInit() 
 	{
 		drivetrain = new DriveTrain();
 		climber = new Climber();
 		shooter = new Shooter();
+		//shooter.disable();
+		auton = new Auton();
 		harvester = new Harvester();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
 	}
 
 	/**
@@ -109,6 +112,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		//shooter.enable();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -126,6 +130,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		//SmartDashboard.putNumber("Work!",shooter.shooterMotor.getEncVelocity());
+		//LiveWindow.
 		LiveWindow.run();
+		
 	}
 }

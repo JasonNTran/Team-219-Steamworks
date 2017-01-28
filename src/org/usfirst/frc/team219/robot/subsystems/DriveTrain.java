@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem {
     private static final boolean driveByTime = false;
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
-	private CANTalon motorBL, motorFL, motorBR, motorFR;
+	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
 
 	
 	public DriveTrain() {
@@ -30,6 +30,10 @@ public class DriveTrain extends Subsystem {
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
+		talon5 = new CANTalon(5);
+		talon6 = new CANTalon(6);
+		talon7 = new CANTalon(7);
+		talon8 = new CANTalon(8);
 		motorFR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBL.changeControlMode(TalonControlMode.PercentVbus);
@@ -38,7 +42,7 @@ public class DriveTrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new OpDrive());
+    	//setDefaultCommand(new OpDrive());
     }
     /**
      * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
