@@ -62,14 +62,14 @@ public class OI {
 	 * Getter for the x-axis of the left joystick
 	 * @return The x-axis on the left joystick which is used for the speed of the left motors on tank drive
 	 */
-	public double getLeftSpeed() {
-		return mainDriver.getRawAxis(1);
-	}
+	//public double getLeftSpeed() {
+		//return mainDriver.getRawAxis(1);
+	//}
 	/**
 	 * Getter for the x-axis of the right joystick
 	 * @return The x-axis on the right joystick which is used for the speed of the right motors on tank drive
 	 */
-	public double getRightSpeed() {
-		return mainDriver.getRawAxis(5);
+	//public double getRightSpeed() {
+		//return mainDriver.getRawAxis(5);
 	}
-}
+//}

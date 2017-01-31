@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team219.robot.commands.ExampleCommand;
 import org.usfirst.frc.team219.robot.subsystems.*;
 
+import com.kauailabs.navx.frc.AHRS;
+
 //import com.kauailabs.navx.frc.AHRS;
 
 /**
@@ -30,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Harvester harvester;
 	public static Climber climber;
 	public static Shooter shooter;
+	public static AHRS imu;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -45,14 +48,26 @@ public class Robot extends IterativeRobot {
 		drivetrain = new DriveTrain();
 		climber = new Climber();
 		shooter = new Shooter();
-		//shooter.disable();
+		shooter.disable();
+		//auton.disable();
 		auton = new Auton();
 		harvester = new Harvester();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+        System.out.println("Reached");
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
+		try {
+            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
+            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+            imu = new AHRS(SPI.Port.kMXP); 
+//            SmartDashboard.putString("Working?", "true");
+        } catch (RuntimeException ex ) {
+            DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
+//            SmartDashboard.putString("Working", "False");
+        }
 	}
 
 	/**
@@ -113,6 +128,7 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		//shooter.enable();
+		shooter.disable();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -122,7 +138,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
+		//SmartDashboard.putNumber("Yaw", imu.getYaw());
+    	SmartDashboard.putNumber("Angle", imu.getAngle());
+    	SmartDashboard.putBoolean("Moving?", imu.isMoving());
+    	shooter.shooterMotor.set(-.78);
 	}
 
 	/**
@@ -130,8 +152,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		//SmartDashboard.putNumber("Work!",shooter.shooterMotor.getEncVelocity());
-		//LiveWindow.
+		//shooter.disable();
+		//LiveWindow.addActuator("Shooter", "PIDSubstem Shooter", getPIDController());
+		//LiveWindow.add
 		LiveWindow.run();
 		
 	}

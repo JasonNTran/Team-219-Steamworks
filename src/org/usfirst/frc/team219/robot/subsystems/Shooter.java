@@ -5,6 +5,8 @@ import org.usfirst.frc.team219.robot.RobotMap;
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends PIDSubsystem {
 
 	// Initialize your subsystem here
-	private CANTalon shooterMotor;
+	public CANTalon shooterMotor;
 	double low;
 	double high;
 	boolean reachedTarget;
@@ -25,12 +27,12 @@ public class Shooter extends PIDSubsystem {
 		// setSetpoint() -  Sets where the PID controller should move the system
 		//                  to
 		// enable() - Enables the PID controller.
-		super( 0.01,0.0,0.15);
+		super( 0.01,0,0.025);
 
 		enable();
 		getPIDController().setContinuous();
 		high= 0.0;
-		
+
 		reachedTarget=false;
 		setSetpoint(10);
 		low=getSetpoint();
@@ -38,8 +40,10 @@ public class Shooter extends PIDSubsystem {
 		setPercentTolerance(.1);
 		setOutputRange(-1,1);
 
-
+		//RobotMap.SHOOTERMOTOR_PORT
 		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT);  	
+//		LiveWindow.addActuator("Shooter", "PIDSubstem Shooter", getPIDController());
+		SmartDashboard.putData("PID Control", getPIDController());
 		//tempMotor = new CANTalon(11);  	
 	}
 
@@ -48,20 +52,34 @@ public class Shooter extends PIDSubsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 
-	protected double returnPIDInput() {
+	public double returnPIDInput() {
 		// Return your input value for the PID loop
 		// e.g. a sensor, like a potentiometer:
 		// yourPot.getAverageVoltage() / kYourMaxVoltage;
+
+//		if(shooterMotor.getEncVelocity()<0) {
+//			return (32768.0+(32768.0+(shooterMotor.getEncVelocity())))/4096.0;
+//		}
+//		else if(shooterMotor.get()>.7)	{
+//			return (32768*2+(shooterMotor.getEncVelocity()))/4096.0;
+//		}
+//		return (shooterMotor.getEncVelocity())/4096.0;
+		if(shooterMotor.getEncVelocity()>0) {
+			return (-32768.0+(-32768.0+(shooterMotor.getEncVelocity())))/4096.0;
+		}
+		else if(shooterMotor.get()<-.7)	{
+			return (-32768*2+(shooterMotor.getEncVelocity()))/4096.0;
+		}
+		return (shooterMotor.getEncVelocity())/4096.0;
+
 		
-		if(shooterMotor.getEncVelocity()<0) {
-			return (32768.0+(32768.0+shooterMotor.getEncVelocity()))/4096.0;
-		}
-		else if(shooterMotor.get()>.7)	{
-			return (32768*2+shooterMotor.getEncVelocity())/4096.0;
-		}
-		return shooterMotor.getEncVelocity()/4096.0;
 
 	}
+//	public LiveWindowSendable input()
+//	{
+//		return returnPIDInput();
+//		
+//	}
 
 	protected void usePIDOutput(double output) {
 		// Use output to drive your system, like a motor
@@ -75,22 +93,22 @@ public class Shooter extends PIDSubsystem {
 		//shooterMotor.get()+output
 
 		//over 70% and + 2^17
-		if(returnPIDInput()>14)
-		{
-			reachedTarget=true;
-		}
+//		if(returnPIDInput()>14)
+//		{
+//			reachedTarget=true;
+//		}
 		shooterMotor.set(shooterMotor.get()+output);
 		//tempMotor.set(tempMotor.get()+output);
 		//shooterMotor.get()+
-		
-//		if(returnPIDInput()<low&&reachedTarget)
-//		{
-//			low=returnPIDInput();
-//		}
-//		if(returnPIDInput()>high&&returnPIDInput())
-//		{
-//			high=returnPIDInput();
-//		}
+
+		//		if(returnPIDInput()<low&&reachedTarget)
+		//		{
+		//			low=returnPIDInput();
+		//		}
+		//		if(returnPIDInput()>high&&returnPIDInput())
+		//		{
+		//			high=returnPIDInput();
+		//		}
 		//NetworkTable.initialize();
 		SmartDashboard.putNumber("ENC Velocity", shooterMotor.getEncVelocity());
 		SmartDashboard.putNumber("ENC Position", shooterMotor.getEncPosition()/4096.0);
@@ -99,6 +117,7 @@ public class Shooter extends PIDSubsystem {
 		SmartDashboard.putNumber("SetPoint", getSetpoint());
 		SmartDashboard.putNumber("Progress to Setpoint", getPosition());
 		SmartDashboard.putNumber("PID Input", returnPIDInput());
+		SmartDashboard.putNumber("PID INPUT2", returnPIDInput());
 		SmartDashboard.putNumber("PID Output", output);
 		SmartDashboard.putNumber("PID Low", low);
 		SmartDashboard.putNumber("PID High", high);
