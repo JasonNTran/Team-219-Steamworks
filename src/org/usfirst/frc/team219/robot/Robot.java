@@ -4,12 +4,14 @@ package org.usfirst.frc.team219.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team219.robot.commands.AutonDrive;
 import org.usfirst.frc.team219.robot.commands.ExampleCommand;
 import org.usfirst.frc.team219.robot.subsystems.*;
 
@@ -62,7 +64,7 @@ public class Robot extends IterativeRobot {
             /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
             /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
             /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-            imu = new AHRS(SPI.Port.kMXP); 
+            imu = new AHRS(SerialPort.Port.kMXP); 
 //            SmartDashboard.putString("Working?", "true");
         } catch (RuntimeException ex ) {
             DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
@@ -98,9 +100,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		chooser.addDefault("AutonDrive", new AutonDrive(.3, 80.0));
 		autonomousCommand = chooser.getSelected();
-
+	
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

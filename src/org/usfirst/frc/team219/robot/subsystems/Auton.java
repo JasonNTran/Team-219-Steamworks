@@ -7,6 +7,7 @@ import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,7 +20,7 @@ public class Auton extends PIDSubsystem {
 
 	
 	final double circumfrence =.1524*Math.PI;
-	private AHRS imu= new AHRS(SPI.Port.kMXP);
+	private AHRS imu= new AHRS(SerialPort.Port.kMXP);
     public Auton() 
     {
         // Use these to get going:

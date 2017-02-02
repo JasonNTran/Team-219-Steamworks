@@ -22,8 +22,8 @@ public class AutonDrive extends Command implements PIDOutput {
 
 	private PIDController turnController;
 	private double rotateToAngleRate;
-	private double targetAngle;
-	private static final double kP = 0.0;
+	private double targetAngle = 0;
+	private static final double kP = 0.0001;
 	private static final double kI = 0.0;
 	private static final double kD = 0.0;
 	private static final double kF = 0.0;

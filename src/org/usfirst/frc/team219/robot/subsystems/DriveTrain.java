@@ -83,7 +83,6 @@ public class DriveTrain extends Subsystem implements PIDSource{
 			return (32768 * 2 + motorBL.getEncVelocity())/4096.0;
 		}
 		return motorBL.getEncVelocity()/4096.0;
-
 	}
 }
 

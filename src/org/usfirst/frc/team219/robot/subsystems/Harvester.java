@@ -31,7 +31,7 @@ public class Harvester extends Subsystem {
 	 */
 	public void startRoller() {
 		collectorMotor.set(1);
-		collectorMotor2.set(.5);
+		//collectorMotor2.set(.5);
 		SmartDashboard.putString("Roller", "On");			
 	}	
 	/**
