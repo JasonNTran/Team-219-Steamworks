@@ -17,14 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * The Drive Train subsystem for Team 219's 2017 robot.
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDSource{
 
-    private static final boolean driveByTime = false;
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	private static final boolean driveByTime = false;
 	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
+	private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
 
-	
 	public DriveTrain() {
 		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
@@ -39,25 +37,53 @@ public class DriveTrain extends Subsystem {
 		motorBL.changeControlMode(TalonControlMode.PercentVbus);
 		motorFL.changeControlMode(TalonControlMode.PercentVbus);
 	}
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	//setDefaultCommand(new OpDrive());
-    }
-    /**
-     * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
-     * @param rightSpeed - The speed of the right motors of the robot.
-     * @param leftSpeed - The speed of the left motors of the robot.
-     */
-    public void tankDrive(double rightSpeed, double leftSpeed) {
-    	motorFR.set(rightSpeed);
-    	motorBR.set(rightSpeed);
-    	motorFL.set(-leftSpeed);
-    	motorBL.set(-leftSpeed);
-//    	
-    	SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
-    	SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
+	public void initDefaultCommand() {        //setDefaultCommand(new MySpecialCommand());
+		//setDefaultCommand(new OpDrive());
+	}
+	/**
+	 * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
+	 * @param rightSpeed - The speed of the right motors of the robot.
+	 * @param leftSpeed - The speed of the left motors of the robot.
+	 */
+	public void tankDrive(double rightSpeed, double leftSpeed) {
+		motorFR.set(rightSpeed);
+		motorBR.set(rightSpeed);
+		motorFL.set(-leftSpeed);
+		motorBL.set(-leftSpeed);
+		//    	
+		SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
+		SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
+	}
+	
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		pidSourceType = pidSource;
 
-    }
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		return pidSourceType;
+	}
+
+	@Override
+	public double pidGet() {
+		return pidSourceType.equals(PIDSourceType.kDisplacement) ? getDistance() : getSpeed();
+	}
+
+	public double getDistance() {
+		return motorBL.getEncPosition();
+	}
+
+	public double getSpeed() {
+		if(motorBL.getEncVelocity() < 0) {
+			return (32768.0 + (32768.0 + motorBL.getEncVelocity()))/4096.0;
+		}
+		else if(motorBL.get()>.7)	{
+			return (32768 * 2 + motorBL.getEncVelocity())/4096.0;
+		}
+		return motorBL.getEncVelocity()/4096.0;
+
+	}
 }
 
