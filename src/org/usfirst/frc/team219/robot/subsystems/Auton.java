@@ -68,7 +68,7 @@ public class Auton extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
     	//int directionFactor = driveByTime || (inchesToDrive>=0) ? 1 : -1;
-   Robot.drivetrain.tankDrive( .3 + output,  .3 - output);
+   //Robot.drivetrain.tankDrive( .3 + output,  .3 - output);
     // Robot.drivetrain.tankDrive( .3 ,  .3 );
      SmartDashboard.putNumber("PID Stuffy Input", returnPIDInput());
      //SmartDashboard.putNumber("PID Stuffy Output", );

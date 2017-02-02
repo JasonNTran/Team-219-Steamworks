@@ -33,5 +33,6 @@ public class RobotMap {
 	public static int SHOOTERMOTOR_PORT = 6;
 	
 	//conveyor ports
-	public static int CONVEYORMOTOR_PORT = 0;
+	public static int CONVEYORMOTOR_PORT = 5;
+	public static int COLLECTORMOTOR_PORT2=6;
 }

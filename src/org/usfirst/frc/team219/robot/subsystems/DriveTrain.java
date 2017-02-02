@@ -59,6 +59,7 @@ public class DriveTrain extends Subsystem {
     {
     	autonStatis = stat;
     }
+    
     public boolean getAutonStatis(){
     	return autonStatis;
     }

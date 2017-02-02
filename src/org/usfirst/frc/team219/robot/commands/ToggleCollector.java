@@ -22,7 +22,7 @@ public class ToggleCollector extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.harvester.startRoller();
+    	Robot.harvester.startRoller(.5);
     	
     }
 

@@ -58,8 +58,8 @@ public class Robot extends IterativeRobot {
 		LiveWindow.addActuator("DriveTrain", "Talon6", drivetrain.talon6);
 		LiveWindow.addActuator("DriveTrain", "Talon7", drivetrain.talon7);
 		LiveWindow.addActuator("DriveTrain", "Talon8", drivetrain.talon8);
-		auton = new Auton();
-		auton.disable();
+		
+
 		harvester = new Harvester();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
@@ -109,6 +109,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		autonomousCommand = chooser.getSelected();
+		auton = new Auton();
 		drivetrain.setAutonStatis(true);
 		auton.ahrs.reset();
 		auton.enable();
