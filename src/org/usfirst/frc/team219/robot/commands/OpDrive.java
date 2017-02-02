@@ -13,7 +13,9 @@ public class OpDrive extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drivetrain);
+    	
     }
+   
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -21,7 +23,10 @@ public class OpDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
+    	if(!Robot.drivetrain.getAutonStatis())
+    	{
+    		 Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()

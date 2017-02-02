@@ -32,7 +32,7 @@ public class Robot extends IterativeRobot {
 	public static Harvester harvester;
 	public static Climber climber;
 	public static Shooter shooter;
-	public static AHRS imu;
+//	public static AHRS imu;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -49,8 +49,17 @@ public class Robot extends IterativeRobot {
 		climber = new Climber();
 		shooter = new Shooter();
 		shooter.disable();
-		//auton.disable();
+		
+		LiveWindow.addActuator("DriveTrain", "TalonBL", drivetrain.motorBL);
+		LiveWindow.addActuator("DriveTrain", "TalonFL", drivetrain.motorFL);
+		LiveWindow.addActuator("DriveTrain", "TalonBR", drivetrain.motorBR);
+		LiveWindow.addActuator("DriveTrain", "TalonFR", drivetrain.motorFR);
+		LiveWindow.addActuator("DriveTrain", "Talon5", drivetrain.talon5);
+		LiveWindow.addActuator("DriveTrain", "Talon6", drivetrain.talon6);
+		LiveWindow.addActuator("DriveTrain", "Talon7", drivetrain.talon7);
+		LiveWindow.addActuator("DriveTrain", "Talon8", drivetrain.talon8);
 		auton = new Auton();
+		auton.disable();
 		harvester = new Harvester();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
@@ -58,16 +67,16 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto mode", chooser);
         System.out.println("Reached");
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
-		try {
-            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
-            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-            imu = new AHRS(SPI.Port.kMXP); 
-//            SmartDashboard.putString("Working?", "true");
-        } catch (RuntimeException ex ) {
-            DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
-//            SmartDashboard.putString("Working", "False");
-        }
+//		try {
+//            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
+//            /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+//            /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+//            imu = new AHRS(SPI.Port.kMXP); 
+////            SmartDashboard.putString("Working?", "true");
+//        } catch (RuntimeException ex ) {
+//            DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
+//           SmartDashboard.putString("Working", "False");
+//        }
 	}
 
 	/**
@@ -100,7 +109,10 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		autonomousCommand = chooser.getSelected();
-
+		drivetrain.setAutonStatis(true);
+		auton.ahrs.reset();
+		auton.enable();
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -129,6 +141,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		//shooter.enable();
 		shooter.disable();
+		drivetrain.setAutonStatis(false);
+		auton.disable();
+		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -140,11 +155,11 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
-		//SmartDashboard.putNumber("Yaw", imu.getYaw());
-    	SmartDashboard.putNumber("Angle", imu.getAngle());
-    	SmartDashboard.putBoolean("Moving?", imu.isMoving());
-    	shooter.shooterMotor.set(-.78);
+//		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
+//		//SmartDashboard.putNumber("Yaw", imu.getYaw());
+//    	SmartDashboard.putNumber("Angle", imu.getAngle());
+//    	SmartDashboard.putBoolean("Moving?", imu.isMoving());
+    	//shooter.shooterMotor.set(-.78);
 	}
 
 	/**

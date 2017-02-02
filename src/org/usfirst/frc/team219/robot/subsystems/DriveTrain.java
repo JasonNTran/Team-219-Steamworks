@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,7 +23,15 @@ public class DriveTrain extends Subsystem {
     private static final boolean driveByTime = false;
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
-	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
+	public CANTalon motorBL;
+	public CANTalon motorFL;
+	public CANTalon motorBR;
+	public CANTalon motorFR;
+	public CANTalon talon6;
+	public CANTalon talon7;
+	public CANTalon talon8;
+	public CANTalon talon5;
+	private boolean autonStatis = false;
 
 	
 	public DriveTrain() {
@@ -34,6 +43,8 @@ public class DriveTrain extends Subsystem {
 		talon6 = new CANTalon(6);
 		talon7 = new CANTalon(7);
 		talon8 = new CANTalon(8);
+		
+		
 		motorFR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBL.changeControlMode(TalonControlMode.PercentVbus);
@@ -42,7 +53,14 @@ public class DriveTrain extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	//setDefaultCommand(new OpDrive());
+    	setDefaultCommand(new OpDrive());
+    }
+    public void setAutonStatis(boolean stat)
+    {
+    	autonStatis = stat;
+    }
+    public boolean getAutonStatis(){
+    	return autonStatis;
     }
     /**
      * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
