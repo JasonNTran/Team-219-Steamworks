@@ -28,27 +28,28 @@ public class DriveTrain extends Subsystem {
 	public CANTalon motorBR;
 	public CANTalon motorFR;
 	public CANTalon talon6;
-	public CANTalon talon7;
-	public CANTalon talon8;
-	public CANTalon talon5;
+//	public CANTalon talon7;
+//	public CANTalon talon8;
+//	public CANTalon talon5;
 	private boolean autonStatis = false;
 
 	
-	public DriveTrain() {
-		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
-		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
-		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
-		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
-		talon5 = new CANTalon(5);
-		talon6 = new CANTalon(6);
-		talon7 = new CANTalon(7);
-		talon8 = new CANTalon(8);
+	public DriveTrain() 
+	{
+		motorBL = new CANTalon(4);
+		motorFL = new CANTalon(3);
+		motorBR = new CANTalon(2);
+		motorFR = new CANTalon(1);
+//		talon5 = new CANTalon(5);
+//		talon6 = new CANTalon(6);
+//		talon7 = new CANTalon(7);
+//		talon8 = new CANTalon(8);
 		
 		
 		motorFR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBR.changeControlMode(TalonControlMode.PercentVbus);
-		motorBL.changeControlMode(TalonControlMode.PercentVbus);
-		motorFL.changeControlMode(TalonControlMode.PercentVbus);
+//		motorBL.changeControlMode(TalonControlMode.PercentVbus);
+//		motorFL.changeControlMode(TalonControlMode.PercentVbus);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -68,14 +69,15 @@ public class DriveTrain extends Subsystem {
      * @param rightSpeed - The speed of the right motors of the robot.
      * @param leftSpeed - The speed of the left motors of the robot.
      */
-    public void tankDrive(double rightSpeed, double leftSpeed) {
+    public void tankDrive(double rightSpeed, double leftSpeed) 
+    {
     	motorFR.set(rightSpeed);
     	motorBR.set(rightSpeed);
     	motorFL.set(-leftSpeed);
     	motorBL.set(-leftSpeed);
 //    	
     	SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
-    	SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
+    	//SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
 
     }
 }

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team219.robot.subsystems;
 
 import org.usfirst.frc.team219.robot.RobotMap;
+import org.usfirst.frc.team219.robot.commands.ToggleCollector;
 
 import com.ctre.CANTalon;
 
@@ -16,23 +17,24 @@ public class Harvester extends Subsystem {
     // here. Call these from Commands.
 	
 	private CANTalon collectorMotor;
-	private CANTalon collectorMotor2;
+	public CANTalon collectorMotor2;
 	
 	public Harvester()
 	{
-		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
-		collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
+		collectorMotor = new CANTalon(5);
+		collectorMotor2 = new CANTalon(7);//SIX
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+       // setDefaultCommand(new ToggleCollector());
     }
 	/**
 	 * Turns on the collector motor at a speed of 1.
 	 */
-	public void startRoller(double x) {
-		collectorMotor.set(x);
-		collectorMotor2.set(x);
+	public void startRoller(double collectSpeed) {
+		collectorMotor.set(collectSpeed);
+		//collectorMotor2.set(collectSpeed);
+		
 		SmartDashboard.putString("Roller", "On");			
 	}	
 	/**
@@ -40,7 +42,7 @@ public class Harvester extends Subsystem {
 	 */
 	public void stopRoller() {
 		collectorMotor.set(0);
-		collectorMotor2.set(0);
+		//collectorMotor2.set(0);
 		SmartDashboard.putString("Roller", "Off");
 	}
 

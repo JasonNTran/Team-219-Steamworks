@@ -3,6 +3,7 @@ package org.usfirst.frc.team219.robot.commands;
 import org.usfirst.frc.team219.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This command toggles the ball collector.
@@ -22,7 +23,8 @@ public class ToggleCollector extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.harvester.startRoller(.5);
+    	Robot.harvester.startRoller(.6);
+    	
     	
     }
 

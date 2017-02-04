@@ -4,6 +4,7 @@ package org.usfirst.frc.team219.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -33,6 +34,8 @@ public class Robot extends IterativeRobot {
 	public static Climber climber;
 	public static Shooter shooter;
 //	public static AHRS imu;
+//	public AHRS ahrs;
+	
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -42,30 +45,32 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	Auton auton;
+	//AHRS ahrs;
 	@Override
 	public void robotInit() 
 	{
+		//auton = new Auton();
 		drivetrain = new DriveTrain();
 		climber = new Climber();
 		shooter = new Shooter();
 		shooter.disable();
+		//ahrs = Auton.ahrs;
+//		LiveWindow.addActuator("DriveTrain", "TalonBL", drivetrain.motorBL);
+//		LiveWindow.addActuator("DriveTrain", "TalonFL", drivetrain.motorFL);
+//		LiveWindow.addActuator("DriveTrain", "TalonBR", drivetrain.motorBR);
+//		LiveWindow.addActuator("DriveTraid", "TalonFr", drivetrain.motorFR);
+//		LiveWindow.addActuator("DriveTrain", "Talon5", drivetrain.talon5);
+//		LiveWindow.addActuator("DriveTrain", "Talon6", drivetrain.talon6);
+//		LiveWindow.addActuator("DriveTrain", "Talon7", drivetrain.talon7);
+//		LiveWindow.addActuator("DriveTrain", "Talon8", drivetrain.talon8);
 		
-		LiveWindow.addActuator("DriveTrain", "TalonBL", drivetrain.motorBL);
-		LiveWindow.addActuator("DriveTrain", "TalonFL", drivetrain.motorFL);
-		LiveWindow.addActuator("DriveTrain", "TalonBR", drivetrain.motorBR);
-		LiveWindow.addActuator("DriveTrain", "TalonFR", drivetrain.motorFR);
-		LiveWindow.addActuator("DriveTrain", "Talon5", drivetrain.talon5);
-		LiveWindow.addActuator("DriveTrain", "Talon6", drivetrain.talon6);
-		LiveWindow.addActuator("DriveTrain", "Talon7", drivetrain.talon7);
-		LiveWindow.addActuator("DriveTrain", "Talon8", drivetrain.talon8);
-		
-
 		harvester = new Harvester();
 		oi = new OI();
-		chooser.addDefault("Default Auto", new ExampleCommand());
+		//chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
         System.out.println("Reached");
+      //  SmartDashboard.putNumber("Initial Angle from RobotInit", ahrs.getAngle());
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
 //		try {
 //            /* Communicate w/navX MXP via the MXP SPI Bus.                                     */
@@ -111,9 +116,9 @@ public class Robot extends IterativeRobot {
 		autonomousCommand = chooser.getSelected();
 		auton = new Auton();
 		drivetrain.setAutonStatis(true);
-		auton.ahrs.reset();
-		auton.enable();
+		//auton.ahrs.reset();
 		
+		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -132,6 +137,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+	 // SmartDashboard.putNumber("AutonPeriodic Angle", ahrs.getAngle());
 	}
 
 	@Override
@@ -141,9 +147,15 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		//shooter.enable();
+		
 		shooter.disable();
 		drivetrain.setAutonStatis(false);
+		// SmartDashboard.putNumber("TeleopInit Angle", ahrs.getAngle());
+		if(auton != null)
+		{
 		auton.disable();
+		}
+		
 		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -154,13 +166,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+ // SmartDashboard.putNumber("TeleopPeriodic Angle", ahrs.getAngle());
 		Scheduler.getInstance().run();
 //		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
 //		//SmartDashboard.putNumber("Yaw", imu.getYaw());
 //    	SmartDashboard.putNumber("Angle", imu.getAngle());
 //    	SmartDashboard.putBoolean("Moving?", imu.isMoving());
-    	//shooter.shooterMotor.set(-.78);
+    	harvester.collectorMotor2.set(-.2);//this is bad
 	}
 
 	/**

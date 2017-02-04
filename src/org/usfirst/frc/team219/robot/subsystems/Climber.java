@@ -1,6 +1,7 @@
 package org.usfirst.frc.team219.robot.subsystems;
 
 import org.usfirst.frc.team219.robot.RobotMap;
+import org.usfirst.frc.team219.robot.commands.ClimbUp;
 
 import com.ctre.CANTalon;
 
@@ -23,6 +24,7 @@ public class Climber extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	//setDefaultCommand(new ClimbUp());
     }
     /**
      * Starts the climber motor and also puts info onto smart dashboard.
