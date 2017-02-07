@@ -16,13 +16,13 @@ public class Harvester extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private CANTalon collectorMotor;
+	public CANTalon collectorMotor;
 	public CANTalon collectorMotor2;
 	
 	public Harvester()
 	{
-		collectorMotor = new CANTalon(5);
-		collectorMotor2 = new CANTalon(7);//SIX
+		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
+		//collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -32,7 +32,7 @@ public class Harvester extends Subsystem {
 	 * Turns on the collector motor at a speed of 1.
 	 */
 	public void startRoller(double collectSpeed) {
-		collectorMotor.set(collectSpeed);
+		//collectorMotor.set(collectSpeed);
 		//collectorMotor2.set(collectSpeed);
 		
 		SmartDashboard.putString("Roller", "On");			
@@ -41,7 +41,7 @@ public class Harvester extends Subsystem {
 	 * Turns off the collector motor.
 	 */
 	public void stopRoller() {
-		collectorMotor.set(0);
+		//collectorMotor.set(0);
 		//collectorMotor2.set(0);
 		SmartDashboard.putString("Roller", "Off");
 	}

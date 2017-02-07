@@ -23,7 +23,7 @@ public class ToggleCollector extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.harvester.startRoller(.6);
+    	//Robot.harvester.startRoller(.6);
     	
     	
     }
@@ -35,7 +35,7 @@ public class ToggleCollector extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.harvester.stopRoller();
+    	//Robot.harvester.stopRoller();
     }
 
     // Called when another command which requires one or more of the same

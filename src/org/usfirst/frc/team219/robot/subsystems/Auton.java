@@ -2,6 +2,8 @@ package org.usfirst.frc.team219.robot.subsystems;
 
 import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
+
 import org.usfirst.frc.team219.robot.RobotMap;
 
 import com.ctre.CANTalon;
@@ -23,6 +25,7 @@ public class Auton extends PIDSubsystem {
 	final double circumfrence =.1524*Math.PI;
 	private AHRS imu;
 	public   AHRS ahrs;
+	public Timer timer;
     public Auton() 
     {
     	
@@ -31,17 +34,18 @@ public class Auton extends PIDSubsystem {
         //                  to
         // enable() - Enables the PID controller.
     	
-    	super( .0005,0,0);
+    	super( .0004,0,0);
     	
     	imu= new AHRS(SPI.Port.kMXP);
     	ahrs = new AHRS(SerialPort.Port.kMXP);
-    	
+    	timer=new Timer();
     	enable();
     	getPIDController().setContinuous();
-    	
+    	timer.reset();
+    	timer.start();
 //    	SmartDashboard.putNumber("Angle", imu.getAngle());
     	//ahrs.setAngleAdjustment(ahrs.getAngle());
-    	setSetpoint(180);
+    	setSetpoint(0);
     	setPercentTolerance(1);
     	
     	
@@ -53,8 +57,8 @@ public class Auton extends PIDSubsystem {
 //    	setOutputRange(-.5,.8);
     	
     	//LiveWindow.addSensor("NavX", "ha", imu);
-    	SmartDashboard.putData("Drive PID Control", getPIDController());
-    	LiveWindow.addSensor("NavX", "wut", ahrs);
+    	//SmartDashboard.putData("Drive PID Control", getPIDController());
+
     
     }
   
@@ -78,18 +82,30 @@ public class Auton extends PIDSubsystem {
         // e.g. yourMotor.set(output);
     	//int directionFactor = driveByTime || (inchesToDrive>=0) ? 1 : -1;
     	SmartDashboard.putBoolean("OnTarget", onTarget());
-   Robot.drivetrain.tankDrive( .15 + output,  .15 - output);
+    	//   Robot.drivetrain.tankDrive( .18 + output,  .12 - output);
     //Robot.drivetrain.tankDrive( .15 ,  .15 );
-     SmartDashboard.putNumber("PID Stuffy Input", returnPIDInput());
+    if(timer.get()<3.0)
+    {
+    	Robot.drivetrain.tankDrive( .5625 +output,  .501 -output);
+    }
+    else
+    {
+    	//timer.stop();
+    	Robot.drivetrain.tankDrive( 0.0,0.0 );
+    	SmartDashboard.putNumber("Time", timer.get());
+    }
+     SmartDashboard.putNumber("PID Drive Input", returnPIDInput());
      SmartDashboard.putNumber("Progress", getPosition());
+     SmartDashboard.putNumber("Volatage of rightSide", Robot.drivetrain.motorBR.get());
+     SmartDashboard.putNumber("Volatage of leftSide", Robot.drivetrain.motorBL.get());
      //SmartDashboard.putNumber("PID Stuffy Output", );
-     SmartDashboard.putNumber("PID Stuffy Output", output);
+     SmartDashboard.putNumber("PID Drive Output", output);
      SmartDashboard.putNumber("Option2 Input", ahrs.getYaw());
-     SmartDashboard.putNumber("Option2 getAngle", ahrs.getAngle());
+     SmartDashboard.putNumber("Option2 getAngle", ahrs.getAngle() %360.0);
     // SmartDashboard.putNumber("Option1 getAngle", imu.getAngle());
      SmartDashboard.putBoolean("Option2 Connnection", ahrs.isConnected());
-    SmartDashboard.putBoolean("Option1 Connection", imu.isConnected());
-    
+     SmartDashboard.putNumber("X displacement", ahrs.getDisplacementX());
+     SmartDashboard.putNumber("Y displacement", ahrs.getDisplacementY());
     }
 	public float getImuYaw() {
 		return ahrs.getYaw();

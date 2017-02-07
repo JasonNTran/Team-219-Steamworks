@@ -29,14 +29,16 @@ public class Climber extends Subsystem {
     /**
      * Starts the climber motor and also puts info onto smart dashboard.
      */
-    public void startClimbing(){
+    public void startClimbing()
+    {
     	climberMotor.set(.5);
     	SmartDashboard.putString("Climber", "Climbing");
     }
     /**
      * Sets the climber motor to go in reverse and also puts info onto smart dashboard.
      */
-    public void comeDown() {
+    public void comeDown() 
+    {
     	climberMotor.set(-0.5);
     	SmartDashboard.putString("Climber", "Descending");
     }

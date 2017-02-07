@@ -4,7 +4,10 @@ import org.usfirst.frc.team219.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -13,38 +16,30 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This is the subsystem for the shooter of Team 219's 2017 robot. It uses PID to make sure the motor is cunning at the correct speed..
  */
-public class Shooter extends PIDSubsystem {
+public class Shooter extends Subsystem implements PIDSource {
 
 	// Initialize your subsystem here
 	public CANTalon shooterMotor;
-	double low;
-	double high;
-	boolean reachedTarget;
-	//private CANTalon tempMotor;
-	//final double circumfrence =.1524*Math.PI;
+	private PIDSourceType pidSource = PIDSourceType.kRate;
+	
 	public Shooter() {
 		// Use these to get going:
 		// setSetpoint() -  Sets where the PID controller should move the system
 		//                  to
 		// enable() - Enables the PID controller.
-		super( 0.01,0,0.025);
-
-		enable();
-		getPIDController().setContinuous();
-		high= 0.0;
-
-		reachedTarget=false;
-		setSetpoint(10);
-		low=getSetpoint();
-		setInputRange(-20.0,20.0);
-		setPercentTolerance(.1);
-		setOutputRange(-1,1);
-
-		//RobotMap.SHOOTERMOTOR_PORT
-		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT);  	
-//		LiveWindow.addActuator("Shooter", "PIDSubstem Shooter", getPIDController());
-		SmartDashboard.putData("PID Control", getPIDController());
-		//tempMotor = new CANTalon(11);  	
+//		super( 0.01,0,0.025);
+//		
+//		setSetpoint(-10);
+//		setInputRange(-20.0,20.0);
+//		setPercentTolerance(.1);
+//		setOutputRange(-1,1);
+//
+//		getPIDController().setContinuous();
+//		enable();
+		shooterMotor = new CANTalon(6); 
+		//shooterMotor.set(-.6);
+		
+		
 	}
 
 	public void initDefaultCommand() {
@@ -52,7 +47,7 @@ public class Shooter extends PIDSubsystem {
 		//setDefaultCommand(new MySpecialCommand());
 	}
 
-	public double returnPIDInput() {
+	public double getRPM() {
 		// Return your input value for the PID loop
 		// e.g. a sensor, like a potentiometer:
 		// yourPot.getAverageVoltage() / kYourMaxVoltage;
@@ -64,6 +59,7 @@ public class Shooter extends PIDSubsystem {
 //			return (32768*2+(shooterMotor.getEncVelocity()))/4096.0;
 //		}
 //		return (shooterMotor.getEncVelocity())/4096.0;
+	
 		if(shooterMotor.getEncVelocity()>0) {
 			return (-32768.0+(-32768.0+(shooterMotor.getEncVelocity())))/4096.0;
 		}
@@ -71,64 +67,60 @@ public class Shooter extends PIDSubsystem {
 			return (-32768*2+(shooterMotor.getEncVelocity()))/4096.0;
 		}
 		return (shooterMotor.getEncVelocity())/4096.0;
-
-		
-
 	}
-//	public LiveWindowSendable input()
-//	{
-//		return returnPIDInput();
+//
+//	}
+//	public void usePIDOutput(double output) {
+//		// Use output to drive your system, like a motor
+//		// e.g. yourMotor.set(output);
+//
+//		//    		if(onTarget() == true)
+//		//    		{
+//		//    			output = 0;
+//		//    		}
+//		//shooterMotor.get()+output
+//		shooterMotor.set(shooterMotor.get()+output);
+//		SmartDashboard.putString("Is this thing on??","??????????");
+//		SmartDashboard.putNumber("Test Num",output);
+//		SmartDashboard.putNumber("ENC Velocity", shooterMotor.getEncVelocity());
+////		SmartDashboard.putNumber("ENC Position", shooterMotor.getEncPosition()/4096.0);
+////		SmartDashboard.putNumber("Voltage Perentage", shooterMotor.get());
+////		SmartDashboard.putBoolean("OnTarget?", onTarget());
+////		SmartDashboard.putNumber("SetPoint", getSetpoint());
+////		SmartDashboard.putNumber("Progress to Setpoint", getPosition());
+//		SmartDashboard.putNumber("PID Input", returnPIDInput());
+//		SmartDashboard.putNumber("PID Graph", returnPIDInput());
+//		SmartDashboard.putNumber("PID Output", output);
 //		
 //	}
 
-	protected void usePIDOutput(double output) {
-		// Use output to drive your system, like a motor
-		// e.g. yourMotor.set(output);
-
-		//    		if(onTarget() == true)
-		//    		{
-		//    			output = 0;
-		//    		
-		//    		}
-		//shooterMotor.get()+output
-
-		//over 70% and + 2^17
-//		if(returnPIDInput()>14)
-//		{
-//			reachedTarget=true;
-//		}
-		shooterMotor.set(shooterMotor.get()+output);
-		//tempMotor.set(tempMotor.get()+output);
-		//shooterMotor.get()+
-
-		//		if(returnPIDInput()<low&&reachedTarget)
-		//		{
-		//			low=returnPIDInput();
-		//		}
-		//		if(returnPIDInput()>high&&returnPIDInput())
-		//		{
-		//			high=returnPIDInput();
-		//		}
-		//NetworkTable.initialize();
-		SmartDashboard.putNumber("ENC Velocity", shooterMotor.getEncVelocity());
-		SmartDashboard.putNumber("ENC Position", shooterMotor.getEncPosition()/4096.0);
-		SmartDashboard.putNumber("Voltage Perentage", shooterMotor.get());
-		SmartDashboard.putBoolean("OnTarget?", onTarget());
-		SmartDashboard.putNumber("SetPoint", getSetpoint());
-		SmartDashboard.putNumber("Progress to Setpoint", getPosition());
-		SmartDashboard.putNumber("PID Input", returnPIDInput());
-		SmartDashboard.putNumber("PID INPUT2", returnPIDInput());
-		SmartDashboard.putNumber("PID Output", output);
-		SmartDashboard.putNumber("PID Low", low);
-		SmartDashboard.putNumber("PID High", high);
-		//LiveWindow.
-		// SmartDashboard.putNumber("Meters Gone",(shooterMotor.getEncPosition()/4096.0)*circumfrence);
-		//output
-		//shooterMotor.get()+
-	}
-
 	public void stopShooter()
 	{
-		//shooterMotor.set(0);
+	//
+		shooterMotor.set(0);
+	}
+	
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) {
+		this.pidSource = pidSource;
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PIDSourceType getPIDSourceType() {
+		// TODO Auto-generated method stub
+		return pidSource;
+	}
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return getRPM();
+	}
+	
+	public void setMotorSpeed(double speed)
+	{
+		shooterMotor.set(speed);
 	}
 }

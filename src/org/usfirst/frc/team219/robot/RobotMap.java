@@ -18,21 +18,22 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	
 	//drive train ports
-	public static int MOTORBL_PORT = 0;
-	public static int MOTORFL_PORT = 0;
-	public static int MOTORBR_PORT = 0;
-	public static int MOTORFR_PORT = 0;
+	public static int MOTORBL_PORT = 0;//4
+	public static int MOTORFL_PORT = 0;//3
+	public static int MOTORBR_PORT = 0;//2
+	public static int MOTORFR_PORT = 0;//1
 	
 	//collector ports
-	public static int COLLECTORMOTOR_PORT = 0;
+	public static int COLLECTORMOTOR_PORT = 0;//5
+	//public static int COLLECTORMOTOR_PORT2=6;
 	
 	//climber ports
-	public static int CLIMBERMOTOR_PORT = 0;
+	public static int CLIMBERMOTOR_PORT = 0;//8
 	
 	//shooter ports
-	public static int SHOOTERMOTOR_PORT = 0;
+	public static int SHOOTERMOTOR_PORT = 0;//9
 	
 	//conveyor ports
-	public static int CONVEYORMOTOR_PORT = 0;
-	public static int COLLECTORMOTOR_PORT2=0;
+	public static int CONVEYORMOTOR_PORT = 0;//7
+	
 }
