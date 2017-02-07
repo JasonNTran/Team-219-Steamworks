@@ -36,7 +36,7 @@ public class Shooter extends Subsystem implements PIDSource {
 //
 //		getPIDController().setContinuous();
 //		enable();
-		shooterMotor = new CANTalon(6); 
+		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT); 
 		//shooterMotor.set(-.6);
 		
 		

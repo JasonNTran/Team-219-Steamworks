@@ -44,6 +44,8 @@ public class OI {
 	private Button buttonB;
 	private Button buttonX;
 	private Button buttonY;
+	private Button buttonBack;
+	private Button buttonForward;
 	
 	public OI() {
 		mainDriver = new Joystick(0);
@@ -52,10 +54,15 @@ public class OI {
 		buttonB = new JoystickButton(mainDriver, 2);
 		buttonX = new JoystickButton(mainDriver, 3);
 		buttonY = new JoystickButton(mainDriver, 4);
+		buttonBack= new JoystickButton(mainDriver,7);
+		buttonForward= new JoystickButton(mainDriver,8);
 		
+		
+		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
 		buttonA.toggleWhenPressed(new ToggleCollector());
 		buttonB.whileHeld(new ClimbUp());
 		buttonY.toggleWhenPressed(new ToggleShooter());
+		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
 	}
 	
 	/**

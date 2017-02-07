@@ -19,6 +19,7 @@ public class Climber extends Subsystem {
 	
 	public Climber() {
 		climberMotor = new CANTalon(RobotMap.CLIMBERMOTOR_PORT);
+		//RobotMap.CLIMBERMOTOR_PORT
 	}
 	
     public void initDefaultCommand() {

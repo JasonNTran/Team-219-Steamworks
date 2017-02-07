@@ -25,12 +25,15 @@ import com.kauailabs.navx.frc.AHRS;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot 
+{
 	public static OI oi;
 	public static DriveTrain drivetrain;
 	public static Harvester harvester;
 	public static Climber climber;
 	public static Shooter shooter;
+	public static Augur Augur;
+	public static Auton auton;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -38,16 +41,15 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	Auton auton;
-	//AHRS ahrs;
 	@Override
 	public void robotInit() 
 	{
-		auton = new Auton();
 		drivetrain = new DriveTrain();
+		harvester = new Harvester();
 		climber = new Climber();
 		shooter = new Shooter();
-		harvester = new Harvester();
+		Augur=new Augur();
+		auton = new Auton();
 		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -79,13 +81,13 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
-	public void autonomousInit() {
+	public void autonomousInit() 
+	{
 		
 		autonomousCommand = chooser.getSelected();
 		auton = new Auton();
-		//drivetrain.setAutonStatis(true);
-		//auton.ahrs.reset();
-		
+		drivetrain.setAutonStatis(true);
+		auton.ahrs.reset();
 		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
