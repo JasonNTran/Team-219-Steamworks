@@ -22,7 +22,7 @@ public class Harvester extends Subsystem {
 	public Harvester()
 	{
 		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
-		collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
+//		collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
