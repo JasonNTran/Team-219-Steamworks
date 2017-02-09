@@ -50,7 +50,7 @@ public class AutonDrive extends Command implements PIDOutput {
 		if(!timedDrive) {
 			startDistance = Robot.drivetrain.getDistance();
 		}
-		targetAngle = Robot.imu.getYaw() ;
+		targetAngle = Robot.imu.getYaw();
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
 		turnController.setOutputRange(-0.5, 0.5);

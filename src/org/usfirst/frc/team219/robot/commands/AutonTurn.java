@@ -44,7 +44,7 @@ public class AutonTurn extends Command implements PIDOutput
     		Robot.drivetrain.tankDrive(speed + rotateToAngleRate, 0);
     	}
     	if(angleToTurn < 0) {
-    		Robot.drivetrain.tankDrive(0, + rotateToAngleRate);
+    		Robot.drivetrain.tankDrive(0, speed + rotateToAngleRate);
     	}
     	
     }
