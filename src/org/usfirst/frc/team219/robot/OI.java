@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team219.robot.commands.ExampleCommand;
 import org.usfirst.frc.team219.robot.commands.*;
 
 /**
@@ -44,18 +43,18 @@ public class OI {
 	
 	private Button buttonA;
 	private Button buttonB;
-	private Button buttonC;
+	private Button buttonx;
 	
 	public OI() {
 		mainDriver = new Joystick(0);
 		secondDriver = new Joystick(2);
 		buttonA = new JoystickButton(mainDriver, 1);
 		buttonB = new JoystickButton(mainDriver, 2);
-		buttonC = new JoystickButton(mainDriver, 3);
+		buttonx = new JoystickButton(mainDriver, 3);
 		
 		buttonA.toggleWhenPressed(new ToggleCollector());
 		buttonB.whileHeld(new ClimbUp());
-		buttonC.whenPressed(new ShootBall());
+		buttonx.whenPressed(new AutonDrive(.3, 672.0));
 	}
 	
 	/**

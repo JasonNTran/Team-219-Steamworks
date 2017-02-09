@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot {
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-	Auton auton;
+	//Auton auton;
 	@Override
 	public void robotInit() 
 	{
@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		shooter.disable();
 		//auton.disable();
-		auton = new Auton();
+		//auton = new Auton();
 		harvester = new Harvester();
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
@@ -142,11 +142,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
+		//drivetrain.tankDrive(.3, .3);
+		SmartDashboard.putNumber("Yaw periodic", imu.getYaw());
 		//SmartDashboard.putNumber("Yaw", imu.getYaw());
     	SmartDashboard.putNumber("Angle", imu.getAngle());
     	SmartDashboard.putBoolean("Moving?", imu.isMoving());
-    	shooter.shooterMotor.set(-.78);
+    	//shooter.shooterMotor.set(-.78);
 	}
 
 	/**

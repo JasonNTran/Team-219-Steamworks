@@ -21,24 +21,21 @@ public class DriveTrain extends Subsystem implements PIDSource{
 
 	private static final boolean driveByTime = false;
 	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
-	private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
-
+	private PIDSourceType pidSourceType = PIDSourceType.kRate;
+	private final double circumfrenceINCH = 6 * Math.PI;
 	public DriveTrain() {
 		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
-		talon5 = new CANTalon(5);
-		talon6 = new CANTalon(6);
-		talon7 = new CANTalon(7);
-		talon8 = new CANTalon(8);
 		motorFR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBR.changeControlMode(TalonControlMode.PercentVbus);
 		motorBL.changeControlMode(TalonControlMode.PercentVbus);
 		motorFL.changeControlMode(TalonControlMode.PercentVbus);
+	
 	}
 	public void initDefaultCommand() {        //setDefaultCommand(new MySpecialCommand());
-		//setDefaultCommand(new OpDrive());
+		setDefaultCommand(new OpDrive());
 	}
 	/**
 	 * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
@@ -46,6 +43,7 @@ public class DriveTrain extends Subsystem implements PIDSource{
 	 * @param leftSpeed - The speed of the left motors of the robot.
 	 */
 	public void tankDrive(double rightSpeed, double leftSpeed) {
+		
 		motorFR.set(rightSpeed);
 		motorBR.set(rightSpeed);
 		motorFL.set(-leftSpeed);
@@ -71,18 +69,24 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		return pidSourceType.equals(PIDSourceType.kDisplacement) ? getDistance() : getSpeed();
 	}
 
-	public double getDistance() {
-		return motorBL.getEncPosition();
+	public double getDistance() 
+	{
+		return (Math.abs(motorBR.getEncPosition()/4096.0))*circumfrenceINCH;
 	}
 
 	public double getSpeed() {
-		if(motorBL.getEncVelocity() < 0) {
+		if(motorBR.getEncVelocity() < 0) {
 			return (32768.0 + (32768.0 + motorBL.getEncVelocity()))/4096.0;
 		}
-		else if(motorBL.get()>.7)	{
+		else if(motorBR.get()>.7)	{
 			return (32768 * 2 + motorBL.getEncVelocity())/4096.0;
 		}
-		return motorBL.getEncVelocity()/4096.0;
+		return motorBR.getEncVelocity()/4096.0;
+	}
+	
+	public void resetEncoders() {
+		motorFL.setPosition(0);
+		motorBR.setPosition(0);
 	}
 }
 
