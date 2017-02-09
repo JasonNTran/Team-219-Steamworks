@@ -14,6 +14,8 @@ public class AutonTurn extends Command implements PIDOutput
 	private double speed;
 	private double angleToTurn;
 	private double targetAngle;
+	private double rotateToAngleRate;
+	
 	private PIDController turnController;
 	private final double kP = 0;
 	private final double kI = 0;
@@ -38,6 +40,13 @@ public class AutonTurn extends Command implements PIDOutput
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(angleToTurn > 0) {
+    		Robot.drivetrain.tankDrive(speed + rotateToAngleRate, 0);
+    	}
+    	if(angleToTurn < 0) {
+    		Robot.drivetrain.tankDrive(0, + rotateToAngleRate);
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -55,17 +64,16 @@ public class AutonTurn extends Command implements PIDOutput
     protected void end() {
     	turnController.disable();
     	Robot.drivetrain.tankDrive(0, 0);
-    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 
 	@Override
 	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		
+		rotateToAngleRate = output;
 	}
 }
