@@ -33,7 +33,6 @@ public class Robot extends IterativeRobot
 	public static Climber climber;
 	public static Shooter shooter;
 	public static Augur Augur;
-	public static Auton auton;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -49,7 +48,6 @@ public class Robot extends IterativeRobot
 		climber = new Climber();
 		shooter = new Shooter();
 		Augur=new Augur();
-		auton = new Auton();
 		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -85,9 +83,6 @@ public class Robot extends IterativeRobot
 	{
 		
 		autonomousCommand = chooser.getSelected();
-		auton = new Auton();
-		drivetrain.setAutonStatis(true);
-		auton.ahrs.reset();
 		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -121,11 +116,6 @@ public class Robot extends IterativeRobot
 		//shooter.disable();
 		//drivetrain.setAutonStatis(false);
 		// SmartDashboard.putNumber("TeleopInit Angle", ahrs.getAngle());
-		if(auton != null)
-		{
-		auton.disable();
-		SmartDashboard.putString("Disabled?", "Ya!");
-		}
 //		else
 //		{
 //			SmartDashboard.putString("Disabled?", "No!");
@@ -144,8 +134,7 @@ public class Robot extends IterativeRobot
  // SmartDashboard.putNumber("TeleopPeriodic Angle", ahrs.getAngle());
 		Scheduler.getInstance().run();
 		//shooter.usePIDOutput(shooter.returnPIDInput());
-		SmartDashboard.putNumber("Hullo",shooter.shooterMotor.getEncVelocity());
-//		SmartDashboard.putNumber("Yaw periodic", imu.getAngle());
+		
 //		//SmartDashboard.putNumber("Yaw", imu.getYaw());
 //    	
 //    	SmartDashboard.putBoolean("Moving?", imu.isMoving());
@@ -161,9 +150,8 @@ public class Robot extends IterativeRobot
 	 */
 	@Override
 	public void testPeriodic() {
-		//shooter.disable();
-		LiveWindow.addActuator("Shooter","ShooterMotor", shooter.shooterMotor);
-		LiveWindow.addActuator("Augur","Augur", harvester.collectorMotor);
+	
+		
 		//LiveWindow.add
 		LiveWindow.run();
 		

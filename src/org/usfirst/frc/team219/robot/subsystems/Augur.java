@@ -9,32 +9,44 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  *
  */
-public class Augur extends Subsystem {
+public class Augur extends Subsystem 
+{
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	private CANTalon conveyorTalon;
 	
+	private CANTalon conveyorTalon;
+
 	public Augur()
 	{
-		conveyorTalon = new CANTalon(RobotMap.CONVEYORMOTOR_PORT);
+		conveyorTalon = new CANTalon(RobotMap.AUGURMOTOR_PORT);
 	}
-	public void forwardGo()
+
+	/**
+	 * Sets the augur to move the balls in the direction of the shooter
+	 */
+	public void forward()
 	{
-		conveyorTalon.set(.1);
+		conveyorTalon.set(.25);
 	}
-	public void reverseGo()
+	
+	/**
+	 * Sets the augur to move in reverse direction. Meant to deal with blockages. 
+	 */
+	public void reverse()
 	{
-		conveyorTalon.set(-.1);
+		conveyorTalon.set(-.25);
 	}
+	
+	/**
+	 * Stops the augur by setting the motor speed to 0.
+	 */
 	public void stop()
 	{
 		conveyorTalon.set(0);
 	}
-    public void initDefaultCommand() 
-    {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    }
+	public void initDefaultCommand() 
+	{
+		// Set the default command for a subsystem here.
+		//setDefaultCommand(new MySpecialCommand());
+	}
 }
 

@@ -16,22 +16,24 @@ public class RobotMap {
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
-	
-	//drive train ports
-	public static int MOTORBL_PORT = 3;
-	public static int MOTORFL_PORT = 4;
-	public static int MOTORBR_PORT = 1;
-	public static int MOTORFR_PORT = 2;
-	
-	//collector ports
-	public static int COLLECTORMOTOR_PORT = 0;
-	
-	//climber ports
-	public static int CLIMBERMOTOR_PORT = 0;
-	
-	//shooter ports
-	public static int SHOOTERMOTOR_PORT = 0;
-	
-	//conveyor ports
-	public static int CONVEYORMOTOR_PORT = 0;
+
+	//Ports for the Drive Train subsystem
+	public static int MOTORBL_PORT = 1; //
+	public static int MOTORFL_PORT = 2; //encoder
+	public static int MOTORBR_PORT = 7; //
+	public static int MOTORFR_PORT = 6; //encoder
+
+	//Ports for the Collector subsystem
+	public static int COLLECTORMOTOR_PORT = 9;
+	public static int COLLECTORMOTOR_PORT2=8;
+
+	//Ports for the Climber subsystem
+	public static int CLIMBERMOTOR_PORT = 4;
+
+	//Ports for the Shooter subsystem
+	public static int SHOOTERMOTOR_PORT = 3;
+
+	//Ports for the Augur subsystem
+	public static int AUGURMOTOR_PORT = 10;
+
 }

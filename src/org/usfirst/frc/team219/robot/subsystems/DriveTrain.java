@@ -1,7 +1,7 @@
 package org.usfirst.frc.team219.robot.subsystems;
 
 import org.usfirst.frc.team219.robot.RobotMap;
-import org.usfirst.frc.team219.robot.commands.TeleOpDrive;
+import org.usfirst.frc.team219.robot.commands.TeleopDrive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -20,40 +20,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem 
 {
+	private CANTalon motorBL;
+	private CANTalon motorFL;
+	private CANTalon motorBR;
+	private CANTalon motorFR;
 
-	// Put methods for controlling this subsystem
-    // here. Call these from Commands.
-	public CANTalon motorBL;
-	public CANTalon motorFL;
-	public CANTalon motorBR;
-	public CANTalon motorFR;
-	private boolean autonStatis = false;
 	public DriveTrain() 
 	{
 		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
-		motorFR.changeControlMode(TalonControlMode.PercentVbus);
-		motorBR.changeControlMode(TalonControlMode.PercentVbus);
-		motorBL.changeControlMode(TalonControlMode.PercentVbus);
-		motorFL.changeControlMode(TalonControlMode.PercentVbus);
 	}
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new TeleOpDrive());
-    }
-    
-    //Used for disabling TeleopDrive in Auton 
-    public void setAutonStatis(boolean stat)
+	
+    public void initDefaultCommand()
     {
-    	autonStatis = stat;
+    	setDefaultCommand(new TeleopDrive());
     }
     
-    public boolean getAutonStatis(){
-    	return autonStatis;
-    }
     /**
      * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
      * @param rightSpeed - The speed of the right motors of the robot.

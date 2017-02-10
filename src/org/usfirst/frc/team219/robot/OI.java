@@ -39,45 +39,52 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	private Joystick mainDriver;
 	private Joystick secondDriver;
-	
+
 	private Button buttonA;
 	private Button buttonB;
 	private Button buttonX;
 	private Button buttonY;
 	private Button buttonBack;
 	private Button buttonForward;
-	
-	public OI() {
+
+	public OI() 
+	{
 		mainDriver = new Joystick(0);
 		secondDriver = new Joystick(2);
 		buttonA = new JoystickButton(mainDriver, 1);
 		buttonB = new JoystickButton(mainDriver, 2);
 		buttonX = new JoystickButton(mainDriver, 3);
 		buttonY = new JoystickButton(mainDriver, 4);
-		buttonBack= new JoystickButton(mainDriver,7);
-		buttonForward= new JoystickButton(mainDriver,8);
-		
-		
+		buttonBack = new JoystickButton(mainDriver,7);
+		buttonForward = new JoystickButton(mainDriver,8);
+
+
 		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
-		buttonA.toggleWhenPressed(new ToggleCollector());
+		buttonA.toggleWhenPressed(new ToggleCollector(0.6));
 		buttonB.whileHeld(new ClimbUp());
 		buttonY.toggleWhenPressed(new ToggleShooter());
 		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
 	}
-	
+
 	/**
 	 * Getter for the x-axis of the left joystick
 	 * @return The x-axis on the left joystick which is used for the speed of the left motors on tank drive
 	 */
-	public double getLeftSpeed() {
-		return mainDriver.getRawAxis(1);
+	public double getLeftSpeed() 
+	{
+		if(Math.abs(mainDriver.getRawAxis(1)) > .1)
+			return mainDriver.getRawAxis(1);
+		return 0;
 	}
 	/**
 	 * Getter for the x-axis of the right joystick
 	 * @return The x-axis on the right joystick which is used for the speed of the right motors on tank drive
 	 */
-	public double getRightSpeed() {
-		return mainDriver.getRawAxis(5);
+	public double getRightSpeed() 
+	{
+		if(Math.abs(mainDriver.getRawAxis(5)) > .1)
+			return mainDriver.getRawAxis(5);
+		return 0.0;
 	}
-	}
-//}
+}
+

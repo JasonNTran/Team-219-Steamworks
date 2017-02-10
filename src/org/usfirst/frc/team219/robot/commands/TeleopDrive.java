@@ -6,16 +6,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * This command toggles the ball collector.
+ * This command allows the operator to control the robot rather than an autonomous command.
  */
-public class ToggleCollector extends Command 
+public class TeleopDrive extends Command 
 {
-	private double speed; 
-	public ToggleCollector(double speed) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.harvester);
-		this.speed = speed;
+	public TeleopDrive()
+	{
+		requires(Robot.drivetrain);
 	}
 
 	// Called just before this Command runs the first time
@@ -23,13 +20,15 @@ public class ToggleCollector extends Command
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute() 
+	protected void execute()
 	{
-		Robot.harvester.startRoller(speed);
+		Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
+		
+	
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished() 
+	protected boolean isFinished()
 	{
 		return false;
 	}
@@ -37,13 +36,10 @@ public class ToggleCollector extends Command
 	// Called once after isFinished returns true
 	protected void end() 
 	{
-		Robot.harvester.stopRoller();
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
-	protected void interrupted()
-	{
-		end();
+	protected void interrupted() {
 	}
 }
