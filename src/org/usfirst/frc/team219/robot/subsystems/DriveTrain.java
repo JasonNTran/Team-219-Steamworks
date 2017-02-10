@@ -1,7 +1,7 @@
 package org.usfirst.frc.team219.robot.subsystems;
 
 import org.usfirst.frc.team219.robot.RobotMap;
-import org.usfirst.frc.team219.robot.commands.OpDrive;
+import org.usfirst.frc.team219.robot.commands.TeleopDrive;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.TalonControlMode;
@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -23,38 +24,23 @@ public class DriveTrain extends Subsystem implements PIDSource{
 	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
 	private PIDSourceType pidSourceType = PIDSourceType.kRate;
 	private final double circumfrenceINCH = 6 * Math.PI;
-	public DriveTrain() {
+
+	public DriveTrain() 
+	{
 		motorBL = new CANTalon(RobotMap.MOTORBL_PORT);
 		motorFL = new CANTalon(RobotMap.MOTORFL_PORT);
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
-		motorFR.changeControlMode(TalonControlMode.PercentVbus);
-		motorBR.changeControlMode(TalonControlMode.PercentVbus);
-		motorBL.changeControlMode(TalonControlMode.PercentVbus);
-		motorFL.changeControlMode(TalonControlMode.PercentVbus);
-	
-	}
-	public void initDefaultCommand() {        //setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new OpDrive());
 	}
 	/**
 	 * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
 	 * @param rightSpeed - The speed of the right motors of the robot.
 	 * @param leftSpeed - The speed of the left motors of the robot.
 	 */
-	public void tankDrive(double rightSpeed, double leftSpeed) {
-		
-		motorFR.set(rightSpeed);
-		motorBR.set(rightSpeed);
-		motorFL.set(-leftSpeed);
-		motorBL.set(-leftSpeed);
-		//    	
-		SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
-		SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
-	}
-	
+
 	@Override
-	public void setPIDSourceType(PIDSourceType pidSource) {
+	public void setPIDSourceType(PIDSourceType pidSource)
+	{
 		pidSourceType = pidSource;
 
 	}
@@ -74,7 +60,8 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		return (Math.abs(motorBR.getEncPosition()/4096.0))*circumfrenceINCH;
 	}
 
-	public double getSpeed() {
+	public double getSpeed() 
+	{
 		if(motorBR.getEncVelocity() < 0) {
 			return (32768.0 + (32768.0 + motorBL.getEncVelocity()))/4096.0;
 		}
@@ -83,10 +70,34 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		}
 		return motorBR.getEncVelocity()/4096.0;
 	}
-	
-	public void resetEncoders() {
+
+	public void resetEncoders()
+	{
 		motorFL.setPosition(0);
 		motorBR.setPosition(0);
 	}
+
+
+	public void initDefaultCommand()
+	{
+		setDefaultCommand(new TeleopDrive());
+	}
+
+	/**
+	 * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
+	 * @param rightSpeed - The speed of the right motors of the robot.
+	 * @param leftSpeed - The speed of the left motors of the robot.
+	 */
+	public void tankDrive(double rightSpeed, double leftSpeed) 
+	{
+		motorFR.set(rightSpeed);
+		motorBR.set(rightSpeed);
+		motorFL.set(-leftSpeed);
+		motorBL.set(-leftSpeed);
+		//Put encoder info on screen
+		SmartDashboard.putNumber("Right Motor Speed", motorFR.getEncVelocity()/4096);
+		SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
+	}
 }
+
 

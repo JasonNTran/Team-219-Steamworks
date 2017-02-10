@@ -7,9 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * This command will make the robot climb up while the button is held. After it is released, the motor will stop.
  */
-public class ClimbUp extends Command {
-
-    public ClimbUp() {
+public class ClimbUp extends Command 
+{
+    public ClimbUp() 
+    {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.climber);
@@ -20,24 +21,27 @@ public class ClimbUp extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.climber.startClimbing();
-    	
+    protected void execute() 
+    {
+    	Robot.climber.startClimbing();	
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    protected boolean isFinished() 
+    {
         return false;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    protected void end() 
+    {
     	Robot.climber.stopMotor();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    protected void interrupted() 
+    {
     	end();
     }
 }

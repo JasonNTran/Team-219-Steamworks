@@ -4,7 +4,10 @@ import org.usfirst.frc.team219.robot.RobotMap;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -13,122 +16,79 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * This is the subsystem for the shooter of Team 219's 2017 robot. It uses PID to make sure the motor is cunning at the correct speed..
  */
-public class Shooter extends PIDSubsystem {
-
+public class Shooter extends Subsystem implements PIDSource 
+{	
 	// Initialize your subsystem here
-	public CANTalon shooterMotor;
-	double low;
-	double high;
-	boolean reachedTarget;
-	//private CANTalon tempMotor;
-	//final double circumfrence =.1524*Math.PI;
-	public Shooter() {
-		// Use these to get going:
-		// setSetpoint() -  Sets where the PID controller should move the system
-		//                  to
-		// enable() - Enables the PID controller.
-		super( 0.01,0,0.025);
+	private CANTalon shooterMotor;
+	private PIDSourceType pidSource = PIDSourceType.kRate;
 
-		enable();
-		getPIDController().setContinuous();
-		high= 0.0;
+	public Shooter() 
+	{
+		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT); 
 
-		reachedTarget=false;
-		setSetpoint(10);
-		low=getSetpoint();
-		setInputRange(-20.0,20.0);
-		setPercentTolerance(.1);
-		setOutputRange(-1,1);
-
-		//RobotMap.SHOOTERMOTOR_PORT
-		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT);  	
-//		LiveWindow.addActuator("Shooter", "PIDSubstem Shooter", getPIDController());
-		SmartDashboard.putData("PID Control", getPIDController());
-		//tempMotor = new CANTalon(11);  	
 	}
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
-		//setDefaultCommand(new MySpecialCommand());
 	}
 
-	public double returnPIDInput() {
-		// Return your input value for the PID loop
-		// e.g. a sensor, like a potentiometer:
-		// yourPot.getAverageVoltage() / kYourMaxVoltage;
-
-//		if(shooterMotor.getEncVelocity()<0) {
-//			return (32768.0+(32768.0+(shooterMotor.getEncVelocity())))/4096.0;
-//		}
-//		else if(shooterMotor.get()>.7)	{
-//			return (32768*2+(shooterMotor.getEncVelocity()))/4096.0;
-//		}
-//		return (shooterMotor.getEncVelocity())/4096.0;
-		if(shooterMotor.getEncVelocity()>0) {
-			return (-32768.0+(-32768.0+(shooterMotor.getEncVelocity())))/4096.0;
+	/**
+	 * Returns the rotations per deci-second, assuming the encoder is reading the negative direction as the proper one
+	 */
+	public double getRotationRate() 
+	{
+		/*
+		 * Takes into account the 15 bit limit of the encoder, which causes its count to start from the reverse when the value reaches 2^15.
+		 * As such, it goes -32766...-32767...-32768...32768...32767...
+		 * At high speeds 16 MPdS produces values similar to 1 RPdS. hence the second if-statement that differs between the two using voltage lvs
+		 */
+		if(shooterMotor.getEncVelocity() > 0) 
+		{
+			return (-32768.0 + (-32768.0 + (shooterMotor.getEncVelocity())))/4096.0;
 		}
-		else if(shooterMotor.get()<-.7)	{
-			return (-32768*2+(shooterMotor.getEncVelocity()))/4096.0;
+		else if(shooterMotor.get() < -.7)	{
+			return (-32768 * 2 + (shooterMotor.getEncVelocity()))/4096.0;
 		}
 		return (shooterMotor.getEncVelocity())/4096.0;
-
-		
-
 	}
-//	public LiveWindowSendable input()
-//	{
-//		return returnPIDInput();
-//		
-//	}
-
-	protected void usePIDOutput(double output) {
-		// Use output to drive your system, like a motor
-		// e.g. yourMotor.set(output);
-
-		//    		if(onTarget() == true)
-		//    		{
-		//    			output = 0;
-		//    		
-		//    		}
-		//shooterMotor.get()+output
-
-		//over 70% and + 2^17
-//		if(returnPIDInput()>14)
-//		{
-//			reachedTarget=true;
-//		}
-		shooterMotor.set(shooterMotor.get()+output);
-		//tempMotor.set(tempMotor.get()+output);
-		//shooterMotor.get()+
-
-		//		if(returnPIDInput()<low&&reachedTarget)
-		//		{
-		//			low=returnPIDInput();
-		//		}
-		//		if(returnPIDInput()>high&&returnPIDInput())
-		//		{
-		//			high=returnPIDInput();
-		//		}
-		//NetworkTable.initialize();
-		SmartDashboard.putNumber("ENC Velocity", shooterMotor.getEncVelocity());
-		SmartDashboard.putNumber("ENC Position", shooterMotor.getEncPosition()/4096.0);
-		SmartDashboard.putNumber("Voltage Perentage", shooterMotor.get());
-		SmartDashboard.putBoolean("OnTarget?", onTarget());
-		SmartDashboard.putNumber("SetPoint", getSetpoint());
-		SmartDashboard.putNumber("Progress to Setpoint", getPosition());
-		SmartDashboard.putNumber("PID Input", returnPIDInput());
-		SmartDashboard.putNumber("PID INPUT2", returnPIDInput());
-		SmartDashboard.putNumber("PID Output", output);
-		SmartDashboard.putNumber("PID Low", low);
-		SmartDashboard.putNumber("PID High", high);
-		//LiveWindow.
-		// SmartDashboard.putNumber("Meters Gone",(shooterMotor.getEncPosition()/4096.0)*circumfrence);
-		//output
-		//shooterMotor.get()+
-	}
-
+	
+	/**
+	 * Stops the shooter motor by setting the speed to 0
+	 */
 	public void stopShooter()
 	{
-		//shooterMotor.set(0);
+		shooterMotor.set(0);
+	}
+	
+	@Override
+	public void setPIDSourceType(PIDSourceType pidSource) 
+	{
+		this.pidSource = pidSource;
+	}
+
+	/**
+	 * Returns the PID from the shooter.
+	 */
+	@Override
+	public PIDSourceType getPIDSourceType() 
+	{
+		return pidSource;
+	}
+
+	/**
+	 * Returns the value that will serve as the input for the PID.
+	 */
+	@Override
+	public double pidGet() 
+	{
+		return getRotationRate();
+	}
+	
+	/**
+	 * Sets the speed of the shooter's motor. The speed is typically the output of the PID.
+	 * @param speed The speed that is sent to the shooter motor.
+	 */
+	public void setMotorSpeed(double speed)
+	{
+		shooterMotor.set(speed);
 	}
 }

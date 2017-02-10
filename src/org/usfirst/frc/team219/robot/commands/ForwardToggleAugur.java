@@ -5,14 +5,15 @@ import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * This command allows the operator to control the robot rather than an autonomous command.
+ *This command will toggle the Augur to go forwards to move the fuel units into the shooter.
  */
-public class OpDrive extends Command {
-
-    public OpDrive() {
+public class ForwardToggleAugur extends Command 
+{
+    public ForwardToggleAugur() 
+    {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drivetrain);
+    	requires(Robot.Augur);
     }
 
     // Called just before this Command runs the first time
@@ -20,21 +21,32 @@ public class OpDrive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+<<<<<<< HEAD:src/org/usfirst/frc/team219/robot/commands/OpDrive.java
     protected void execute() {
     	Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
+=======
+    protected void execute() 
+    {
+    	Robot.Augur.forward();	
+>>>>>>> Sam:src/org/usfirst/frc/team219/robot/commands/ForwardToggleAugur.java
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
+    protected boolean isFinished() 
+    {
         return false;
     }
 
     // Called once after isFinished returns true
-    protected void end() {
+    protected void end() 
+    {
+    	Robot.Augur.stop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
-    protected void interrupted() {
+    protected void interrupted() 
+    {
+    	end();
     }
 }
