@@ -25,7 +25,7 @@ public class Augur extends Subsystem
 	 */
 	public void forward()
 	{
-		conveyorTalon.set(.25);
+		conveyorTalon.set(.12);
 	}
 	
 	/**
@@ -33,7 +33,7 @@ public class Augur extends Subsystem
 	 */
 	public void reverse()
 	{
-		conveyorTalon.set(-.25);
+		conveyorTalon.set(-.12);
 	}
 	
 	/**

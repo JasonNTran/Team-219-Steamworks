@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
-		@Override
+	@Override
 	public void robotInit() 
 	{
 		drivetrain = new DriveTrain();
@@ -54,13 +54,16 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putData("Auto mode", chooser);
 		System.out.println("Reached");
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
-		try {
+		try 
+		{
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
 			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			imu = new AHRS(SerialPort.Port.kMXP); 
 			//            SmartDashboard.putString("Working?", "true");
-		} catch (RuntimeException ex ) {
+		} 
+		catch (RuntimeException ex ) 
+		{
 			DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
 			//            SmartDashboard.putString("Working", "False");
 		}
@@ -73,11 +76,11 @@ public class Robot extends IterativeRobot
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
-	public void disabledPeriodic() {
+	public void disabledPeriodic() 
+	{
 		Scheduler.getInstance().run();
 	}
 
@@ -114,7 +117,8 @@ public class Robot extends IterativeRobot
 	 * This function is called periodically during autonomous
 	 */
 	@Override
-	public void autonomousPeriodic() {
+	public void autonomousPeriodic() 
+	{
 		Scheduler.getInstance().run();
 		// SmartDashboard.putNumber("AutonPeriodic Angle", ahrs.getAngle());
 	}
@@ -144,18 +148,16 @@ public class Robot extends IterativeRobot
 	 * This function is called periodically during operator control
 	 */
 	@Override
-	public void teleopPeriodic() {
+	public void teleopPeriodic()
+	{
 		// SmartDashboard.putNumber("TeleopPeriodic Angle", ahrs.getAngle());
 		Scheduler.getInstance().run();
 	}		/**
 	 * This function is called periodically during test mode
 	 */
 	@Override
-	public void testPeriodic() {
-
-
-		//LiveWindow.add
+	public void testPeriodic() 
+	{
 		LiveWindow.run();
-
 	}
 }

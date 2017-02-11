@@ -21,14 +21,9 @@ public class ForwardToggleAugur extends Command
     }
 
     // Called repeatedly when this Command is scheduled to run
-<<<<<<< HEAD:src/org/usfirst/frc/team219/robot/commands/OpDrive.java
-    protected void execute() {
-    	Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
-=======
     protected void execute() 
     {
     	Robot.Augur.forward();	
->>>>>>> Sam:src/org/usfirst/frc/team219/robot/commands/ForwardToggleAugur.java
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This is the climber subsystem for Team 219's 2017 robot.
  */
 public class Climber extends Subsystem 
-{	s
+{	
 	private CANTalon climberMotor;
 	
 	public Climber() 
@@ -28,7 +28,7 @@ public class Climber extends Subsystem
      */
     public void startClimbing()
     {
-    	climberMotor.set(.5);
+    	climberMotor.set(-1);
     	SmartDashboard.putString("Climber", "Climbing");
     }
     
@@ -37,7 +37,7 @@ public class Climber extends Subsystem
      */
     public void comeDown() 
     {
-    	climberMotor.set(-0.5);
+    	climberMotor.set(1);
     	SmartDashboard.putString("Climber", "Descending");
     }
     

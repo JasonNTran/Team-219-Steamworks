@@ -24,7 +24,7 @@ public class Shooter extends Subsystem implements PIDSource
 
 	public Shooter() 
 	{
-		shooterMotor = new CANTalon(RobotMap.SHOOTERMOTOR_PORT); 
+		setShooterMotor(new CANTalon(RobotMap.SHOOTERMOTOR_PORT)); 
 
 	}
 
@@ -41,14 +41,15 @@ public class Shooter extends Subsystem implements PIDSource
 		 * As such, it goes -32766...-32767...-32768...32768...32767...
 		 * At high speeds 16 MPdS produces values similar to 1 RPdS. hence the second if-statement that differs between the two using voltage lvs
 		 */
-		if(shooterMotor.getEncVelocity() > 0) 
+		if(getShooterMotor().getEncVelocity() > 0) 
 		{
-			return (-32768.0 + (-32768.0 + (shooterMotor.getEncVelocity())))/4096.0;
+			return (-32768.0 + (-32768.0 + (getShooterMotor().getEncVelocity())))/4096.0;
 		}
-		else if(shooterMotor.get() < -.7)	{
-			return (-32768 * 2 + (shooterMotor.getEncVelocity()))/4096.0;
+		else if(getShooterMotor().get() < -.9)	
+		{
+			return (-32768 * 2 + (getShooterMotor().getEncVelocity()))/4096.0;
 		}
-		return (shooterMotor.getEncVelocity())/4096.0;
+		return (getShooterMotor().getEncVelocity())/4096.0;
 	}
 	
 	/**
@@ -56,7 +57,7 @@ public class Shooter extends Subsystem implements PIDSource
 	 */
 	public void stopShooter()
 	{
-		shooterMotor.set(0);
+		getShooterMotor().set(0);
 	}
 	
 	@Override
@@ -89,6 +90,14 @@ public class Shooter extends Subsystem implements PIDSource
 	 */
 	public void setMotorSpeed(double speed)
 	{
-		shooterMotor.set(speed);
+		getShooterMotor().set(speed);
+	}
+
+	public CANTalon getShooterMotor() {
+		return shooterMotor;
+	}
+
+	public void setShooterMotor(CANTalon shooterMotor) {
+		this.shooterMotor = shooterMotor;
 	}
 }

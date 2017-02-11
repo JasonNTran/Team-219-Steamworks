@@ -10,14 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //left = +;
 /**
- *
+ *Autonomous drive for the robot. The user can specify the speed the robot moves, the inches to drive, and the time to drive.
+ *Note: Yaw is increased when turned to the left and decreased when turned to the right.
  */
-public class AutonDrive extends Command implements PIDOutput {
-
+public class AutonDrive extends Command implements PIDOutput 
+{
 	private double speed;
 	private double inchesToDrive;
-	private double startDistance;
-	private long endTime;
 	private boolean timedDrive;
 
 	private PIDController turnController;
@@ -28,16 +27,25 @@ public class AutonDrive extends Command implements PIDOutput {
 	private static final double kD = 0.0;
 	private static final double kF = 0.0;
 
-
-	public AutonDrive(double speed, int driveTime) {
+	/**
+	 * @param speed The speed the robot will move at.
+	 * @param driveTime The amount of time the robot will run for.
+	 */
+	public AutonDrive(double speed, int driveTime) 
+	{
 		requires(Robot.drivetrain);
 		Robot.drivetrain.resetEncoders();
 		this.speed = speed;
 		timedDrive = true;
 		setTimeout(driveTime);
 	}
-
-	public AutonDrive(double speed, double inchesToDrive) {
+	
+	/*
+	 * @param speed The speed the robot will move at.
+	 * @param inchesToDrive The distance in inches the robot will move.
+	 */
+	public AutonDrive(double speed, double inchesToDrive) 
+	{
 		requires(Robot.drivetrain);
 		Robot.drivetrain.resetEncoders();
 		this.speed = speed;
@@ -46,10 +54,9 @@ public class AutonDrive extends Command implements PIDOutput {
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize() {
-		if(!timedDrive) {
-			startDistance = Robot.drivetrain.getDistance();
-		}
+	protected void initialize() 
+	{
+		if(!timedDrive) 
 		targetAngle = Robot.imu.getYaw();
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
@@ -60,40 +67,37 @@ public class AutonDrive extends Command implements PIDOutput {
 		turnController.enable();
 		SmartDashboard.putData("Auton Drive controller", turnController);
 		SmartDashboard.putNumber("Target Angle", targetAngle);
-		//Robot.drivetrain.motorBR.
 	}
 
 	// Called repeatedly when this Command is scheduled to run 
-	protected void execute() {
+	protected void execute() 
+	{
 		int direction = timedDrive || inchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed + 0.045) + rotateToAngleRate,  direction * (speed) -rotateToAngleRate);
+		Robot.drivetrain.tankDrive(direction *(speed ) + rotateToAngleRate,  direction * (speed) -rotateToAngleRate);//.045
 		SmartDashboard.putNumber("Auton Drive Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Set", inchesToDrive);
 		SmartDashboard.putNumber("Actual?", Robot.drivetrain.getDistance());
+		//SmartDashboard.putNumber("RIght Voltss", value)
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-		//		if(timedDrive) {
-		//			return isTimedOut();
-		//		}
-		//		else if(inchesToDrive > 0) {
-		//			return inchesToDrive <= Robot.drivetrain.getDistance();
-		//		}
-		//		else if(inchesToDrive < 0) {
-		//			return inchesToDrive >= Robot.drivetrain.getDistance();
-		//		}
-		if(Math.abs(Robot.drivetrain.getDistance())>=inchesToDrive) {
-			return true;
+		if(inchesToDrive > 0) 
+		{
+			return inchesToDrive <= Robot.drivetrain.getDistance();
+		}
+		else if(inchesToDrive < 0)
+		{
+			return inchesToDrive >= Robot.drivetrain.getDistance();
 		}
 		else
 			return false;
-
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {
+	protected void end() 
+	{
 		turnController.disable();
 		Robot.drivetrain.tankDrive(0,0);
 		Robot.drivetrain.resetEncoders();
@@ -101,12 +105,14 @@ public class AutonDrive extends Command implements PIDOutput {
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
-	protected void interrupted() {
+	protected void interrupted() 
+	{
 		end();
 	}
 
 	@Override
-	public void pidWrite(double output) {
+	public void pidWrite(double output)
+	{
 		rotateToAngleRate = output;
 		SmartDashboard.putNumber("Auton Drive Output", output);
 	}

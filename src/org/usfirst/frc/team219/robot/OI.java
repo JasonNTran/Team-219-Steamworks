@@ -58,12 +58,12 @@ public class OI {
 		buttonBack = new JoystickButton(mainDriver,7);
 		buttonForward = new JoystickButton(mainDriver,8);
 
-
 		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
 		buttonA.toggleWhenPressed(new ToggleCollector(0.6));
 		buttonB.whileHeld(new ClimbUp());
 		buttonY.toggleWhenPressed(new ToggleShooter());
 		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
+		buttonX.toggleWhenPressed(new AutonDrive(.3,20.0));
 	}
 
 	/**
@@ -72,9 +72,9 @@ public class OI {
 	 */
 	public double getLeftSpeed() 
 	{
-		if(Math.abs(mainDriver.getRawAxis(1)) > .1)
+		if(Math.abs(mainDriver.getRawAxis(1)) >= .1)
 			return mainDriver.getRawAxis(1);
-		return 0;
+		return 0.0;
 	}
 	/**
 	 * Getter for the x-axis of the right joystick
@@ -82,7 +82,7 @@ public class OI {
 	 */
 	public double getRightSpeed() 
 	{
-		if(Math.abs(mainDriver.getRawAxis(5)) > .1)
+		if(Math.abs(mainDriver.getRawAxis(5)) >= .1)
 			return mainDriver.getRawAxis(5);
 		return 0.0;
 	}
