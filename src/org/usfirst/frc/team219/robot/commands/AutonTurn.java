@@ -5,23 +5,16 @@ import org.usfirst.frc.team219.robot.Robot;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *This command allows the robot to turn to any specified angle using PID.
  */
-public class AutonTurn extends Command implements PIDOutput
+public class AutonTurn extends Command 
 {
 	private double speed;
 	private double angleToTurn;
 	private double targetAngle;
-	private double rotateToAngleRate;
-	
-	private PIDController turnController;
-	private final double kP = 0.00125;
-	private final double kI = 0;
-	private final double kD = 0;
-	private final double kF = 0;
-	
 	/**
 	 * @param speed The speed the user wants the robot to turn at.
 	 * @param angleToTurn The difference between the current yaw of the robot and the angle the user wants to turn to.
@@ -35,23 +28,18 @@ public class AutonTurn extends Command implements PIDOutput
     // Called just before this Command runs the first time
     protected void initialize()
     {
-    	targetAngle = Robot.imu.getYaw() + angleToTurn;
-    	turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
-    	turnController.setInputRange(-180f, 180f);
-    	turnController.setOutputRange(-0.5, 0.5);
-    	turnController.setContinuous(true);
-    	turnController.setSetpoint(targetAngle);
-    	turnController.enable();
+    	targetAngle = Robot.imu.getAngle() + angleToTurn;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute()
     {
+    	SmartDashboard.putNumber("Target ANGLE ", targetAngle);
     	if(angleToTurn > 0) {
-    		Robot.drivetrain.tankDrive(speed + rotateToAngleRate, 0);
+    		Robot.drivetrain.tankDrive(speed-.045,-speed);
     	}
     	if(angleToTurn < 0) {
-    		Robot.drivetrain.tankDrive(0, speed + rotateToAngleRate);
+    		Robot.drivetrain.tankDrive(-speed+.045, speed );
     	}
     	
     }
@@ -61,11 +49,11 @@ public class AutonTurn extends Command implements PIDOutput
     {
         if(angleToTurn > 0) 
         {
-        	return Robot.imu.getYaw() >= targetAngle;
+        	return Robot.imu.getAngle() >= targetAngle - 32;
         }
         else if(angleToTurn < 0)
         {
-        	return Robot.imu.getYaw() <= targetAngle;
+        	return Robot.imu.getAngle() <= targetAngle + 32;
         }
         else
         	return false;
@@ -73,7 +61,6 @@ public class AutonTurn extends Command implements PIDOutput
     // Called once after isFinished returns true
     protected void end() 
     {
-    	turnController.disable();
     	Robot.drivetrain.tankDrive(0, 0);
     }
 
@@ -83,10 +70,4 @@ public class AutonTurn extends Command implements PIDOutput
     {
     	end();
     }
-
-	@Override
-	public void pidWrite(double output) 
-	{
-		rotateToAngleRate = output;
-	}
 }

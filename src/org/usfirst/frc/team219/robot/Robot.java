@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team219.robot.commands.AutoAlign;
+import org.usfirst.frc.team219.robot.commands.AutonDrive;
 import org.usfirst.frc.team219.robot.commands.ToggleShooter;
 import org.usfirst.frc.team219.robot.subsystems.*;
 
@@ -36,6 +38,7 @@ public class Robot extends IterativeRobot
 	public static AHRS imu;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	int num;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,6 +53,7 @@ public class Robot extends IterativeRobot
 		shooter = new Shooter();
 		harvester = new Harvester();
 		Augur=new Augur();
+		num=0;
 		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
 		System.out.println("Reached");
@@ -59,7 +63,7 @@ public class Robot extends IterativeRobot
 			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
 			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
 			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
-			imu = new AHRS(SerialPort.Port.kMXP); 
+			imu = new AHRS(SerialPort.Port.kMXP,AHRS.SerialDataType.kProcessedData, (byte)50);
 			//            SmartDashboard.putString("Working?", "true");
 		} 
 		catch (RuntimeException ex ) 
@@ -150,8 +154,11 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
-		// SmartDashboard.putNumber("TeleopPeriodic Angle", ahrs.getAngle());
 		Scheduler.getInstance().run();
+		
+		SmartDashboard.putNumber("Counter",num++);
+		//SmartDashboard.putNumber("sETPoint", AutoAlign.getDistance()));
+		//SmartDashboard.putNumber("Testing getting values", SmartDashboard.getNumber("PegAngle", 0));
 	}		/**
 	 * This function is called periodically during test mode
 	 */

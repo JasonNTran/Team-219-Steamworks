@@ -63,9 +63,9 @@ public class OI {
 		buttonB.whileHeld(new ClimbUp());
 		buttonY.toggleWhenPressed(new ToggleShooter());
 		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
-		buttonX.toggleWhenPressed(new AutonDrive(.3,20.0));
+		//buttonX.toggleWhenPressed(new AutonDrive(.3,620.0));
+		buttonX.whenPressed(new AutoAlign(30));
 	}
-
 	/**
 	 * Getter for the x-axis of the left joystick
 	 * @return The x-axis on the left joystick which is used for the speed of the left motors on tank drive
@@ -84,7 +84,7 @@ public class OI {
 	{
 		if(Math.abs(mainDriver.getRawAxis(5)) >= .1)
 			return mainDriver.getRawAxis(5);
-		return 0.0;
+		return -0.0;
 	}
 }
 

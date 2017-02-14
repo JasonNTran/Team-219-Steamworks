@@ -39,7 +39,7 @@ public class AutonDrive extends Command implements PIDOutput
 		timedDrive = true;
 		setTimeout(driveTime);
 	}
-	
+
 	/*
 	 * @param speed The speed the robot will move at.
 	 * @param inchesToDrive The distance in inches the robot will move.
@@ -57,7 +57,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void initialize() 
 	{
 		if(!timedDrive) 
-		targetAngle = Robot.imu.getYaw();
+			targetAngle = Robot.imu.getYaw();
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
 		turnController.setOutputRange(-0.5, 0.5);
@@ -65,6 +65,7 @@ public class AutonDrive extends Command implements PIDOutput
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.enable();
+		//		turnController.
 		SmartDashboard.putData("Auton Drive controller", turnController);
 		SmartDashboard.putNumber("Target Angle", targetAngle);
 	}
@@ -73,7 +74,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{
 		int direction = timedDrive || inchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed ) + rotateToAngleRate,  direction * (speed) -rotateToAngleRate);//.045
+		Robot.drivetrain.tankDrive(direction *(speed) + rotateToAngleRate,  direction * (speed) -rotateToAngleRate);//Puppies .045
 		SmartDashboard.putNumber("Auton Drive Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Set", inchesToDrive);
 		SmartDashboard.putNumber("Actual?", Robot.drivetrain.getDistance());
@@ -83,16 +84,11 @@ public class AutonDrive extends Command implements PIDOutput
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-		if(inchesToDrive > 0) 
-		{
+		if(inchesToDrive > 0)
 			return inchesToDrive <= Robot.drivetrain.getDistance();
-		}
-		else if(inchesToDrive < 0)
-		{
+		if(inchesToDrive < 0)
 			return inchesToDrive >= Robot.drivetrain.getDistance();
-		}
-		else
-			return false;
+		return false;
 	}
 
 	// Called once after isFinished returns true
