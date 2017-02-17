@@ -21,7 +21,7 @@ public class RobotMap {
 	public static int MOTORBL_PORT = 1; //
 	public static int MOTORFL_PORT = 2; //encoder
 	public static int MOTORBR_PORT = 3; //7//3
-	public static int MOTORFR_PORT = 4; //8//4 encoder
+	public static int MOTORFR_PORT = 4; //6//4 encoder
 
 	//Ports for the Collector subsystem
 	public static int COLLECTORMOTOR_PORT = 9;
@@ -31,9 +31,11 @@ public class RobotMap {
 	public static int CLIMBERMOTOR_PORT = 4;
 
 	//Ports for the Shooter subsystem
-	public static int SHOOTERMOTOR_PORT = 0;//3
+	public static int SHOOTERMOTOR_PORT = 3;//3
 
 	//Ports for the Augur subsystem
 	public static int AUGURMOTOR_PORT = 10;
+	
+	public static int Mixer=5;
 
 }

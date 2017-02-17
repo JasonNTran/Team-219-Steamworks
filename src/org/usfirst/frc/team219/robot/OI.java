@@ -37,34 +37,56 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	private Joystick mainDriver;
+	public Joystick mainDriver;
 	private Joystick secondDriver;
 
 	private Button buttonA;
 	private Button buttonB;
 	private Button buttonX;
 	private Button buttonY;
+	private Button buttonA_2;
+	private Button buttonB_2;
+	private Button buttonX_2;
+	private Button buttonY_2;
 	private Button buttonBack;
+	private Button buttonBack_2;
 	private Button buttonForward;
 
 	public OI() 
 	{
 		mainDriver = new Joystick(0);
-		secondDriver = new Joystick(2);
+		//secondDriver = new Joystick(1);
 		buttonA = new JoystickButton(mainDriver, 1);
 		buttonB = new JoystickButton(mainDriver, 2);
 		buttonX = new JoystickButton(mainDriver, 3);
 		buttonY = new JoystickButton(mainDriver, 4);
 		buttonBack = new JoystickButton(mainDriver,7);
 		buttonForward = new JoystickButton(mainDriver,8);
-
+		
+		secondDriver = new Joystick(1);
+		buttonA_2= new JoystickButton(secondDriver,1);
+		buttonB_2 = new JoystickButton(secondDriver, 2);
+		buttonX_2 = new JoystickButton(secondDriver, 3);
+		buttonY_2 = new JoystickButton(secondDriver, 4);
+		buttonBack_2 = new JoystickButton(secondDriver,7);
+		
+		//2nd
+		buttonA_2.toggleWhenPressed(new ToggleCollector(0.8));
+		buttonB_2.whileHeld(new CollectorReverse(0.8));
+		buttonX_2.whileHeld(new ClimbUp());
+		buttonY_2.whileHeld(new ClimberReverse());
+		buttonBack_2.whenPressed(new MiddleGear());
+		//buttonX_2.toggleWhenPressed(new ToggleShooter());
+		
+		//Main
 		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
-		buttonA.toggleWhenPressed(new ToggleCollector(0.6));
-		buttonB.whileHeld(new ClimbUp());
+		//buttonA.toggleWhenPressed(new ToggleCollector(0.8));
+		buttonB.whileHeld(new Mixer());
 		buttonY.toggleWhenPressed(new ToggleShooter());
 		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
 		//buttonX.toggleWhenPressed(new AutonDrive(.3,620.0));
-		buttonX.whenPressed(new AutoAlign(30));
+//		buttonX.whenPressed(new AutoAlign(170));
+		
 	}
 	/**
 	 * Getter for the x-axis of the left joystick

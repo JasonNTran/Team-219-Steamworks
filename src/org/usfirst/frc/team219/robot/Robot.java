@@ -157,6 +157,11 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 		
 		SmartDashboard.putNumber("Counter",num++);
+		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
+		SmartDashboard.putNumber("Robot ngleaw", Robot.imu.getAngle());
+		
+		SmartDashboard.putNumber("Actual2Inches", Robot.drivetrain.getDistance());
+
 		//SmartDashboard.putNumber("sETPoint", AutoAlign.getDistance()));
 		//SmartDashboard.putNumber("Testing getting values", SmartDashboard.getNumber("PegAngle", 0));
 	}		/**

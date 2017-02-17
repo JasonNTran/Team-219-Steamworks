@@ -14,10 +14,11 @@ public class Augur extends Subsystem
 
 	
 	private CANTalon conveyorTalon;
-
+	
 	public Augur()
 	{
 		conveyorTalon = new CANTalon(RobotMap.AUGURMOTOR_PORT);
+		
 	}
 
 	/**
@@ -25,15 +26,16 @@ public class Augur extends Subsystem
 	 */
 	public void forward()
 	{
-		conveyorTalon.set(.12);
+		conveyorTalon.set(.17);
 	}
+	
 	
 	/**
 	 * Sets the augur to move in reverse direction. Meant to deal with blockages. 
 	 */
 	public void reverse()
 	{
-		conveyorTalon.set(-.12);
+		conveyorTalon.set(-.17);
 	}
 	
 	/**

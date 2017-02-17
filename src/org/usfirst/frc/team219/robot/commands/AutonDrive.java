@@ -1,5 +1,6 @@
 package org.usfirst.frc.team219.robot.commands;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.usfirst.frc.team219.robot.Robot;
@@ -13,16 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *Autonomous drive for the robot. The user can specify the speed the robot moves, the inches to drive, and the time to drive.
  *Note: Yaw is increased when turned to the left and decreased when turned to the right.
  */
-public class AutonDrive extends Command implements PIDOutput 
+public class AutonDrive extends Command implements PIDOutput
 {
 	private double speed;
-	private double inchesToDrive;
+	private double myInchesToDrive;
 	private boolean timedDrive;
+	//Timer timer = new Timer;
 
 	private PIDController turnController;
 	private double rotateToAngleRate;
 	private double targetAngle;
-	private static final double kP = 0.00125;
+	private static final double kP = 0.00225;
 	private static final double kI = 0.0;
 	private static final double kD = 0.0;
 	private static final double kF = 0.0;
@@ -31,15 +33,6 @@ public class AutonDrive extends Command implements PIDOutput
 	 * @param speed The speed the robot will move at.
 	 * @param driveTime The amount of time the robot will run for.
 	 */
-	public AutonDrive(double speed, int driveTime) 
-	{
-		requires(Robot.drivetrain);
-		Robot.drivetrain.resetEncoders();
-		this.speed = speed;
-		timedDrive = true;
-		setTimeout(driveTime);
-	}
-
 	/*
 	 * @param speed The speed the robot will move at.
 	 * @param inchesToDrive The distance in inches the robot will move.
@@ -49,7 +42,7 @@ public class AutonDrive extends Command implements PIDOutput
 		requires(Robot.drivetrain);
 		Robot.drivetrain.resetEncoders();
 		this.speed = speed;
-		this.inchesToDrive = inchesToDrive;
+		myInchesToDrive = inchesToDrive;
 		timedDrive = false;
 	}
 
@@ -65,30 +58,32 @@ public class AutonDrive extends Command implements PIDOutput
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.enable();
-		//		turnController.
+		//		turnController.S
 		SmartDashboard.putData("Auton Drive controller", turnController);
 		SmartDashboard.putNumber("Target Angle", targetAngle);
-	}
+		}
 
 	// Called repeatedly when this Command is scheduled to run 
 	protected void execute() 
-	{
-		int direction = timedDrive || inchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed) + rotateToAngleRate,  direction * (speed) -rotateToAngleRate);//Puppies .045
-		SmartDashboard.putNumber("Auton Drive Yaw", Robot.imu.getYaw());
-		SmartDashboard.putNumber("Set", inchesToDrive);
-		SmartDashboard.putNumber("Actual?", Robot.drivetrain.getDistance());
+	{	
+		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
+		Robot.drivetrain.tankDrive(-1*direction *(speed) + rotateToAngleRate-.05,  -1*direction * (speed) -rotateToAngleRate - .08);//Puppies .045
+		
+
+		SmartDashboard.putNumber("Set Inches", myInchesToDrive);
+		
 		//SmartDashboard.putNumber("RIght Voltss", value)
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-		if(inchesToDrive > 0)
-			return inchesToDrive <= Robot.drivetrain.getDistance();
-		if(inchesToDrive < 0)
-			return inchesToDrive >= Robot.drivetrain.getDistance();
-		return false;
+	
+		return myInchesToDrive <= Robot.drivetrain.getDistance();
+//		if(inchesToDrive < 0)
+//			return inchesToDrive >= Robot.drivetrain.getDistance();
+//		
+		
 	}
 
 	// Called once after isFinished returns true
@@ -97,6 +92,7 @@ public class AutonDrive extends Command implements PIDOutput
 		turnController.disable();
 		Robot.drivetrain.tankDrive(0,0);
 		Robot.drivetrain.resetEncoders();
+		
 	}
 
 	// Called when another command which requires one or more of the same

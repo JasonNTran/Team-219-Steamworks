@@ -23,7 +23,14 @@ public class TeleopDrive extends Command
 	protected void execute()
 	{
 		Robot.drivetrain.tankDrive(Robot.oi.getRightSpeed(), Robot.oi.getLeftSpeed());
-		
+		if(Robot.oi.mainDriver.getPOV() == 0 ||  Robot.oi.mainDriver.getPOV() == 45|| Robot.oi.mainDriver.getPOV() == 315)
+		{
+			Robot.drivetrain.setInvertedStatis(true);
+		}
+		if(Robot.oi.mainDriver.getPOV() == 180 ||  Robot.oi.mainDriver.getPOV() == 225|| Robot.oi.mainDriver.getPOV() == 135)
+		{
+			Robot.drivetrain.setInvertedStatis(false);
+		}
 	
 	}
 

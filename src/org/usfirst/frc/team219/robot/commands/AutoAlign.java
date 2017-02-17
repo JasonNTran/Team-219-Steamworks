@@ -17,11 +17,11 @@ public class AutoAlign extends Command implements PIDOutput
 	private double rotateToAngleRate;
 
 	private PIDController turnController;
-	private final double kP = 0.06;
-	private final double kI = 0.0;
+	private final double kP = 0.01;//.0075
+	private final double kI = 0.00;
 	private final double kD = 0.0;
 	private final double kF = 0;
-	private final double kTolerance = 5;
+	private final double kTolerance = 1;
 
 	public AutoAlign(double angleToTurn) 
 	{
@@ -32,13 +32,15 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
+		//Robot.imu.reset();
 		Robot.drivetrain.resetEncoders();
-		targetAngle = Robot.imu.getYaw() + angleToTurn;
+		targetAngle = (Robot.imu.getYaw() + angleToTurn);
+		SmartDashboard.putNumber("Target before?", targetAngle);
 		targetAngle = fixYaw(targetAngle);
-
+			SmartDashboard.putNumber("Target Plus", angleToTurn);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
-//		turnController.setOutputRange(-0.5, 0.5);
+		turnController.setOutputRange(-0.20, 0.20);
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.setAbsoluteTolerance(kTolerance);
@@ -51,14 +53,17 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called repeatedly when this Command is scheduled to run 
 	protected void execute()
 	{
-		Robot.drivetrain.tankDrive(rotateToAngleRate, -rotateToAngleRate);
-		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
+		Robot.drivetrain.tankDrive(-rotateToAngleRate, rotateToAngleRate);
 	}
-
+	public boolean OnTarget()
+	{
+		return Math.abs(Robot.imu.getYaw()-targetAngle)<kTolerance;
+				
+	}
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-		return Math.abs(Robot.imu.getYaw() - targetAngle) <= kTolerance;
+		return OnTarget();
 	}
 	// Called once after isFinished returns true
 	protected void end() 
@@ -84,6 +89,7 @@ public class AutoAlign extends Command implements PIDOutput
 	}
 
 	public double getSetpoint()
+	
 	{
 		return targetAngle;
 	}

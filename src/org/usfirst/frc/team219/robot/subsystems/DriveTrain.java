@@ -57,24 +57,25 @@ public class DriveTrain extends Subsystem implements PIDSource{
 
 	public double getDistance() 
 	{
-		return (Math.abs(motorBR.getEncPosition()/4096.0))*circumfrenceINCH;
+		return (Math.abs(motorFR.getEncPosition()/4096.0))*circumfrenceINCH;
 	}
 
 	public double getSpeed() 
 	{
-		if(motorBR.getEncVelocity() < 0) {
+		//CHANGE ENCODERS 
+		if(motorFR.getEncVelocity() < 0) {
 			return (32768.0 + (32768.0 + motorBL.getEncVelocity()))/4096.0;
 		}
-		else if(motorBR.get()>.7)	{
+		else if(motorFR.get()>.7)	{
 			return (32768 * 2 + motorBL.getEncVelocity())/4096.0;
 		}
-		return motorBR.getEncVelocity()/4096.0;
+		return motorFR.getEncVelocity()/4096.0;
 	}
 
 	public void resetEncoders()
 	{
 		motorFL.setPosition(0);
-		motorBR.setPosition(0);
+		motorFR.setPosition(0);
 	}
 
 
@@ -99,6 +100,13 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		SmartDashboard.putNumber("Left Motor Speed", motorFL.getEncVelocity()/4096);
 		SmartDashboard.putNumber("Right Motor Volts", motorFR.get());
 		SmartDashboard.putNumber("Left Motor Volts", motorFL.get());
+	}
+	public void setInvertedStatis(boolean statis)
+	{
+		motorFR.setInverted(statis);
+		motorBR.setInverted(statis);
+		motorFL.setInverted(statis);
+		motorBL.setInverted(statis);
 	}
 }
 

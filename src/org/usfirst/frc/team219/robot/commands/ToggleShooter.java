@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ToggleShooter extends Command implements PIDOutput
 {
-	private double kP = 0.0025;
-	private double kI = 0.1;
+	private double kP = 0.0025;//.0025
+	private double kI = 0.01;//.1
 	private double kD = 0.025;//.025
 	private double speedUp = 0;
 	private PIDController shooterController;
