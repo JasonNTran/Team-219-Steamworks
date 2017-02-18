@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ToggleShooter extends Command implements PIDOutput
 {
-	private double kP = 0.0025;//.0025
+	private double kP = 0.003;//.0025//.004
 	private double kI = 0.01;//.1
-	private double kD = 0.025;//.025
+	private double kD = 0.075;//.025//.05
 	private double speedUp = 0;
 	private PIDController shooterController;
 
@@ -33,7 +33,7 @@ public class ToggleShooter extends Command implements PIDOutput
 	protected void initialize() 
 	{
 		shooterController = new PIDController(kP, kI, kD, Robot.shooter, this);
-		shooterController.setSetpoint(-15);//14.6
+		shooterController.setSetpoint(-14.5);//14.6
 		shooterController.setInputRange(-20.0,20.0);
 		shooterController.setPercentTolerance(.1);
 		shooterController.setOutputRange(-1,1);
@@ -73,11 +73,12 @@ public class ToggleShooter extends Command implements PIDOutput
 	@Override
 	public void pidWrite(double output)
 	{
-		Robot.shooter.setMotorSpeed(output);
+		Robot.shooter.setMotorSpeed(output);//output
 		SmartDashboard.putNumber("Current Velocity", Robot.shooter.getRotationRate());
 		SmartDashboard.putNumber("PID_DRIVE INPUT",Robot.shooter.pidGet());
 		SmartDashboard.putNumber("PID_DRIVE Voltage",Robot.shooter.getShooterMotor().get());
 		SmartDashboard.putNumber("speedUp", output);
+		SmartDashboard.putNumber("ENCVELOCITY", Robot.shooter.getShooterMotor().getEncVelocity());
 	}
 
 }

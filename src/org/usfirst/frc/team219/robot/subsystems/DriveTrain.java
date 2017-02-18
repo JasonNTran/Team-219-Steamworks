@@ -20,10 +20,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem implements PIDSource{
 
-	private static final boolean driveByTime = false;
-	private CANTalon motorBL, motorFL, motorBR, motorFR, talon6, talon7, talon8, talon5;
+	private CANTalon motorBL, motorFL, motorBR, motorFR;
 	private PIDSourceType pidSourceType = PIDSourceType.kRate;
 	private final double circumfrenceINCH = 6 * Math.PI;
+
 
 	public DriveTrain() 
 	{
@@ -52,7 +52,7 @@ public class DriveTrain extends Subsystem implements PIDSource{
 
 	@Override
 	public double pidGet() {
-		return pidSourceType.equals(PIDSourceType.kDisplacement) ? getDistance() : getSpeed();
+		return  getDistance();
 	}
 
 	public double getDistance() 
@@ -60,17 +60,6 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		return (Math.abs(motorFR.getEncPosition()/4096.0))*circumfrenceINCH;
 	}
 
-	public double getSpeed() 
-	{
-		//CHANGE ENCODERS 
-		if(motorFR.getEncVelocity() < 0) {
-			return (32768.0 + (32768.0 + motorBL.getEncVelocity()))/4096.0;
-		}
-		else if(motorFR.get()>.7)	{
-			return (32768 * 2 + motorBL.getEncVelocity())/4096.0;
-		}
-		return motorFR.getEncVelocity()/4096.0;
-	}
 
 	public void resetEncoders()
 	{

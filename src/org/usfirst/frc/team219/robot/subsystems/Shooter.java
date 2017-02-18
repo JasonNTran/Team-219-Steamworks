@@ -41,14 +41,14 @@ public class Shooter extends Subsystem implements PIDSource
 		 * As such, it goes -32766...-32767...-32768...32768...32767...
 		 * At high speeds 16 MPdS produces values similar to 1 RPdS. hence the second if-statement that differs between the two using voltage lvs
 		 */
-		if(getShooterMotor().getEncVelocity() > 0) 
-		{
-			return (-32768.0 + (-32768.0 + (getShooterMotor().getEncVelocity())))/4096.0;
-		}
-		else if(getShooterMotor().get() < -.9)	
-		{
-			return (-32768 * 2 + (getShooterMotor().getEncVelocity()))/4096.0;
-		}
+//		if(getShooterMotor().getEncVelocity() > 0) 
+//		{
+//			return (-32768.0 + (-32768.0 + (getShooterMotor().getEncVelocity())))/4096.0;
+//		}
+//		else if(getShooterMotor().get() < -.9)	
+//		{
+//			return (-32768 * 2 - (getShooterMotor().getEncVelocity()))/4096.0;
+//		}
 		return (getShooterMotor().getEncVelocity())/4096.0;
 	}
 	

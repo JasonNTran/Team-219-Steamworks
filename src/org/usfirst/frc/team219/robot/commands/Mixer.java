@@ -13,35 +13,28 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Mixer extends Command {
 
-	//Timer time;
 	
     public Mixer()
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.harvester);
-    //	time=new Timer();
+    	requires(Robot.agitator);
     	
     }
+
 
     // Called just before this Command runs the first time
     protected void initialize() 
     {
-//    	time.reset();
-//    	time.start();
+    	Robot.agitator.mixerGo();
+    	Robot.agitator.mixer.setEncPosition(0);
     }
-
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-//    	if(time.get()%5==0)
-//    	{
-    		//Robot.harvester.mixerReverse();
-//    	}
-//    	else
-//    	{
-    	Robot.harvester.mixerGo();
-//    	}
+
+    	Robot.agitator.chooseDirection();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -53,14 +46,13 @@ public class Mixer extends Command {
     // Called once after isFinished returns true
     protected void end() 
     {
-    	Robot.harvester.mixerStop();
+    	Robot.agitator.mixerStop();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() 
     {
-    	//time.stop();
     	end();
     }
 }

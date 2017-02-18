@@ -19,7 +19,6 @@ public class AutonDrive extends Command implements PIDOutput
 	private double speed;
 	private double myInchesToDrive;
 	private boolean timedDrive;
-	//Timer timer = new Timer;
 
 	private PIDController turnController;
 	private double rotateToAngleRate;
@@ -58,7 +57,6 @@ public class AutonDrive extends Command implements PIDOutput
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.enable();
-		//		turnController.S
 		SmartDashboard.putData("Auton Drive controller", turnController);
 		SmartDashboard.putNumber("Target Angle", targetAngle);
 		}
@@ -67,22 +65,17 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{	
 		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(-1*direction *(speed) + rotateToAngleRate-.05,  -1*direction * (speed) -rotateToAngleRate - .08);//Puppies .045
+		Robot.drivetrain.tankDrive(direction *(speed) + rotateToAngleRate,direction * (speed) -rotateToAngleRate);//Puppies .045
 		
 
 		SmartDashboard.putNumber("Set Inches", myInchesToDrive);
-		
-		//SmartDashboard.putNumber("RIght Voltss", value)
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
 	
-		return myInchesToDrive <= Robot.drivetrain.getDistance();
-//		if(inchesToDrive < 0)
-//			return inchesToDrive >= Robot.drivetrain.getDistance();
-//		
+		return myInchesToDrive <= Robot.drivetrain.getDistance();		
 		
 	}
 

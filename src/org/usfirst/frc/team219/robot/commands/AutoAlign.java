@@ -17,11 +17,11 @@ public class AutoAlign extends Command implements PIDOutput
 	private double rotateToAngleRate;
 
 	private PIDController turnController;
-	private final double kP = 0.01;//.0075
+	private final double kP = 0.015;//.0075
 	private final double kI = 0.00;
 	private final double kD = 0.0;
 	private final double kF = 0;
-	private final double kTolerance = 1;
+	private final double kTolerance = 5;
 
 	public AutoAlign(double angleToTurn) 
 	{
@@ -32,15 +32,16 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{
-		//Robot.imu.reset();
+		//Robot.imu.reset(); - this is bad because it will reset the yaw value at the same time 
+		
 		Robot.drivetrain.resetEncoders();
 		targetAngle = (Robot.imu.getYaw() + angleToTurn);
 		SmartDashboard.putNumber("Target before?", targetAngle);
 		targetAngle = fixYaw(targetAngle);
-			SmartDashboard.putNumber("Target Plus", angleToTurn);
+		SmartDashboard.putNumber("Target Plus", angleToTurn);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
-		turnController.setOutputRange(-0.20, 0.20);
+		turnController.setOutputRange(-0.2, 0.2);
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.setAbsoluteTolerance(kTolerance);
@@ -53,7 +54,7 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called repeatedly when this Command is scheduled to run 
 	protected void execute()
 	{
-		Robot.drivetrain.tankDrive(-rotateToAngleRate, rotateToAngleRate);
+		Robot.drivetrain.tankDrive(rotateToAngleRate, -rotateToAngleRate);
 	}
 	public boolean OnTarget()
 	{
@@ -70,6 +71,7 @@ public class AutoAlign extends Command implements PIDOutput
 	{
 		SmartDashboard.putString("Turn Running?", "No");
 		turnController.disable();
+		Robot.drivetrain.tankDrive(0, 0);
 
 	}
 

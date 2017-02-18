@@ -36,6 +36,7 @@ public class Robot extends IterativeRobot
 	public static Shooter shooter;
 	public static Augur Augur;
 	public static AHRS imu;
+	public static Agitator agitator;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	int num;
@@ -52,7 +53,8 @@ public class Robot extends IterativeRobot
 		climber = new Climber();
 		shooter = new Shooter();
 		harvester = new Harvester();
-		Augur=new Augur();
+		Augur = new Augur();
+		agitator = new Agitator();
 		num=0;
 		oi = new OI();
 		SmartDashboard.putData("Auto mode", chooser);
@@ -60,16 +62,11 @@ public class Robot extends IterativeRobot
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
 		try 
 		{
-			/* Communicate w/navX MXP via the MXP SPI Bus.                                     */
-			/* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
-			/* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
 			imu = new AHRS(SerialPort.Port.kMXP,AHRS.SerialDataType.kProcessedData, (byte)50);
-			//            SmartDashboard.putString("Working?", "true");
 		} 
 		catch (RuntimeException ex ) 
 		{
 			DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
-			//            SmartDashboard.putString("Working", "False");
 		}
 	}
 
@@ -124,7 +121,6 @@ public class Robot extends IterativeRobot
 	public void autonomousPeriodic() 
 	{
 		Scheduler.getInstance().run();
-		// SmartDashboard.putNumber("AutonPeriodic Angle", ahrs.getAngle());
 	}
 
 	@Override
@@ -133,17 +129,6 @@ public class Robot extends IterativeRobot
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		//shooter.shooterMotor.set(.2);
-		//SmartDashboard.putData("PID Control", shooter.getPIDController());
-		//shooter.disable();
-		//drivetrain.setAutonStatis(false);
-		// SmartDashboard.putNumber("TeleopInit Angle", ahrs.getAngle());
-		//		else
-		//		{
-		//			SmartDashboard.putString("Disabled?", "No!");
-		//		}
-		//		
-		//		
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -161,9 +146,8 @@ public class Robot extends IterativeRobot
 		SmartDashboard.putNumber("Robot ngleaw", Robot.imu.getAngle());
 		
 		SmartDashboard.putNumber("Actual2Inches", Robot.drivetrain.getDistance());
-
-		//SmartDashboard.putNumber("sETPoint", AutoAlign.getDistance()));
-		//SmartDashboard.putNumber("Testing getting values", SmartDashboard.getNumber("PegAngle", 0));
+		
+		SmartDashboard.putNumber("Mixer Enc Pos", Robot.agitator.mixer.getEncPosition()/4096.0);
 	}		/**
 	 * This function is called periodically during test mode
 	 */

@@ -15,13 +15,11 @@ public class Harvester extends Subsystem {
 
 	private CANTalon collectorMotor;
 	private CANTalon collectorMotor2;
-	private CANTalon mixer;
 
 	public Harvester()
 	{
 		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
 		collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
-		mixer=new CANTalon(RobotMap.Mixer);
 	}
 	public void initDefaultCommand() {
 	}
@@ -44,19 +42,6 @@ public class Harvester extends Subsystem {
 		collectorMotor2.set(-collectSpeed);
 
 		SmartDashboard.putString("Roller", "On");			
-	}
-	//BAD!!!!!!!!!!!!!!!
-	public void mixerGo()
-	{
-		mixer.set(1);
-	}
-	public void mixerStop()
-	{
-		mixer.set(0);
-	}
-	public void mixerReverse()
-	{
-		mixer.set(-1);
 	}
 	
 	/**

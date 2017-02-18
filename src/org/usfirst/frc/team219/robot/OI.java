@@ -71,20 +71,20 @@ public class OI {
 		buttonBack_2 = new JoystickButton(secondDriver,7);
 		
 		//2nd
-		buttonA_2.toggleWhenPressed(new ToggleCollector(0.8));
+		//buttonA_2.toggleWhenPressed(new ToggleCollector(0.8));
 		buttonB_2.whileHeld(new CollectorReverse(0.8));
 		buttonX_2.whileHeld(new ClimbUp());
 		buttonY_2.whileHeld(new ClimberReverse());
-		buttonBack_2.whenPressed(new MiddleGear());
+		//buttonBack.whenPressed(new GearMiddle());
 		//buttonX_2.toggleWhenPressed(new ToggleShooter());
 		
 		//Main
 		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
-		//buttonA.toggleWhenPressed(new ToggleCollector(0.8));
-		buttonB.whileHeld(new Mixer());
+		buttonA.toggleWhenPressed(new ToggleCollector(0.8));
+		buttonB.toggleWhenPressed(new Mixer());
 		buttonY.toggleWhenPressed(new ToggleShooter());
 		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
-		//buttonX.toggleWhenPressed(new AutonDrive(.3,620.0));
+		buttonX.toggleWhenPressed(new AutonDrive(.3,20.0));
 //		buttonX.whenPressed(new AutoAlign(170));
 		
 	}
