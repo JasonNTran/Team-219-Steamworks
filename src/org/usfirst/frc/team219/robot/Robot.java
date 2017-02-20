@@ -5,14 +5,22 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.CameraServer;
+import edu.wpi.first.wpilibj.vision.USBCamera;
+
+
 
 import org.usfirst.frc.team219.robot.commands.AutoAlign;
 import org.usfirst.frc.team219.robot.commands.AutonDrive;
+import org.usfirst.frc.team219.robot.commands.GearLeft;
+import org.usfirst.frc.team219.robot.commands.GearMiddle;
+import org.usfirst.frc.team219.robot.commands.GearRight;
 import org.usfirst.frc.team219.robot.commands.ToggleShooter;
 import org.usfirst.frc.team219.robot.subsystems.*;
 
@@ -37,10 +45,10 @@ public class Robot extends IterativeRobot
 	public static Augur Augur;
 	public static AHRS imu;
 	public static Agitator agitator;
+	public static CameraServer camera;
 	Command autonomousCommand;
-	SendableChooser<Command> chooser = new SendableChooser<>();
-	int num;
-
+	public SendableChooser autoChooser;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -48,6 +56,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit() 
 	{
+		
 		drivetrain = new DriveTrain();
 		harvester = new Harvester();
 		climber = new Climber();
@@ -55,19 +64,27 @@ public class Robot extends IterativeRobot
 		harvester = new Harvester();
 		Augur = new Augur();
 		agitator = new Agitator();
-		num=0;
+		camera=CameraServer.getInstance();
+		camera.setQuality(50);
+		camera.setSize(50);
+		camera.startAutomaticCapture("cam0");
 		oi = new OI();
-		SmartDashboard.putData("Auto mode", chooser);
+		autoChooser=new SendableChooser();
+//		SmartDashboard.putData("Middle Gear Go!",middleGear);
+//		SmartDashboard.putData("Left Gear Go!", leftGear);
+//		SmartDashboard.putData("Right Gear Go!", rightGear);
 		System.out.println("Reached");
 		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
 		try 
 		{
 			imu = new AHRS(SerialPort.Port.kMXP,AHRS.SerialDataType.kProcessedData, (byte)50);
+			imu.reset();
 		} 
 		catch (RuntimeException ex ) 
 		{
 			DriverStation.reportError("`Error instantiating navX MXP:  " + ex.getMessage(), true);
 		}
+		
 	}
 
 	/**
@@ -100,7 +117,7 @@ public class Robot extends IterativeRobot
 	public void autonomousInit() 
 	{
 
-		autonomousCommand = chooser.getSelected();
+		autonomousCommand = (Command) autoChooser.getSelected();
 		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -129,6 +146,7 @@ public class Robot extends IterativeRobot
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+	
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -141,7 +159,7 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 		
-		SmartDashboard.putNumber("Counter",num++);
+	
 		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Robot ngleaw", Robot.imu.getAngle());
 		

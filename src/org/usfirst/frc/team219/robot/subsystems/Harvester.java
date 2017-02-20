@@ -14,12 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Harvester extends Subsystem {
 
 	private CANTalon collectorMotor;
-	private CANTalon collectorMotor2;
 
 	public Harvester()
 	{
 		collectorMotor = new CANTalon(RobotMap.COLLECTORMOTOR_PORT);
-		collectorMotor2 = new CANTalon(RobotMap.COLLECTORMOTOR_PORT2);
 	}
 	public void initDefaultCommand() {
 	}
@@ -31,16 +29,12 @@ public class Harvester extends Subsystem {
 	public void startRoller(double collectSpeed) 
 	{
 		collectorMotor.set(collectSpeed);
-		collectorMotor2.set(collectSpeed);
-
 		SmartDashboard.putString("Roller", "On");			
 	}
 	
 	public void startRollerReverse(double collectSpeed) 
 	{
 		collectorMotor.set(-collectSpeed);
-		collectorMotor2.set(-collectSpeed);
-
 		SmartDashboard.putString("Roller", "On");			
 	}
 	
@@ -49,8 +43,6 @@ public class Harvester extends Subsystem {
 	 */
 	public void stopRoller() {
 		collectorMotor.set(0);
-		collectorMotor2.set(0);
-
 		SmartDashboard.putString("Roller", "Off");
 	}
 

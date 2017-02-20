@@ -25,7 +25,7 @@ public class RobotMap {
 
 	//Ports for the Collector subsystem
 	public static int COLLECTORMOTOR_PORT = 9;//9
-	public static int COLLECTORMOTOR_PORT2=0;//8
+	public static int COLLECTORMOTOR_PORT2=8;//8
 	//Ports for the Climber subsystem
 	public static int CLIMBERMOTOR_PORT = 4;
 

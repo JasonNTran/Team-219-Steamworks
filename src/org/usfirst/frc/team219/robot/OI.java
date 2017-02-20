@@ -3,7 +3,10 @@ package org.usfirst.frc.team219.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team219.robot.commands.*;
+import org.usfirst.frc.team219.robot.subsystems.Climber;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -41,52 +44,55 @@ public class OI {
 	private Joystick secondDriver;
 
 	private Button buttonA;
-	private Button buttonB;
+	private Button buttonB;	
 	private Button buttonX;
 	private Button buttonY;
-	private Button buttonA_2;
-	private Button buttonB_2;
-	private Button buttonX_2;
-	private Button buttonY_2;
-	private Button buttonBack;
+	private Button buttonLB;
+	private Button buttonRB;
+	
+	private Button button1;
+	private Button button2;
+	private Button button3;
+	private Button button4;
 	private Button buttonBack_2;
-	private Button buttonForward;
+	private Button buttonForward_2;
 
 	public OI() 
 	{
 		mainDriver = new Joystick(0);
-		//secondDriver = new Joystick(1);
+		secondDriver = new Joystick(1);
 		buttonA = new JoystickButton(mainDriver, 1);
 		buttonB = new JoystickButton(mainDriver, 2);
 		buttonX = new JoystickButton(mainDriver, 3);
 		buttonY = new JoystickButton(mainDriver, 4);
-		buttonBack = new JoystickButton(mainDriver,7);
-		buttonForward = new JoystickButton(mainDriver,8);
+		buttonLB = new JoystickButton(mainDriver, 5);
+		buttonRB = new JoystickButton(mainDriver, 6);
 		
 		secondDriver = new Joystick(1);
-		buttonA_2= new JoystickButton(secondDriver,1);
-		buttonB_2 = new JoystickButton(secondDriver, 2);
-		buttonX_2 = new JoystickButton(secondDriver, 3);
-		buttonY_2 = new JoystickButton(secondDriver, 4);
-		buttonBack_2 = new JoystickButton(secondDriver,7);
+		button1= new JoystickButton(secondDriver,1);
+		button2 = new JoystickButton(secondDriver, 2);
+		button3 = new JoystickButton(secondDriver, 3);
+		button4 = new JoystickButton(secondDriver, 4);
+		buttonBack_2 = new JoystickButton(secondDriver,9);
+		buttonForward_2 = new JoystickButton(secondDriver,10);
 		
 		//2nd
-		//buttonA_2.toggleWhenPressed(new ToggleCollector(0.8));
-		buttonB_2.whileHeld(new CollectorReverse(0.8));
-		buttonX_2.whileHeld(new ClimbUp());
-		buttonY_2.whileHeld(new ClimberReverse());
+
+		buttonForward_2.whileHeld(new CollectorReverse(0.8));
+		buttonBack_2.whileHeld(new ClimberReverse());
+		button1.whileHeld(new ClimbUp());
+		button2.whileHeld(new ReverseAugurToggle());
+		button3.whileHeld(new Augurs_System());
+		button4.toggleWhenPressed(new ToggleShooter());
 		//buttonBack.whenPressed(new GearMiddle());
-		//buttonX_2.toggleWhenPressed(new ToggleShooter());
+
 		
 		//Main
-		buttonForward.toggleWhenPressed(new ForwardToggleAugur());
 		buttonA.toggleWhenPressed(new ToggleCollector(0.8));
-		buttonB.toggleWhenPressed(new Mixer());
-		buttonY.toggleWhenPressed(new ToggleShooter());
-		buttonBack.toggleWhenPressed(new ReverseAugurToggle());
-		buttonX.toggleWhenPressed(new AutonDrive(.3,20.0));
-//		buttonX.whenPressed(new AutoAlign(170));
-		
+	//	buttonX.toggleWhenPressed(new AutonDrive(.3,77.0));
+	//	buttonX.whenPressed(new AutoAlign(60));
+		buttonX.whenPressed(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
+		//buttonX.whenPressed(new AutonDrive(.3,150));
 	}
 	/**
 	 * Getter for the x-axis of the left joystick
@@ -94,7 +100,7 @@ public class OI {
 	 */
 	public double getLeftSpeed() 
 	{
-		if(Math.abs(mainDriver.getRawAxis(1)) >= .1)
+		if(Math.abs(mainDriver.getRawAxis(1)) >= .2)
 			return mainDriver.getRawAxis(1);
 		return 0.0;
 	}
@@ -104,7 +110,7 @@ public class OI {
 	 */
 	public double getRightSpeed() 
 	{
-		if(Math.abs(mainDriver.getRawAxis(5)) >= .1)
+		if(Math.abs(mainDriver.getRawAxis(5)) >= .2)
 			return mainDriver.getRawAxis(5);
 		return -0.0;
 	}

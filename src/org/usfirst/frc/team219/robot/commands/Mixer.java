@@ -27,7 +27,6 @@ public class Mixer extends Command {
     protected void initialize() 
     {
     	Robot.agitator.mixerGo();
-    	Robot.agitator.mixer.setEncPosition(0);
     }
     
     // Called repeatedly when this Command is scheduled to run

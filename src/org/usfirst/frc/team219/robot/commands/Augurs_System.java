@@ -1,20 +1,21 @@
 package org.usfirst.frc.team219.robot.commands;
 
+import org.usfirst.frc.team219.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class GearRight extends CommandGroup {
+public class Augurs_System extends CommandGroup {
 
-    public GearRight() 
-    
+    public Augurs_System() 
     {
+    	requires(Robot.Augur);
         // Add Commands here:
         // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
         // these will run in order.
-    	//      addSequential(new Command2());  
 
         // To run multiple commands at the same time,
         // use addParallel()
@@ -24,11 +25,11 @@ public class GearRight extends CommandGroup {
 
         // A command group will require all of the subsystems that each member
         // would require.
+    	addParallel(new ForwardToggleAugur());
+    	addParallel(new Mixer());
+    	
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,94.3));
-    	addSequential(new AutoAlign(60));
-    	addSequential(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
     }
 }

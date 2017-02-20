@@ -8,71 +8,34 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class GearMiddle extends CommandGroup {
 
-    public GearMiddle() 
+    public GearMiddle(double theta, double adjacent) 
     {
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
+//        // Add Commands here:
+//        // e.g. addSequential(new Command1());
+//        //      addSequential(new Command2());
+//        // these will run in order.
+//
+//        // To run multiple commands at the same time,
+//        // use addParallel()
+//        // e.g. addParallel(new Command1());
 
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-    	double badNum = 666;
-    	
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-    	
-    	double theta = SmartDashboard.getNumber("gearDegreeToMove", 0);
-    	double adjacent = SmartDashboard.getNumber("gearDistanceToMove", 0);
-    	
-    	for(int x = 0; x < 1000; x++)
-    	{
-	    	if(theta == badNum )
-	    	{
-	    		
-	    		theta = SmartDashboard.getNumber("gearDegreeToMove", 0);
-	    		adjacent = SmartDashboard.getNumber("gearDistanceToMove", 0);
-	    	}
-	    	else
-	    	{
-	    		x = 1000;
-	    	}
-    	}
-        // arm.
-    	
-    	
-    	//
-//    	if(Math.abs(theta) > 1)
-//    	{
-    		addSequential(new AutoAlign(theta*2.0));//what should be here is 2Theta
-    		addSequential(new AutonDrive(.3, adjacent/Math.cos(Math.toRadians(90 - (theta*2)))	));
-    		addSequential(new AutoAlign(-(theta*2.0)));
-    //	}
-    	
-    	
-    	double distanceToTarget = SmartDashboard.getNumber("gearDistanceToTarget", 0);
-    	
-    	
-    	for(int x = 0; x < 1000; x++)
-    	{
-    		if(distanceToTarget == badNum )
-        	{
-        		distanceToTarget = SmartDashboard.getNumber("gearDistanceToTarget", 0);
-        	}
-	    	else
-	    	{
-	    		x = 1000;
-	    	}
-    	}
-    	addSequential(new AutonDrive(.2,distanceToTarget-20));
-    	//addSequential(new AutoAlign(-10));
-    	//SmartDashboard.getNumber("gearDistanceToTarget", 0)-100
+   
     
+ 
+       	SmartDashboard.putNumber("theta", theta);
+       	if(Math.abs(theta) > 3)
+       	{
+    	addSequential(new AutoAlign(-theta*2.0));
+    	SmartDashboard.putNumber("MiddleDrive", Math.abs(adjacent/Math.cos(Math.toRadians(90 - (Math.abs(theta)*2)))-16));
+    	addSequential(new AutonDrive(.3,  Math.abs(adjacent/Math.sin(Math.toRadians(Math.abs(theta)*2) ) ) -16));
+    	addSequential(new AutoAlign((theta*2.0)));
+       	}
+    //	SmartDashboard.putNumber("Leg",Math.cos(Math.toRadians(theta)*SmartDashboard.getNumber("gearDistanceToTarget",0)));
+    	//addSequential(new AutonDrive(.3,));
+    	 //Math.cos(Math.toRadians(theta)*SmartDashboard.getNumber("gearDistanceToTarget",0)))
+      	
+   
+    	
+    	addSequential(new AutonDrive(.3,Math.abs(SmartDashboard.getNumber("gearDistanceToTarget",0))-12));
     }
 }

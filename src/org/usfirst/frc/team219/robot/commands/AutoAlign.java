@@ -18,10 +18,10 @@ public class AutoAlign extends Command implements PIDOutput
 
 	private PIDController turnController;
 	private final double kP = 0.015;//.0075
-	private final double kI = 0.00;
+	private final double kI = 0.001;
 	private final double kD = 0.0;
 	private final double kF = 0;
-	private final double kTolerance = 5;
+	private final double kTolerance = 1;
 
 	public AutoAlign(double angleToTurn) 
 	{
@@ -36,17 +36,15 @@ public class AutoAlign extends Command implements PIDOutput
 		
 		Robot.drivetrain.resetEncoders();
 		targetAngle = (Robot.imu.getYaw() + angleToTurn);
-		SmartDashboard.putNumber("Target before?", targetAngle);
 		targetAngle = fixYaw(targetAngle);
-		SmartDashboard.putNumber("Target Plus", angleToTurn);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
-		turnController.setOutputRange(-0.2, 0.2);
+		turnController.setOutputRange(-0.6, 0.6);
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.setAbsoluteTolerance(kTolerance);
 		turnController.enable();
-		SmartDashboard.putNumber("Target Turn", targetAngle);
+		SmartDashboard.putNumber("Target Check", targetAngle);
 		SmartDashboard.putString("Turn Running?", "Yes");
 
 	}
@@ -54,7 +52,7 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called repeatedly when this Command is scheduled to run 
 	protected void execute()
 	{
-		Robot.drivetrain.tankDrive(rotateToAngleRate, -rotateToAngleRate);
+		Robot.drivetrain.tankDrive(-rotateToAngleRate, rotateToAngleRate);
 	}
 	public boolean OnTarget()
 	{
@@ -88,6 +86,7 @@ public class AutoAlign extends Command implements PIDOutput
 	{
 		rotateToAngleRate = output;
 		SmartDashboard.putNumber("Turn Output", output);
+		SmartDashboard.putBoolean("ONTARGET", OnTarget());
 	}
 
 	public double getSetpoint()
