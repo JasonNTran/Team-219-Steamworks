@@ -6,15 +6,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class GearRight extends CommandGroup {
+public class Gear_Shoot extends CommandGroup {
 
-    public GearRight() 
-    
-    {
+    public Gear_Shoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
         // these will run in order.
-    	//      addSequential(new Command2());  
 
         // To run multiple commands at the same time,
         // use addParallel()
@@ -27,8 +25,14 @@ public class GearRight extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,72));
-    	addSequential(new AutoAlign(60,0));
-    	//addSequential(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
+    	addSequential(new GearLeft());
+    	addSequential(new ToggleShooter());
+    	double theta=SmartDashboard.getNumber("shooterDegreeToMove",0);
+    	double hyp=SmartDashboard.getNumber("shooterDistanceToMove",0);
+//    	addSequential(new AutoAlign(2.0*theta));
+//    	addSequential(new AutonDrive(.3,hyp));
+//    	addSequential(new AutoAlign(-2.0*theta));
+    	addSequential(new AutonDrive(.3,SmartDashboard.getNumber("shooterDegreeToTarget",0)));
+    	addSequential(new Augurs_System());
     }
 }

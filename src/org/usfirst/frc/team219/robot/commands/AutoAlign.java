@@ -18,15 +18,16 @@ public class AutoAlign extends Command implements PIDOutput
 
 	private PIDController turnController;
 	private final double kP = 0.015;//.0075
-	private final double kI = 0.001;
+	private double kI = 0.00;//.001
 	private final double kD = 0.0;
 	private final double kF = 0;
-	private final double kTolerance = 1;
+	private final double kTolerance = 2;
 
-	public AutoAlign(double angleToTurn) 
+	public AutoAlign(double angleToTurn, double iValue) 
 	{
 		requires(Robot.drivetrain);
 		this.angleToTurn = angleToTurn;
+		kI = iValue;
 	}
 
 	// Called just before this Command runs the first time

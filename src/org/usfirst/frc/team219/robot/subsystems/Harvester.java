@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Harvester extends Subsystem {
 
-	private CANTalon collectorMotor;
+	public CANTalon collectorMotor;
 
 	public Harvester()
 	{
@@ -28,13 +28,13 @@ public class Harvester extends Subsystem {
 	 */
 	public void startRoller(double collectSpeed) 
 	{
-		collectorMotor.set(collectSpeed);
+		collectorMotor.set(-collectSpeed);
 		SmartDashboard.putString("Roller", "On");			
 	}
 	
 	public void startRollerReverse(double collectSpeed) 
 	{
-		collectorMotor.set(-collectSpeed);
+		collectorMotor.set(collectSpeed);
 		SmartDashboard.putString("Roller", "On");			
 	}
 	

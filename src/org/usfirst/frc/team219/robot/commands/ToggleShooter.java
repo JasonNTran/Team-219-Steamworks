@@ -33,7 +33,7 @@ public class ToggleShooter extends Command implements PIDOutput
 	protected void initialize() 
 	{
 		shooterController = new PIDController(kP, kI, kD, Robot.shooter, this);
-		shooterController.setSetpoint(-14.5);//14.6
+		shooterController.setSetpoint(-17);//14.6
 		shooterController.setInputRange(-20.0,20.0);
 		shooterController.setPercentTolerance(.1);
 		shooterController.setOutputRange(-1,1);

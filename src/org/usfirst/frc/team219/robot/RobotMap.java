@@ -17,6 +17,7 @@ public class RobotMap {
 	// public static int rangefinderPort = 1;
 	// public static int rangefinderModule = 1;
 
+	
 	//Ports for the Drive Train subsystem
 	public static int MOTORBL_PORT = 1; //
 	public static int MOTORFL_PORT = 2; //encoder
@@ -24,8 +25,7 @@ public class RobotMap {
 	public static int MOTORFR_PORT = 6; //6//4 encoder
 
 	//Ports for the Collector subsystem
-	public static int COLLECTORMOTOR_PORT = 9;//9
-	public static int COLLECTORMOTOR_PORT2=8;//8
+	public static int COLLECTORMOTOR_PORT = 8;
 	//Ports for the Climber subsystem
 	public static int CLIMBERMOTOR_PORT = 4;
 

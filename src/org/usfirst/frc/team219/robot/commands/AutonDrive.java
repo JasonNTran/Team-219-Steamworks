@@ -48,6 +48,7 @@ public class AutonDrive extends Command implements PIDOutput
 	// Called just before this Command runs the first time
 	protected void initialize() 
 	{
+		Robot.drivetrain.resetEncoders();
 		if(!timedDrive) 
 			targetAngle = Robot.imu.getYaw();
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
@@ -65,7 +66,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{	
 		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate + .025,direction * (speed) +rotateToAngleRate -.025 );//Puppies .045
+		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate ,direction * (speed) +rotateToAngleRate -.025 );//Puppies .045
 		
 
 		SmartDashboard.putNumber("Set Inches", myInchesToDrive);

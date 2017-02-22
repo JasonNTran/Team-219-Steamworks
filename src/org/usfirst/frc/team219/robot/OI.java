@@ -60,7 +60,6 @@ public class OI {
 	public OI() 
 	{
 		mainDriver = new Joystick(0);
-		secondDriver = new Joystick(1);
 		buttonA = new JoystickButton(mainDriver, 1);
 		buttonB = new JoystickButton(mainDriver, 2);
 		buttonX = new JoystickButton(mainDriver, 3);
@@ -78,9 +77,8 @@ public class OI {
 		
 		//2nd
 
-		buttonForward_2.whileHeld(new CollectorReverse(0.8));
+		
 		buttonBack_2.whileHeld(new ClimberReverse());
-		button1.whileHeld(new ClimbUp());
 		button2.whileHeld(new ReverseAugurToggle());
 		button3.whileHeld(new Augurs_System());
 		button4.toggleWhenPressed(new ToggleShooter());
@@ -88,10 +86,13 @@ public class OI {
 
 		
 		//Main
-		buttonA.toggleWhenPressed(new ToggleCollector(0.8));
+		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
 	//	buttonX.toggleWhenPressed(new AutonDrive(.3,77.0));
 	//	buttonX.whenPressed(new AutoAlign(60));
-		buttonX.whenPressed(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
+		buttonY.toggleWhenPressed(new ClimbUp());
+		buttonX.toggleWhenPressed(new GearLeft());
+		buttonB.toggleWhenPressed(new CollectorReverse(0.85));
+		//buttonX.whenPressed(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
 		//buttonX.whenPressed(new AutonDrive(.3,150));
 	}
 	/**
@@ -101,7 +102,7 @@ public class OI {
 	public double getLeftSpeed() 
 	{
 		if(Math.abs(mainDriver.getRawAxis(1)) >= .2)
-			return mainDriver.getRawAxis(1);
+			return mainDriver.getRawAxis(1)-.05;
 		return 0.0;
 	}
 	/**

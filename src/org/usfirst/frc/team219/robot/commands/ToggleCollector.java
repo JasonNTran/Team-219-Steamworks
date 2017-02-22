@@ -25,7 +25,8 @@ public class ToggleCollector extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() 
 	{
-		Robot.harvester.startRoller(speed);
+		//Robot.harvester.startRoller(.85);
+		Robot.harvester.collectorMotor.set(-.85);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

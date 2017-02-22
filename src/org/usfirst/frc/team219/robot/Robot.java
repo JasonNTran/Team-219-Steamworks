@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -65,16 +66,15 @@ public class Robot extends IterativeRobot
 		Augur = new Augur();
 		agitator = new Agitator();
 		camera=CameraServer.getInstance();
-		camera.setQuality(50);
+		//camera.setQuality(50);
 		camera.setSize(50);
 		camera.startAutomaticCapture("cam0");
 		oi = new OI();
-		autoChooser=new SendableChooser();
-//		SmartDashboard.putData("Middle Gear Go!",middleGear);
-//		SmartDashboard.putData("Left Gear Go!", leftGear);
-//		SmartDashboard.putData("Right Gear Go!", rightGear);
+		autoChooser = new SendableChooser<CommandGroup>();
+		//autoChooser.addObject("MiddleGear Selector", new GearMiddle( SmartDashboard.getNumber("gearDistanceToMove", 0),true));
+		autoChooser.addObject("LeftGear Selector", new GearLeft());
+		autoChooser.addObject("RightGear Selector", new GearRight());
 		System.out.println("Reached");
-		//SmartDashboard.putData("Auto mode", auton.getImuYaw());
 		try 
 		{
 			imu = new AHRS(SerialPort.Port.kMXP,AHRS.SerialDataType.kProcessedData, (byte)50);
@@ -157,14 +157,11 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
+		SmartDashboard.putBoolean("Bumpers?", true);
 		Scheduler.getInstance().run();
-		
-	
 		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Robot ngleaw", Robot.imu.getAngle());
-		
 		SmartDashboard.putNumber("Actual2Inches", Robot.drivetrain.getDistance());
-		
 		SmartDashboard.putNumber("Mixer Enc Pos", Robot.agitator.mixer.getEncPosition()/4096.0);
 	}		/**
 	 * This function is called periodically during test mode
