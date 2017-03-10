@@ -47,7 +47,7 @@ public class OI {
 	private Button buttonB;	
 	private Button buttonX;
 	private Button buttonY;
-	private Button buttonLB;
+	Button buttonLB;
 	private Button buttonRB;
 	private Button button1;
 	private Button button2;

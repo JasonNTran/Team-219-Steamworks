@@ -26,6 +26,8 @@ import org.usfirst.frc.team219.robot.commands.ToggleShooter;
 import org.usfirst.frc.team219.robot.subsystems.*;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Image;
 
 //import com.kauailabs.navx.frc.AHRS;
 
@@ -49,6 +51,10 @@ public class Robot extends IterativeRobot
 	public static CameraServer cameraGearSide,HarvesterSide;
 	Command autonomousCommand;
 	public SendableChooser autoChooser;
+	int currSession;
+	int sessionfront;
+	int sessionback;
+	Image frame;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -66,10 +72,19 @@ public class Robot extends IterativeRobot
 		Augur = new Augur();
 		agitator = new Agitator();
 		
-		cameraGearSide=CameraServer.getInstance();
+		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+
+		sessionfront = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		        
+		sessionback = NIVision.IMAQdxOpenCamera("cam2", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+
+		currSession = sessionfront;
+
+		NIVision.IMAQdxConfigureGrab(currSession);
+		//cameraGearSide=CameraServer.getInstance();
 //		cameraGearSide.setQuality(50);
 //		cameraGearSide.setSize(50);
-		cameraGearSide.startAutomaticCapture("cam0");
+		//cameraGearSide.startAutomaticCapture("cam0");
 		
 //		HarvesterSide=CameraServer.getInstance();
 ////		HarvesterSide.setQuality(50);
@@ -125,7 +140,8 @@ public class Robot extends IterativeRobot
 	public void autonomousInit() 
 	{
 
-		autonomousCommand = (Command) autoChooser.getSelected();
+		//autonomousCommand = (Command) autoChooser.getSelected();
+		autonomousCommand= new GearMiddle();
 		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -166,6 +182,20 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
+		if(oi.buttonLB.get()){
+	        if(currSession == sessionfront){
+	       		  NIVision.IMAQdxStopAcquisition(currSession);
+	 		  currSession = sessionback;
+		          NIVision.IMAQdxConfigureGrab(currSession);
+	 	} else if(currSession == sessionback){
+	      		  NIVision.IMAQdxStopAcquisition(currSession);
+	       		  currSession = sessionfront;
+	       		  NIVision.IMAQdxConfigureGrab(currSession);
+	        }
+	       
+	}
+		 NIVision.IMAQdxGrab(currSession, frame, 1);
+	        CameraServer.getInstance().setImage(frame);
 		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Robot Angle", Robot.imu.getAngle());
 	}		/**
