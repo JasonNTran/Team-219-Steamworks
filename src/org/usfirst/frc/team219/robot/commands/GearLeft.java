@@ -26,9 +26,8 @@ public class GearLeft extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,72));
-    	addSequential(new AutoAlign(-60,0.00));
-    	//addSequential(new GearMiddle( SmartDashboard.getNumber("gearDistanceToMove",0),false));
-    	addSequential(new AutonDrive(.3,36));
+    	addSequential(new AutonDrive(.3,37.3));
+    	addSequential(new AutoAlign(-60,0.0001));
+    	addSequential(new AutonDrive(.3,90.5));
     }
 }

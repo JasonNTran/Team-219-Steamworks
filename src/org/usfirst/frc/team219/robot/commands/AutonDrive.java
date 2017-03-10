@@ -66,7 +66,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{	
 		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate ,direction * (speed) +rotateToAngleRate -.025 );//Puppies .045
+		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate ,direction * (speed) +rotateToAngleRate  );
 		
 
 		SmartDashboard.putNumber("Set Inches", myInchesToDrive);

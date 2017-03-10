@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ToggleCollector extends Command 
 {
-	private double speed; 
-	public ToggleCollector(double speed) {
+	private double setSpeed;
+	
+	public ToggleCollector(double speed) 
+	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.harvester);
-		this.speed = speed;
+		setSpeed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -25,8 +27,8 @@ public class ToggleCollector extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() 
 	{
-		//Robot.harvester.startRoller(.85);
-		Robot.harvester.collectorMotor.set(-.85);
+		//Robot.harvester.startRoller(setSpeed);
+		Robot.harvester.collectorMotor.set(setSpeed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

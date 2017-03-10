@@ -19,10 +19,10 @@ public class RobotMap {
 
 	
 	//Ports for the Drive Train subsystem
-	public static int MOTORBL_PORT = 1; //
+	public static int MOTORBL_PORT = 1; 
 	public static int MOTORFL_PORT = 2; //encoder
-	public static int MOTORBR_PORT = 7; //7//3
-	public static int MOTORFR_PORT = 6; //6//4 encoder
+	public static int MOTORBR_PORT = 7; 
+	public static int MOTORFR_PORT = 6; //encoder
 
 	//Ports for the Collector subsystem
 	public static int COLLECTORMOTOR_PORT = 8;

@@ -46,7 +46,7 @@ public class Robot extends IterativeRobot
 	public static Augur Augur;
 	public static AHRS imu;
 	public static Agitator agitator;
-	public static CameraServer camera;
+	public static CameraServer cameraGearSide,HarvesterSide;
 	Command autonomousCommand;
 	public SendableChooser autoChooser;
 	
@@ -65,13 +65,21 @@ public class Robot extends IterativeRobot
 		harvester = new Harvester();
 		Augur = new Augur();
 		agitator = new Agitator();
-		camera=CameraServer.getInstance();
-		//camera.setQuality(50);
-		camera.setSize(50);
-		camera.startAutomaticCapture("cam0");
+		
+		cameraGearSide=CameraServer.getInstance();
+//		cameraGearSide.setQuality(50);
+//		cameraGearSide.setSize(50);
+		cameraGearSide.startAutomaticCapture("cam0");
+		
+//		HarvesterSide=CameraServer.getInstance();
+////		HarvesterSide.setQuality(50);
+////		HarvesterSide.setSize(50);
+//		HarvesterSide.startAutomaticCapture("GearCamera");
+		
 		oi = new OI();
-		autoChooser = new SendableChooser<CommandGroup>();
-		//autoChooser.addObject("MiddleGear Selector", new GearMiddle( SmartDashboard.getNumber("gearDistanceToMove", 0),true));
+		autoChooser = new SendableChooser();
+		autoChooser.addDefault("Nothing", null);
+		autoChooser.addObject("MiddleGear Selector", new GearMiddle());
 		autoChooser.addObject("LeftGear Selector", new GearLeft());
 		autoChooser.addObject("RightGear Selector", new GearRight());
 		System.out.println("Reached");
@@ -157,12 +165,9 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopPeriodic()
 	{
-		SmartDashboard.putBoolean("Bumpers?", true);
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
-		SmartDashboard.putNumber("Robot ngleaw", Robot.imu.getAngle());
-		SmartDashboard.putNumber("Actual2Inches", Robot.drivetrain.getDistance());
-		SmartDashboard.putNumber("Mixer Enc Pos", Robot.agitator.mixer.getEncPosition()/4096.0);
+		SmartDashboard.putNumber("Robot Angle", Robot.imu.getAngle());
 	}		/**
 	 * This function is called periodically during test mode
 	 */

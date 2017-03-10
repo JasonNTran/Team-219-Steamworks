@@ -28,22 +28,20 @@ public class Harvester extends Subsystem {
 	 */
 	public void startRoller(double collectSpeed) 
 	{
-		collectorMotor.set(-collectSpeed);
-		SmartDashboard.putString("Roller", "On");			
+		collectorMotor.set(-collectSpeed);		
 	}
 	
 	public void startRollerReverse(double collectSpeed) 
 	{
-		collectorMotor.set(collectSpeed);
-		SmartDashboard.putString("Roller", "On");			
+		collectorMotor.set(collectSpeed);	
 	}
 	
 	/**
 	 * Turns off the collector motor by setting the speed to 0.
 	 */
-	public void stopRoller() {
+	public void stopRoller()
+	{
 		collectorMotor.set(0);
-		SmartDashboard.putString("Roller", "Off");
 	}
 
 }

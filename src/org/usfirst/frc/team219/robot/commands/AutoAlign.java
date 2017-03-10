@@ -17,8 +17,8 @@ public class AutoAlign extends Command implements PIDOutput
 	private double rotateToAngleRate;
 
 	private PIDController turnController;
-	private final double kP = 0.015;//.0075
-	private double kI = 0.00;//.001
+	private final double kP = 0.0028;
+	private double kI = 0.000;
 	private final double kD = 0.0;
 	private final double kF = 0;
 	private final double kTolerance = 2;
@@ -40,14 +40,13 @@ public class AutoAlign extends Command implements PIDOutput
 		targetAngle = fixYaw(targetAngle);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
-		turnController.setOutputRange(-0.6, 0.6);
+		turnController.setOutputRange(-0.45, 0.45);
 		turnController.setContinuous(true);
 		turnController.setSetpoint(targetAngle);
 		turnController.setAbsoluteTolerance(kTolerance);
 		turnController.enable();
 		SmartDashboard.putNumber("Target Check", targetAngle);
 		SmartDashboard.putString("Turn Running?", "Yes");
-
 	}
 
 	// Called repeatedly when this Command is scheduled to run 
@@ -71,7 +70,6 @@ public class AutoAlign extends Command implements PIDOutput
 		SmartDashboard.putString("Turn Running?", "No");
 		turnController.disable();
 		Robot.drivetrain.tankDrive(0, 0);
-
 	}
 
 	// Called when another command which requires one or more of the same
@@ -91,7 +89,6 @@ public class AutoAlign extends Command implements PIDOutput
 	}
 
 	public double getSetpoint()
-	
 	{
 		return targetAngle;
 	}

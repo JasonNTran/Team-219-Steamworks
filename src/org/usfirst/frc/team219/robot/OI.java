@@ -49,7 +49,6 @@ public class OI {
 	private Button buttonY;
 	private Button buttonLB;
 	private Button buttonRB;
-	
 	private Button button1;
 	private Button button2;
 	private Button button3;
@@ -75,25 +74,19 @@ public class OI {
 		buttonBack_2 = new JoystickButton(secondDriver,9);
 		buttonForward_2 = new JoystickButton(secondDriver,10);
 		
-		//2nd
-
+		//Main Controller
+		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
+		buttonY.toggleWhenPressed(new ClimbUp());
+		buttonX.toggleWhenPressed(new GearRight());
+		buttonB.toggleWhenPressed(new CollectorReverse(0.85));
 		
+		//2nd Controller
 		buttonBack_2.whileHeld(new ClimberReverse());
 		button2.whileHeld(new ReverseAugurToggle());
 		button3.whileHeld(new Augurs_System());
 		button4.toggleWhenPressed(new ToggleShooter());
-		//buttonBack.whenPressed(new GearMiddle());
-
 		
-		//Main
-		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
-	//	buttonX.toggleWhenPressed(new AutonDrive(.3,77.0));
-	//	buttonX.whenPressed(new AutoAlign(60));
-		buttonY.toggleWhenPressed(new ClimbUp());
-		buttonX.toggleWhenPressed(new GearLeft());
-		buttonB.toggleWhenPressed(new CollectorReverse(0.85));
-		//buttonX.whenPressed(new GearMiddle(SmartDashboard.getNumber("gearDegreeToMove",0), SmartDashboard.getNumber("gearDistanceToMove",0)));
-		//buttonX.whenPressed(new AutonDrive(.3,150));
+		
 	}
 	/**
 	 * Getter for the x-axis of the left joystick
@@ -102,7 +95,19 @@ public class OI {
 	public double getLeftSpeed() 
 	{
 		if(Math.abs(mainDriver.getRawAxis(1)) >= .2)
-			return mainDriver.getRawAxis(1)-.05;
+		{
+//			if(mainDriver.getRawAxis(1)> 0)
+//			{
+//				return (mainDriver.getRawAxis(1)-.10)/.90;
+//			}
+//			else
+//			{
+//				return (mainDriver.getRawAxis(1)+.10)/.90;
+//			}
+			return (mainDriver.getRawAxis(1));
+		}
+		
+	
 		return 0.0;
 	}
 	/**
@@ -112,7 +117,17 @@ public class OI {
 	public double getRightSpeed() 
 	{
 		if(Math.abs(mainDriver.getRawAxis(5)) >= .2)
-			return mainDriver.getRawAxis(5);
+		{
+//			if(mainDriver.getRawAxis(5)> 0)
+//			{
+//				return (mainDriver.getRawAxis(5)-.10)/.90;
+//			}
+//			else
+//			{
+//				return (mainDriver.getRawAxis(5)+.10)/.90;
+//			}
+			return (mainDriver.getRawAxis(5));
+		}
 		return -0.0;
 	}
 }

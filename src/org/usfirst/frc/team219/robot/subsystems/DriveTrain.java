@@ -86,10 +86,10 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		motorBL.set(-leftSpeed);
 		
 		//Put encoder info on screen
-		SmartDashboard.putNumber("Right Motor Velocity", motorFR.getEncVelocity()/4096.0);
-		SmartDashboard.putNumber("Left Motor Velocity", motorFL.getEncVelocity()/4096.0);
-		SmartDashboard.putNumber("Right Motor Volts", motorFR.get());
-		SmartDashboard.putNumber("Left Motor Volts", motorFL.get());
+//		SmartDashboard.putNumber("Right Motor Velocity", motorFR.getEncVelocity()/4096.0);
+//		SmartDashboard.putNumber("Left Motor Velocity", motorFL.getEncVelocity()/4096.0);
+//		SmartDashboard.putNumber("Right Motor Volts", motorFR.get());
+//		SmartDashboard.putNumber("Left Motor Volts", motorFL.get());
 	}
 	public void setInvertedStatis(boolean statis)
 	{
