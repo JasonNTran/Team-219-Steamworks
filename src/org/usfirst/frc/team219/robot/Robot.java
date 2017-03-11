@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot
 	public static Agitator agitator;
 	public static CameraServer cameraGearSide,HarvesterSide;
 	Command autonomousCommand;
-	public SendableChooser autoChooser;
+	public SendableChooser<Command> autoChooser;
 	int currSession;
 	int sessionfront;
 	int sessionback;
@@ -74,9 +74,9 @@ public class Robot extends IterativeRobot
 		
 		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
-		sessionfront = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		sessionfront = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 		        
-		sessionback = NIVision.IMAQdxOpenCamera("cam2", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+		sessionback = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
 		currSession = sessionfront;
 
@@ -92,11 +92,12 @@ public class Robot extends IterativeRobot
 //		HarvesterSide.startAutomaticCapture("GearCamera");
 		
 		oi = new OI();
-		autoChooser = new SendableChooser();
+		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("Nothing", null);
 		autoChooser.addObject("MiddleGear Selector", new GearMiddle());
 		autoChooser.addObject("LeftGear Selector", new GearLeft());
 		autoChooser.addObject("RightGear Selector", new GearRight());
+		SmartDashboard.putData("Auto Modes", autoChooser);
 		System.out.println("Reached");
 		try 
 		{
@@ -139,9 +140,9 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit() 
 	{
-
-		//autonomousCommand = (Command) autoChooser.getSelected();
-		autonomousCommand= new GearMiddle();
+  
+		autonomousCommand = autoChooser.getSelected();
+//		autonomousCommand= new GearMiddle();
 		//  SmartDashboard.putNumber("Initial Angle from AutonInit", ahrs.getAngle());
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

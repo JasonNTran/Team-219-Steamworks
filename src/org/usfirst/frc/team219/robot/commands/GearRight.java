@@ -26,8 +26,8 @@ public class GearRight extends CommandGroup
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,31.3));
-    	addSequential(new AutoAlign(54,0.00015));
-    	addSequential(new AutonDrive(.3,90.5));
+    	addSequential(new AutonDrive(.3,66));
+    	addSequential(new AutoAlign(60,0.0002));
+    	addSequential(new AutonDrive(.3,51.5));
     }
 }

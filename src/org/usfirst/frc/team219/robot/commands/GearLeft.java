@@ -15,8 +15,8 @@ public class GearLeft extends CommandGroup {
         //      addSequential(new Command2());
         // these will run in order.
 
-        // To run multiple commands at the same time,
-        // use addParallel()
+        // To run multiple commands at the same time,]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]'''''''''''''''''''''''''''''''''''''''''''''''''
+    	//''
         // e.g. addParallel(new Command1());
         //      addSequential(new Command2());
         // Command1 and Command2 will run in parallel.
@@ -26,8 +26,8 @@ public class GearLeft extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,37.3));
-    	addSequential(new AutoAlign(-60,0.0001));
-    	addSequential(new AutonDrive(.3,90.5));
+    	addSequential(new AutonDrive(.3,66));
+    	addSequential(new AutoAlign(-60,0.0002));
+    	addSequential(new AutonDrive(.3,51.5));
     }
 }

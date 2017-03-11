@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class GearMiddle extends CommandGroup {
-	double count = 1;
+	
     public GearMiddle( ) 
     //double adjacent, boolean middle
     {
@@ -40,6 +40,6 @@ public class GearMiddle extends CommandGroup {
 //    	 //Math.cos(Math.toRadians(theta)*SmartDashboard.getNumber("gearDistanceToTarget",0)))
 //
 //    	addSequential(new AutonDrive(.3,Math.abs(SmartDashboard.getNumber("gearDistanceToTarget",0))-12));
-    	addSequential(new AutonDrive(.3,68));
+    	addSequential(new AutonDrive(.3,55));
     }
 }
