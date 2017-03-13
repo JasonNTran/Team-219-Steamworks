@@ -17,7 +17,7 @@ public class AutoAlign extends Command implements PIDOutput
 	private double rotateToAngleRate;
 
 	private PIDController turnController;
-	private final double kP = 0.0028;
+	private final double kP = 0.0026;
 	private double kI = 0.000;
 	private final double kD = 0.0;
 	private final double kF = 0;

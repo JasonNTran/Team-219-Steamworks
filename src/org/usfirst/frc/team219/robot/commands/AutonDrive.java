@@ -23,8 +23,8 @@ public class AutonDrive extends Command implements PIDOutput
 	private PIDController turnController;
 	private double rotateToAngleRate;
 	private double targetAngle;
-	private static final double kP = 0.00225;
-	private static final double kI = 0.0;
+	private static final double kP = 0.00225;//.00225
+	private static final double kI = 0.00001;
 	private static final double kD = 0.0;
 	private static final double kF = 0.0;
 
@@ -66,7 +66,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{	
 		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate +.04,direction * (speed) +rotateToAngleRate );
+		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate  -.01,direction * (speed) +rotateToAngleRate );
 		
 
 		SmartDashboard.putNumber("Set Inches", myInchesToDrive);

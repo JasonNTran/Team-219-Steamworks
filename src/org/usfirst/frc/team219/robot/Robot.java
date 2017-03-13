@@ -72,19 +72,10 @@ public class Robot extends IterativeRobot
 		Augur = new Augur();
 		agitator = new Agitator();
 		
-		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-
-		sessionfront = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-		        
-		sessionback = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-
-		currSession = sessionfront;
-
-		NIVision.IMAQdxConfigureGrab(currSession);
-		//cameraGearSide=CameraServer.getInstance();
+		cameraGearSide=CameraServer.getInstance();
 //		cameraGearSide.setQuality(50);
 //		cameraGearSide.setSize(50);
-		//cameraGearSide.startAutomaticCapture("cam0");
+		cameraGearSide.startAutomaticCapture("cam1");
 		
 //		HarvesterSide=CameraServer.getInstance();
 ////		HarvesterSide.setQuality(50);
@@ -163,6 +154,8 @@ public class Robot extends IterativeRobot
 	public void autonomousPeriodic() 
 	{
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
+		SmartDashboard.putNumber("Robot Angle", Robot.imu.getAngle());
 	}
 
 	@Override
@@ -171,7 +164,16 @@ public class Robot extends IterativeRobot
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-	
+
+//		frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+//
+//		sessionfront = NIVision.IMAQdxOpenCamera("cam0", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+//		        
+//		sessionback = NIVision.IMAQdxOpenCamera("cam1", NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+//
+//		currSession = sessionfront;
+//
+//		NIVision.IMAQdxConfigureGrab(currSession);
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 	}
@@ -183,22 +185,21 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
-		if(oi.buttonLB.get()){
-	        if(currSession == sessionfront){
-	       		  NIVision.IMAQdxStopAcquisition(currSession);
-	 		  currSession = sessionback;
-		          NIVision.IMAQdxConfigureGrab(currSession);
-	 	} else if(currSession == sessionback){
-	      		  NIVision.IMAQdxStopAcquisition(currSession);
-	       		  currSession = sessionfront;
-	       		  NIVision.IMAQdxConfigureGrab(currSession);
-	        }
-	       
-	}
-		 NIVision.IMAQdxGrab(currSession, frame, 1);
-	        CameraServer.getInstance().setImage(frame);
-		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
-		SmartDashboard.putNumber("Robot Angle", Robot.imu.getAngle());
+//		if(oi.buttonLB.get()){
+//	        if(currSession == sessionfront){
+//	       		  NIVision.IMAQdxStopAcquisition(currSession);
+//	 		  currSession = sessionback;
+//		          NIVision.IMAQdxConfigureGrab(currSession);
+//	 	} else if(currSession == sessionback){
+//	      		  NIVision.IMAQdxStopAcquisition(currSession);
+//	       		  currSession = sessionfront;
+//	       		  NIVision.IMAQdxConfigureGrab(currSession);
+//	        }
+//	       
+//	}
+//		 NIVision.IMAQdxGrab(currSession, frame, 1);
+	       // CameraServer.getInstance().setImage(frame);
+	
 	}		/**
 	 * This function is called periodically during test mode
 	 */

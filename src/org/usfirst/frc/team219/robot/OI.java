@@ -88,11 +88,12 @@ public class OI {
 		
 		buttonA.toggleWhenPressed(new ToggleCollector(.85));
 		buttonX.toggleWhenPressed(new ClimbUp());
+		//buttonB.toggleWhenPressed(new ClimberReverse());
 		
 		green.toggleWhenPressed(new ToggleShooter());
 		red.whileHeld(new Augurs_System());
-		yellow.whileHeld(new Augurs_System());
-		blue.whileHeld(new ReverseAugurToggle());
+		//yellow.whileHeld(new Augurs_System());
+		yellow.whileHeld(new ReverseAugurToggle());
 		
 		
 		

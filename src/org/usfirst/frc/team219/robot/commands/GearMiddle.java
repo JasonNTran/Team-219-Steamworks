@@ -40,6 +40,6 @@ public class GearMiddle extends CommandGroup {
 //    	 //Math.cos(Math.toRadians(theta)*SmartDashboard.getNumber("gearDistanceToTarget",0)))
 //
 //    	addSequential(new AutonDrive(.3,Math.abs(SmartDashboard.getNumber("gearDistanceToTarget",0))-12));
-    	addSequential(new AutonDrive(.3,55));
+    	addSequential(new AutonDrive(.3,80));
     }
 }

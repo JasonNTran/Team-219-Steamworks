@@ -28,6 +28,6 @@ public class GearRight extends CommandGroup
         // arm.
     	addSequential(new AutonDrive(.3,66));
     	addSequential(new AutoAlign(60,0.0002));
-    	addSequential(new AutonDrive(.3,51.5));
+    	addSequential(new AutonDrive(.3,66.5));
     }
 }

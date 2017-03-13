@@ -21,14 +21,16 @@ public class ToggleCollector extends Command
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize() {
+	protected void initialize() 
+	{
+		Robot.harvester.startRoller(.85);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() 
 	{
 		//Robot.harvester.startRoller(setSpeed);
-		Robot.harvester.collectorMotor.set(setSpeed);
+		//Robot.harvester.collectorMotor.set(-.85);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
