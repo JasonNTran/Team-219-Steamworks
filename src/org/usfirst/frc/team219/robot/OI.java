@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team219.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -56,7 +57,7 @@ public class OI {
 	private Button buttonBack_2;
 	private Button buttonForward_2;
 	
-	private JoystickButton green,red,yellow,blue;
+	private JoystickButton first,second,third,blue;
 
 	public OI() 
 	{
@@ -69,31 +70,30 @@ public class OI {
 		buttonRB = new JoystickButton(mainDriver, 6);
 		
 		secondDriver = new Joystick(1);
-		green = new JoystickButton(secondDriver, 6);
-		red = new JoystickButton(secondDriver, 2);
-		yellow = new JoystickButton(secondDriver, 1);
-		blue = new JoystickButton(secondDriver, 3);
+		first = new JoystickButton(secondDriver, 6); //A
+		second = new JoystickButton(secondDriver, 2); //B
+		third = new JoystickButton(secondDriver, 1); //X
+		blue = new JoystickButton(secondDriver, 4); //Y
 		
 //		//Main Controller
 //		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
 //		buttonY.toggleWhenPressed(new ClimbUp());
 //		buttonX.toggleWhenPressed(new GearRight());
-//		buttonB.toggleWhenPressed(new CollectorReverse(0.85));
 //		
 //		//2nd Controller
 //		buttonBack_2.whileHeld(new ClimberReverse());
 //		button2.whileHeld(new ReverseAugurToggle());
 //		button3.whileHeld(new Augurs_System());
 //		button4.toggleWhenPressed(new ToggleShooter());
-		
-		buttonA.toggleWhenPressed(new ToggleCollector(.85));
+		buttonB.toggleWhenPressed(new CollectorReverse());
+		buttonA.toggleWhenPressed(new ToggleCollector());
 		buttonX.toggleWhenPressed(new ClimbUp());
-		//buttonB.toggleWhenPressed(new ClimberReverse());
+		//buttonY.toggleWhenPressed(new ClimberReverse());
 		
-		green.toggleWhenPressed(new ToggleShooter());
-		red.whileHeld(new Augurs_System());
+		first.toggleWhenPressed(new ToggleShooter()); // A
+		second.whileHeld(new Augurs_System()); // B
 		//yellow.whileHeld(new Augurs_System());
-		yellow.whileHeld(new ReverseAugurToggle());
+		third.whileHeld(new ReverseAugurToggle()); // X
 		
 		
 		

@@ -16,6 +16,7 @@ public class ToggleShooter extends Command implements PIDOutput
 	private double kI = 0.01;
 	private double kD = 0.075;
 	private double speedUp = 0;
+	private double setVelocity = -11;
 	private PIDController shooterController;
 
 	public ToggleShooter() 
@@ -24,12 +25,19 @@ public class ToggleShooter extends Command implements PIDOutput
 		// eg. requires(chassis);
 		requires(Robot.shooter);
 	}
-
+	public ToggleShooter(double vel) 
+	{
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.shooter);
+		setVelocity = -vel;
+	}
+ 
 	// Called just before this Command runs the first time
 	protected void initialize() 
 	{
 		shooterController = new PIDController(kP, kI, kD, Robot.shooter, this);
-		shooterController.setSetpoint(-17);
+		shooterController.setSetpoint(setVelocity);
 		shooterController.setInputRange(-20.0,20.0);
 		shooterController.setPercentTolerance(.1);
 		shooterController.setOutputRange(-1,1);
@@ -67,6 +75,7 @@ public class ToggleShooter extends Command implements PIDOutput
 	public void pidWrite(double output)
 	{
 		Robot.shooter.setMotorSpeed(output);
+		//Robot.shooter.shooterMotor.set(-.5);
 		SmartDashboard.putNumber("Current Velocity", Robot.shooter.getRotationRate());
 	}
 

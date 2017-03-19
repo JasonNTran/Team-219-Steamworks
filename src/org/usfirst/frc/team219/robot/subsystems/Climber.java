@@ -28,7 +28,7 @@ public class Climber extends Subsystem
      */
     public void startClimbing()
     {
-    	climberMotor.set(-1);
+    	climberMotor.set(1);
     	SmartDashboard.putString("Climber", "Climbing");
     }
     
@@ -37,7 +37,7 @@ public class Climber extends Subsystem
      */
     public void comeDown() 
     {
-    	climberMotor.set(1);
+    	climberMotor.set(-1);
     	SmartDashboard.putString("Climber", "Descending");
     }
     

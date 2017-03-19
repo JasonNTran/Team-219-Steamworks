@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Gear_Shooter_Right extends CommandGroup {
+public class AutonBlueBoiler extends CommandGroup {
 
-    public Gear_Shooter_Right() {
+    public AutonBlueBoiler() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,12 +24,13 @@ public class Gear_Shooter_Right extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new GearRight());
-    	addSequential(new ToggleShooter());
-//    	addSequential(new AutoAlign();
-//     	addSequential(new AutonDrive();
-//    	addSequential(new AutoAlign();
-//    	addSequential(new AutonDrive(.3,);
-    	addSequential(new Augurs_System());
+    	addParallel(new ToggleShooter(10));
+    	addSequential(new Delay(1.5));
+    	addParallel(new Augurs_System());
+    	addSequential(new Delay(8.5));
+    	addSequential(new AutonShooterDrive(.35,-.50,.7));
+    	addSequential(new AutonShooterDrive(-.6,-.55,1.3));
+    	
+    	
     }
 }

@@ -12,12 +12,11 @@ public class ToggleCollector extends Command
 {
 	private double setSpeed;
 	
-	public ToggleCollector(double speed) 
+	public ToggleCollector() 
 	{
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.harvester);
-		setSpeed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -29,6 +28,8 @@ public class ToggleCollector extends Command
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() 
 	{
+		Robot.harvester.startRoller(.85);
+
 		//Robot.harvester.startRoller(setSpeed);
 		//Robot.harvester.collectorMotor.set(-.85);
 	}

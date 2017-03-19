@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem implements PIDSource 
 {	
 	// Initialize your subsystem here
-	private CANTalon shooterMotor;
+	public CANTalon shooterMotor;
 	private PIDSourceType pidSource = PIDSourceType.kRate;
 
 	public Shooter() 

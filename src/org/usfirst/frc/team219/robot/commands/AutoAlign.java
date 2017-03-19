@@ -17,7 +17,7 @@ public class AutoAlign extends Command implements PIDOutput
 	private double rotateToAngleRate;
 
 	private PIDController turnController;
-	private final double kP = 0.0026;
+	private double kP = 0.0026;
 	private double kI = 0.000;
 	private final double kD = 0.0;
 	private final double kF = 0;
@@ -29,12 +29,17 @@ public class AutoAlign extends Command implements PIDOutput
 		this.angleToTurn = angleToTurn;
 		kI = iValue;
 	}
+	public AutoAlign(double angleToTurn, double pValue, double iValue) 
+	{
+		requires(Robot.drivetrain);
+		this.angleToTurn = angleToTurn;
+		kI = iValue;
+		kP = pValue;
+	}
 
 	// Called just before this Command runs the first time
 	protected void initialize()
-	{
-		//Robot.imu.reset(); - this is bad because it will reset the yaw value at the same time 
-		
+	{	
 		Robot.drivetrain.resetEncoders();
 		targetAngle = (Robot.imu.getYaw() + angleToTurn);
 		targetAngle = fixYaw(targetAngle);
