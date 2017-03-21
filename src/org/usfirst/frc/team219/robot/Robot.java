@@ -23,7 +23,8 @@ import org.usfirst.frc.team219.robot.commands.AutonDrive;
 import org.usfirst.frc.team219.robot.commands.AutonRedBoiler;
 import org.usfirst.frc.team219.robot.commands.GearLeft;
 import org.usfirst.frc.team219.robot.commands.GearMiddle;
-import org.usfirst.frc.team219.robot.commands.GearMiddleShoot;
+import org.usfirst.frc.team219.robot.commands.GearMiddleBlueShoot;
+import org.usfirst.frc.team219.robot.commands.GearMiddleRedShoot;
 import org.usfirst.frc.team219.robot.commands.GearRight;
 import org.usfirst.frc.team219.robot.commands.ToggleShooter;
 import org.usfirst.frc.team219.robot.subsystems.*;
@@ -91,7 +92,8 @@ public class Robot extends IterativeRobot
 		autoChooser.addObject("RightGear Selector", new GearRight());
 		autoChooser.addObject("Blue Shooting", new AutonBlueBoiler());
 		autoChooser.addObject("Red Shooting", new AutonRedBoiler());
-		autoChooser.addObject("MiddleShoot", new GearMiddleShoot());
+		autoChooser.addObject("MiddleBlueShoot", new GearMiddleBlueShoot());
+		autoChooser.addObject("MiddleRedShoot", new GearMiddleRedShoot());
 		SmartDashboard.putData("Auto Modes", autoChooser);
 		System.out.println("Reached");
 		try 

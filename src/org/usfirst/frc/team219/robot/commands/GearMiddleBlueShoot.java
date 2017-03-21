@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GearMiddleShoot extends CommandGroup {
+public class GearMiddleBlueShoot extends CommandGroup {
 
-    public GearMiddleShoot() {
+    public GearMiddleBlueShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -25,11 +25,12 @@ public class GearMiddleShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//Left Bolier
-    	addParallel(new ToggleShooter(13));
-    	addSequential(new AutonDrive(.3,80));
-    	addSequential(new Delay(3.0));//2.0
-    	addSequential(new AutonDrive(-.5,40));
-    	addSequential(new AutoAlign(105,0.0001));
-    	addSequential(new Augurs_System());
-    }
+    	addParallel(new ToggleShooter(13.75));
+    	addSequential(new AutonDrive(.3,89,3)); 
+    	addSequential(new Delay(1.2));
+    	addSequential(new AutonDrive(-.5,32.5));
+    	addParallel(new Augurs_System());
+    	addSequential(new AutoAlign(96,0.0001)); 
+    	
+    } 
 }

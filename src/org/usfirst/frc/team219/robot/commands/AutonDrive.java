@@ -7,6 +7,7 @@ import org.usfirst.frc.team219.robot.Robot;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //left = +;
@@ -27,6 +28,8 @@ public class AutonDrive extends Command implements PIDOutput
 	private static final double kI = 0.0008;
 	private static final double kD = 0.1;
 	private static final double kF = 0.0;
+	private Timer timer;
+	private double timeStop = 15;
 
 	/**
 	 * @param speed The speed the robot will move at.
@@ -43,6 +46,17 @@ public class AutonDrive extends Command implements PIDOutput
 		this.speed = speed;
 		myInchesToDrive = inchesToDrive;
 		timedDrive = false;
+		timer = new Timer();
+	}
+	public AutonDrive(double speed, double inchesToDrive,double timeDrive) 
+	{
+		requires(Robot.drivetrain);
+		Robot.drivetrain.resetEncoders();
+		this.speed = speed;
+		myInchesToDrive = inchesToDrive;
+	
+		timer = new Timer();
+		timeStop = timeDrive;
 	}
 
 	// Called just before this Command runs the first time
@@ -60,6 +74,7 @@ public class AutonDrive extends Command implements PIDOutput
 		turnController.enable();
 		SmartDashboard.putData("Auton Drive controller", turnController);
 		SmartDashboard.putNumber("Target Angle", targetAngle);
+		timer.start();
 		}
 
 	// Called repeatedly when this Command is scheduled to run 
@@ -76,7 +91,7 @@ public class AutonDrive extends Command implements PIDOutput
 	protected boolean isFinished() 
 	{
 	
-		return myInchesToDrive <= Robot.drivetrain.getDistance();		
+		return myInchesToDrive <= Robot.drivetrain.getDistance()  || timeStop < timer.get() ;		
 		
 	}
 
