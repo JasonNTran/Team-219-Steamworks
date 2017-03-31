@@ -43,11 +43,16 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	public Joystick mainDriver;
 	private Joystick secondDriver;
+	private Joystick BackupCo;
 
 	private Button buttonA;
 	private Button buttonB;	
 	private Button buttonX;
+	private Button buttonA2;
+	private Button buttonB2;	
+	private Button buttonX2;
 	private Button buttonY;
+	private Button buttonY2;
 	Button buttonLB;
 	private Button buttonRB;
 	private Button button1;
@@ -57,7 +62,7 @@ public class OI {
 	private Button buttonBack_2;
 	private Button buttonForward_2;
 	
-	private JoystickButton first,second,third,blue;
+	private JoystickButton first,second,third,fourth,blue;
 
 	public OI() 
 	{
@@ -70,10 +75,17 @@ public class OI {
 		buttonRB = new JoystickButton(mainDriver, 6);
 		
 		secondDriver = new Joystick(1);
-		first = new JoystickButton(secondDriver, 6); //A
+		first = new JoystickButton(secondDriver, 6); //A-6
 		second = new JoystickButton(secondDriver, 2); //B
-		third = new JoystickButton(secondDriver, 1); //X
+		third = new JoystickButton(secondDriver, 1); //X-1
+		fourth=new JoystickButton(secondDriver,3);
 		blue = new JoystickButton(secondDriver, 4); //Y
+		
+		BackupCo = new Joystick(2);
+		buttonA2 = new JoystickButton(BackupCo , 1);
+		buttonB2 = new JoystickButton(BackupCo , 2);
+		buttonX2 = new JoystickButton(BackupCo , 3);
+		buttonY2= new JoystickButton(BackupCo,4);
 		
 //		//Main Controller
 //		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
@@ -94,8 +106,13 @@ public class OI {
 		second.whileHeld(new Augurs_System()); // B
 		//yellow.whileHeld(new Augurs_System());
 		third.whileHeld(new ReverseAugurToggle()); // X
+		fourth.whileHeld(new Reverse_Agitator_Augur());
 		
-		
+		buttonA2.toggleWhenPressed(new ToggleShooter()); // A
+		buttonX2.whileHeld(new Augurs_System()); // B
+		//yellow.whileHeld(new Augurs_System());
+		buttonB2.whileHeld(new ReverseAugurToggle()); // X
+	//	buttonY2.toggleWhenPressed(new ToggleShooter(10));
 		
 	}
 	/**

@@ -24,7 +24,7 @@ public class Agitator extends Subsystem {
 	
 	public void mixerGo()
 	{
-		mixer.set(.6);
+		mixer.set(1);
 	}
 	
 	public void chooseDirection()
@@ -38,6 +38,20 @@ public class Agitator extends Subsystem {
 		{
 		
 			mixerGo();
+		}
+	}
+	
+	public void chooseDirectionReverse()
+	{
+		if(mixer.getEncPosition()/4096.0 > .01)
+		{
+			
+			mixerGo();
+		}
+		else if(mixer.getEncPosition()/4096.0 < -.01)
+		{
+		
+			mixerReverse();
 		}
 	}
 	

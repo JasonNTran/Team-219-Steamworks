@@ -16,7 +16,7 @@ public class ToggleShooter extends Command implements PIDOutput
 	private double kI = 0.01;
 	private double kD = 0.075;
 	private double speedUp = 0;
-	private double setVelocity = -11;
+	private double setVelocity = -12.75;//-13
 	private PIDController shooterController;
 
 	public ToggleShooter() 

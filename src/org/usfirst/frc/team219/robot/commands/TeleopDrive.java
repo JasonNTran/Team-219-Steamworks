@@ -13,6 +13,8 @@ public class TeleopDrive extends Command
 {
 	double leftSpeed, rightSpeed;
 	boolean inverted;
+	double throttle;
+	double turn;
 	public TeleopDrive()
 	{
 		requires(Robot.drivetrain);
@@ -40,7 +42,7 @@ public class TeleopDrive extends Command
 		}
 		if(inverted)
 		{
-			Robot.drivetrain.tankDrive(Robot.oi.getLeftSpeed(), Robot.oi.getRightSpeed());
+			Robot.drivetrain.tankDrive(	Robot.oi.getLeftSpeed(),Robot.oi.getRightSpeed());
 		}
 		else
 		{

@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutonBlueBoiler extends CommandGroup {
+public class Reverse_Agitator_Augur extends CommandGroup {
 
-    public AutonBlueBoiler() {
+    public Reverse_Agitator_Augur() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,13 +24,7 @@ public class AutonBlueBoiler extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new ToggleShooter(10));
-    	addSequential(new Delay(1.5));
-    	addParallel(new Augurs_System());
-    	addSequential(new Delay(8.5));
-    	addSequential(new AutonShooterDrive(.5,.50,.3));
-    	addSequential(new AutonShooterDrive(-.7,-.55,1.3));
-    	
-    	
+    	addParallel(new ForwardToggleAugur());
+    	addParallel(new Reverse_Mixer());
     }
 }

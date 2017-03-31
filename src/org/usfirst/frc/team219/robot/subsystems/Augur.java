@@ -26,7 +26,7 @@ public class Augur extends Subsystem
 	 */
 	public void forward()
 	{
-		conveyorTalon.set(.60);
+		conveyorTalon.set(.85);
 	}
 	
 	

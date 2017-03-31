@@ -24,12 +24,15 @@ public class GearMiddleRedShoot extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new ToggleShooter(13.75));
-    	addSequential(new AutonDrive(.3,89,3));
-    	addSequential(new Delay(1.2));
+    	
+    	addParallel(new ToggleShooter(15));
+    	addSequential(new AutonDrive(.3,89,3.0,0.0008,.1));
+    	addSequential(new Delay(1.1));
     	addSequential(new AutonDrive(-.5,32.5));
+    	addSequential(new AutoAlign(-96,0.0001));
     	addParallel(new Augurs_System());
-    	addSequential(new AutoAlign(-90,0.0001));
+    	addSequential(new AutonDrive(.3,13.0));
+    	
     
     }
 }

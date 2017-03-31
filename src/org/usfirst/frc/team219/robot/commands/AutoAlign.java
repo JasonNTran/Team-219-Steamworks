@@ -15,6 +15,7 @@ public class AutoAlign extends Command implements PIDOutput
 	private double angleToTurn;
 	private double targetAngle;
 	private double rotateToAngleRate;
+	private boolean UsingVision=false;
 
 	private PIDController turnController;
 	private double kP = 0.0026;
@@ -22,6 +23,7 @@ public class AutoAlign extends Command implements PIDOutput
 	private final double kD = 0.0;
 	private final double kF = 0;
 	private final double kTolerance = 2;
+	
 
 	public AutoAlign(double angleToTurn, double iValue) 
 	{
@@ -36,12 +38,19 @@ public class AutoAlign extends Command implements PIDOutput
 		kI = iValue;
 		kP = pValue;
 	}
+	public AutoAlign(boolean vision)
+	{
+		UsingVision=vision;
+		angleToTurn=0;
+	}
 
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{	
 		Robot.drivetrain.resetEncoders();
 		targetAngle = (Robot.imu.getYaw() + angleToTurn);
+		if(UsingVision)
+			targetAngle=(Robot.imu.getYaw()+SmartDashboard.getNumber("gearDegreeToMove", 0));
 		targetAngle = fixYaw(targetAngle);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
@@ -75,6 +84,7 @@ public class AutoAlign extends Command implements PIDOutput
 		SmartDashboard.putString("Turn Running?", "No");
 		turnController.disable();
 		Robot.drivetrain.tankDrive(0, 0);
+		Robot.drivetrain.resetEncoders();
 	}
 
 	// Called when another command which requires one or more of the same

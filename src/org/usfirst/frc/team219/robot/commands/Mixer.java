@@ -33,7 +33,8 @@ public class Mixer extends Command {
     protected void execute() 
     {
 
-    	Robot.agitator.chooseDirection();
+    	//Robot.agitator.chooseDirection();
+    	Robot.agitator.mixerGo();
     }
 
     // Make this return true when this Command no longer needs to run execute()

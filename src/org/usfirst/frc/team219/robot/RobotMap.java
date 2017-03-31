@@ -18,7 +18,7 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 
 	
-	//Ports for the Drive Train subsystem
+//	Ports for the Drive Train subsystem
 	public static int MOTORBL_PORT = 1; 
 	public static int MOTORFL_PORT = 2; //encoder
 	public static int MOTORBR_PORT = 7; 

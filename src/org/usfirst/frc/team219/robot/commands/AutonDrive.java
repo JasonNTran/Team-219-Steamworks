@@ -25,12 +25,13 @@ public class AutonDrive extends Command implements PIDOutput
 	private double rotateToAngleRate;
 	private double targetAngle;
 	private static final double kP = 0.00;//.00225
-	private static final double kI = 0.0008;
-	private static final double kD = 0.1;
+	private static double kI = 0.0008;
+	private static double kD = 0.1;
 	private static final double kF = 0.0;
 	private Timer timer;
 	private double timeStop = 15;
 
+	
 	/**
 	 * @param speed The speed the robot will move at.
 	 * @param driveTime The amount of time the robot will run for.
@@ -48,13 +49,15 @@ public class AutonDrive extends Command implements PIDOutput
 		timedDrive = false;
 		timer = new Timer();
 	}
-	public AutonDrive(double speed, double inchesToDrive,double timeDrive) 
+	
+	public AutonDrive(double speed, double inchesToDrive,double timeDrive,double i, double d) 
 	{
 		requires(Robot.drivetrain);
 		Robot.drivetrain.resetEncoders();
 		this.speed = speed;
 		myInchesToDrive = inchesToDrive;
-	
+		kI=i;
+		kD=d;
 		timer = new Timer();
 		timeStop = timeDrive;
 	}
@@ -81,8 +84,8 @@ public class AutonDrive extends Command implements PIDOutput
 	protected void execute() 
 	{	
 		int direction = timedDrive || myInchesToDrive > 0 ? 1: -1;
-		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate  -.01,direction * (speed) +rotateToAngleRate );
-		
+		Robot.drivetrain.tankDrive(direction *(speed) - rotateToAngleRate,direction * (speed) +rotateToAngleRate );
+		//direction *(speed) - rotateToAngleRate  -.01 
 
 		SmartDashboard.putNumber("Set Inches", myInchesToDrive);
 	}
@@ -90,15 +93,21 @@ public class AutonDrive extends Command implements PIDOutput
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-	
-		return myInchesToDrive <= Robot.drivetrain.getDistance()  || timeStop < timer.get() ;		
+		if(timer.get() > .3)
+		{
+			return myInchesToDrive <= Robot.drivetrain.getDistance()  || timeStop < timer.get();
+		}
+		else
+		{
+			return false;
+		}
 		
 	}
-
 	// Called once after isFinished returns true
 	protected void end() 
 	{
 		turnController.disable();
+		
 		Robot.drivetrain.tankDrive(0,0);
 		Robot.drivetrain.resetEncoders();
 		

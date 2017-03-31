@@ -87,13 +87,13 @@ public class Robot extends IterativeRobot
 		oi = new OI();
 		autoChooser = new SendableChooser<Command>();
 		autoChooser.addDefault("Nothing", null);
-		autoChooser.addObject("MiddleGear Selector", new GearMiddle());
-		autoChooser.addObject("LeftGear Selector", new GearLeft());
-		autoChooser.addObject("RightGear Selector", new GearRight());
-		autoChooser.addObject("Blue Shooting", new AutonBlueBoiler());
-		autoChooser.addObject("Red Shooting", new AutonRedBoiler());
-		autoChooser.addObject("MiddleBlueShoot", new GearMiddleBlueShoot());
-		autoChooser.addObject("MiddleRedShoot", new GearMiddleRedShoot());
+		autoChooser.addObject("MiddleGear Only", new GearMiddle());
+		autoChooser.addObject("LeftGear", new GearLeft());
+		autoChooser.addObject("RightGear", new GearRight());
+		autoChooser.addObject("Blue Shooting Only", new AutonBlueBoiler());
+		autoChooser.addObject("Red Shooting Only", new AutonRedBoiler());
+		autoChooser.addObject("Middle Blue Gear and Shoot", new GearMiddleBlueShoot());
+		autoChooser.addObject("Middle Red Gear and Shoot", new GearMiddleRedShoot());
 		SmartDashboard.putData("Auto Modes", autoChooser);
 		System.out.println("Reached");
 		try 
@@ -162,6 +162,7 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Robot Yaw", Robot.imu.getYaw());
 		SmartDashboard.putNumber("Robot Angle", Robot.imu.getAngle());
+		SmartDashboard.putNumber("Shooter ENC Velocity",  Robot.shooter.getRotationRate());
 	}
 
 	@Override
@@ -192,6 +193,7 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 		SmartDashboard.putNumber("Testing Yaw", Robot.imu.getYaw());
+		SmartDashboard.putNumber("Shooter  Velocity",  Robot.shooter.getRotationRate());
 //		if(oi.buttonLB.get()){
 //	        if(currSession == sessionfront){
 //	       		  NIVision.IMAQdxStopAcquisition(currSession);

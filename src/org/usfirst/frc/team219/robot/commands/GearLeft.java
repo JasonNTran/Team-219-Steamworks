@@ -28,6 +28,7 @@ public class GearLeft extends CommandGroup {
         // arm.
     	addSequential(new AutonDrive(.3,66));
     	addSequential(new AutoAlign(-60,0.0002));
+    	addSequential(new AutoAlign(true));
     	addSequential(new AutonDrive(.3,66.5));
     }
 }
