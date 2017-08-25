@@ -19,7 +19,7 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	// Joystick stick = new Joystick(port);
+	// Joystick stick = new Joystick(port);  
 	// Button button = new JoystickButton(stick, buttonNumber);
 
 	// There are a few additional built in buttons you can use. Additionally,
@@ -44,6 +44,7 @@ public class OI {
 	public Joystick mainDriver;
 	private Joystick secondDriver;
 	private Joystick BackupCo;
+	public Joystick LogicTech;
 
 	private Button buttonA;
 	private Button buttonB;	
@@ -62,7 +63,12 @@ public class OI {
 	private Button buttonBack_2;
 	private Button buttonForward_2;
 	
-	private JoystickButton first,second,third,fourth,blue;
+	private Button B8;
+	private Button B4;
+	private Button B2;
+	
+	
+	private JoystickButton first,second,third,fourth,fifth;
 
 	public OI() 
 	{
@@ -79,7 +85,8 @@ public class OI {
 		second = new JoystickButton(secondDriver, 2); //B
 		third = new JoystickButton(secondDriver, 1); //X-1
 		fourth=new JoystickButton(secondDriver,3);
-		blue = new JoystickButton(secondDriver, 4); //Y
+		fifth = new JoystickButton(secondDriver, 4); //Y
+		
 		
 		BackupCo = new Joystick(2);
 		buttonA2 = new JoystickButton(BackupCo , 1);
@@ -87,6 +94,10 @@ public class OI {
 		buttonX2 = new JoystickButton(BackupCo , 3);
 		buttonY2= new JoystickButton(BackupCo,4);
 		
+		LogicTech = new Joystick(3);
+		B8 = new JoystickButton(LogicTech, 8);
+		B4= new JoystickButton(LogicTech, 4);
+		B2= new JoystickButton(LogicTech, 2);
 //		//Main Controller
 //		buttonA.toggleWhenPressed(new ToggleCollector(0.85));
 //		buttonY.toggleWhenPressed(new ClimbUp());
@@ -99,19 +110,26 @@ public class OI {
 //		button4.toggleWhenPressed(new ToggleShooter());
 		buttonB.toggleWhenPressed(new CollectorReverse());
 		buttonA.toggleWhenPressed(new ToggleCollector());
+		
 		buttonX.toggleWhenPressed(new ClimbUp());
 		//buttonY.toggleWhenPressed(new ClimberReverse());
 		
-		first.toggleWhenPressed(new ToggleShooter()); // A
+		first.toggleWhenPressed(new ToggleShooter(14.25)); // A
 		second.whileHeld(new Augurs_System()); // B
-		//yellow.whileHeld(new Augurs_System());
-		third.whileHeld(new ReverseAugurToggle()); // X
+
 		fourth.whileHeld(new Reverse_Agitator_Augur());
+		fifth.toggleWhenPressed(new ToggleShooter(14.25));
 		
-		buttonA2.toggleWhenPressed(new ToggleShooter()); // A
-		buttonX2.whileHeld(new Augurs_System()); // B
+		buttonA2.whileHeld(new ToggleShooter(14.25)); // A
+		buttonX2.whileHeld(new Augurs_System()); // X 
 		//yellow.whileHeld(new Augurs_System());
-		buttonB2.whileHeld(new ReverseAugurToggle()); // X
+		buttonB2.whileHeld(new ReverseAugurToggle()); // B
+		
+		B8.whileHeld(new ToggleShooter(14.25));
+		B4.whileHeld(new Augurs_System());
+		B2.whileHeld(new ReverseAugurToggle());
+		
+		
 	//	buttonY2.toggleWhenPressed(new ToggleShooter(10));
 		
 	}

@@ -4,6 +4,7 @@ import org.usfirst.frc.team219.robot.RobotMap;
 import org.usfirst.frc.team219.robot.commands.TeleopDrive;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -14,13 +15,17 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
+import jaci.pathfinder.Waypoint;
+import jaci.pathfinder.modifiers.TankModifier;
 
 /**
  * The Drive Train subsystem for Team 219's 2017 robot.
  */
 public class DriveTrain extends Subsystem implements PIDSource{
 
-	private CANTalon motorBL, motorFL, motorBR, motorFR;
+	public CANTalon motorBL, motorFL, motorBR, motorFR;
 	private PIDSourceType pidSourceType = PIDSourceType.kRate;
 	private final double circumfrenceINCH = 6 * Math.PI;
 
@@ -32,6 +37,7 @@ public class DriveTrain extends Subsystem implements PIDSource{
 		motorBR = new CANTalon(RobotMap.MOTORBR_PORT);
 		motorFR = new CANTalon(RobotMap.MOTORFR_PORT);
 	}
+
 	/**
 	 * Assigns speed values for the left and right motors of tank drive. Also puts the speed of those motors on smart dashboard 
 	 * @param rightSpeed - The speed of the right motors of the robot.

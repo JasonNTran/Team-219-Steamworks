@@ -1,19 +1,17 @@
 package org.usfirst.frc.team219.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class GearRight extends CommandGroup 
-{
-    public GearRight() 
-    {
+public class Faster_Middle extends CommandGroup {
+
+    public Faster_Middle() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
         // these will run in order.
-    	//      addSequential(new Command2());  
 
         // To run multiple commands at the same time,
         // use addParallel()
@@ -26,12 +24,17 @@ public class GearRight extends CommandGroup
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,62,.2));
-    	addSequential(new AutoAlign(60,0.0002));
-     	addSequential(new AutonDrive(.3,66.5,3,0.0008,.1));
-    	addSequential(new Delay(1.5));
-    	//original values: -.5,32.5
-    	//addSequential(new AutonDrive(-.3,20,.1));
-  
+    	
+    	addParallel(new ToggleShooter(15));
+    	addSequential(new AutonDrive(.8,50.1,1,0.0008,.1));
+    	addSequential(new Delay(.05));
+    	addSequential(new AutonDrive(.3, 39.3,1,.088,.1));
+    	addSequential(new Delay(.8));
+    	addSequential(new AutonDrive(-.5,32.5,.2));
+    	addSequential(new AutoAlign(-96,0.0001));
+    	addParallel(new Augurs_System());
+    	addSequential(new AutonDrive(.3,13.0,.2));
+    	
+    
     }
 }

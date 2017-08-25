@@ -21,6 +21,7 @@ public class Shooter extends Subsystem implements PIDSource
 	// Initialize your subsystem here
 	public CANTalon shooterMotor;
 	private PIDSourceType pidSource = PIDSourceType.kRate;
+	//# userLibs=${user.home}/wpilib/user/java/lib
 
 	public Shooter() 
 	{

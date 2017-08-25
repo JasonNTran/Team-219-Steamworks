@@ -14,7 +14,7 @@ public class Augur extends Subsystem
 
 	
 	private CANTalon conveyorTalon;
-	
+
 	public Augur()
 	{
 		conveyorTalon = new CANTalon(RobotMap.AUGURMOTOR_PORT);
@@ -24,9 +24,11 @@ public class Augur extends Subsystem
 	/**
 	 * Sets the augur to move the balls in the direction of the shooter
 	 */
-	public void forward()
+	
+	public void forward(double speed)
 	{
-		conveyorTalon.set(.85);
+		//
+		conveyorTalon.set(speed);
 	}
 	
 	

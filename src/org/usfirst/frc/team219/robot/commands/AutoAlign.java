@@ -16,6 +16,7 @@ public class AutoAlign extends Command implements PIDOutput
 	private double targetAngle;
 	private double rotateToAngleRate;
 	private boolean UsingVision=false;
+	private boolean Vision2=false;
 
 	private PIDController turnController;
 	private double kP = 0.0026;
@@ -30,6 +31,7 @@ public class AutoAlign extends Command implements PIDOutput
 		requires(Robot.drivetrain);
 		this.angleToTurn = angleToTurn;
 		kI = iValue;
+		UsingVision=false;
 	}
 	public AutoAlign(double angleToTurn, double pValue, double iValue) 
 	{
@@ -37,20 +39,30 @@ public class AutoAlign extends Command implements PIDOutput
 		this.angleToTurn = angleToTurn;
 		kI = iValue;
 		kP = pValue;
+		UsingVision=false;
 	}
 	public AutoAlign(boolean vision)
 	{
 		UsingVision=vision;
 		angleToTurn=0;
 	}
-
+	public AutoAlign(double angleToTurn,  double iValue,boolean visiondos)
+	{
+		requires(Robot.drivetrain);
+		this.angleToTurn = angleToTurn;
+		kI = iValue;
+	
+		UsingVision=false;
+		Vision2=visiondos;
+	}
 	// Called just before this Command runs the first time
 	protected void initialize()
 	{	
 		Robot.drivetrain.resetEncoders();
 		targetAngle = (Robot.imu.getYaw() + angleToTurn);
-		if(UsingVision)
-			targetAngle=(Robot.imu.getYaw()+SmartDashboard.getNumber("gearDegreeToMove", 0));
+		if(UsingVision)//TO FIX LATER ON PRACTICE FIELD
+			// +20?
+			targetAngle=(Robot.imu.getYaw()+SmartDashboard.getNumber("shooterDegree", 0)-3);
 		targetAngle = fixYaw(targetAngle);
 		turnController = new PIDController(kP, kI, kD, kF, Robot.imu, this);
 		turnController.setInputRange(-180f, 180f);
@@ -66,11 +78,22 @@ public class AutoAlign extends Command implements PIDOutput
 	// Called repeatedly when this Command is scheduled to run 
 	protected void execute()
 	{
+	
 		Robot.drivetrain.tankDrive(-rotateToAngleRate, rotateToAngleRate);
+		
 	}
 	public boolean OnTarget()
 	{
-		return Math.abs(Robot.imu.getYaw()-targetAngle)<kTolerance;
+		if(Vision2)
+		{
+			SmartDashboard.putString("Am i working?", "Yes");
+			SmartDashboard.putNumber("ShooterActual", SmartDashboard.getNumber("shooterDegree",0));
+			return SmartDashboard.getNumber("shooterDegree",0)>-47&&SmartDashboard.getNumber("shooterDegree",0)<20;
+		}
+		else
+		{
+			return Math.abs(Robot.imu.getYaw()-targetAngle)<kTolerance;
+		}
 				
 	}
 	// Make this return true when this Command no longer needs to run execute()

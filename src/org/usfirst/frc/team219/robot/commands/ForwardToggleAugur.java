@@ -9,11 +9,20 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ForwardToggleAugur extends Command 
 {
+	private double forSpeed;
     public ForwardToggleAugur() 
     {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.Augur);
+    	forSpeed = .85;
+    }
+    public ForwardToggleAugur(double speed) 
+    {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.Augur);
+    	forSpeed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +32,7 @@ public class ForwardToggleAugur extends Command
     // Called repeatedly when this Command is scheduled to run
     protected void execute() 
     {
-    	Robot.Augur.forward();	
+    	Robot.Augur.forward(forSpeed);	
     }
 
     // Make this return true when this Command no longer needs to run execute()

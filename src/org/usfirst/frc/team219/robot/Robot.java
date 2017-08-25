@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team219.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -10,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.livewindow.LiveWindowSendable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.CameraServer;
@@ -68,7 +68,7 @@ public class Robot extends IterativeRobot
 	public void robotInit() 
 	{
 		
-		drivetrain = new DriveTrain();
+		drivetrain = new DriveTrain(); 
 		harvester = new Harvester();
 		climber = new Climber();
 		shooter = new Shooter();
@@ -215,6 +215,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void testPeriodic() 
 	{
+		LiveWindow.addActuator("DriveTrain", "motorBL", drivetrain.motorBL);
+		LiveWindow.addActuator("motorBL", 1, drivetrain.motorBL);
 		LiveWindow.run();
 	}
 }

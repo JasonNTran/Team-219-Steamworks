@@ -30,6 +30,7 @@ public class AutonDrive extends Command implements PIDOutput
 	private static final double kF = 0.0;
 	private Timer timer;
 	private double timeStop = 15;
+	private double minTime = .3;
 
 	
 	/**
@@ -40,7 +41,7 @@ public class AutonDrive extends Command implements PIDOutput
 	 * @param speed The speed the robot will move at.
 	 * @param inchesToDrive The distance in inches the robot will move.
 	 */
-	public AutonDrive(double speed, double inchesToDrive) 
+	public AutonDrive(double speed, double inchesToDrive, double minDriveTime) 
 	{
 		requires(Robot.drivetrain);
 		Robot.drivetrain.resetEncoders();
@@ -48,6 +49,7 @@ public class AutonDrive extends Command implements PIDOutput
 		myInchesToDrive = inchesToDrive;
 		timedDrive = false;
 		timer = new Timer();
+		minTime = minDriveTime;
 	}
 	
 	public AutonDrive(double speed, double inchesToDrive,double timeDrive,double i, double d) 
@@ -93,7 +95,7 @@ public class AutonDrive extends Command implements PIDOutput
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() 
 	{
-		if(timer.get() > .3)
+		if(timer.get() > minTime)
 		{
 			return myInchesToDrive <= Robot.drivetrain.getDistance()  || timeStop < timer.get();
 		}

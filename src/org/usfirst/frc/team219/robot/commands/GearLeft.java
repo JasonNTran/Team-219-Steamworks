@@ -26,9 +26,12 @@ public class GearLeft extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonDrive(.3,66));
+    
+    	addSequential(new AutonDrive(.3,55,.2));
     	addSequential(new AutoAlign(-60,0.0002));
-    	addSequential(new AutoAlign(true));
-    	addSequential(new AutonDrive(.3,66.5));
+     	addSequential(new AutonDrive(.3,66.5,3,0.0008,.1));
+    	addSequential(new Delay(1.5));
+    	//original values: -.5,32.5
+    //	addSequential(new AutonDrive(-.3,20,.1));
     }
 }

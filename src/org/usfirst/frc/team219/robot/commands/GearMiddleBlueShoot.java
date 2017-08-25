@@ -25,17 +25,25 @@ public class GearMiddleBlueShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	//Left Bolier
-    	System.out.println("Initial");
-    	addParallel(new ToggleShooter(15));
-    	addSequential(new AutonDrive(.3,89,3.0,0.0008,.1)); 
-    	addSequential(new Delay(1.1));
-    	addSequential(new AutonDrive(-.5,32.5));
-       	addSequential(new AutoAlign(101.5,0.0001)); 
-     
-       	addParallel(new Augurs_System());
-
-    	addSequential(new AutonDrive(.3,13.0, 1.0,.0008,.1)); //weird encoders?
+    	addParallel(new ToggleShooter(14.5));
+    	//original values: .3,89,3.0,0.0008,.1
+    	//.6, .45
+    	addSequential(new AutonDrive(.7,50,1.5,0.0008,.1));
+    	addSequential(new Delay(1.75));//maybe we should increase
+    	//original values: -.5,32.5
+    	addSequential(new AutonDrive(-.7,24.5,.2));
+    	
+    	//101.5
+    	addParallel(new Augurs_System(.6));
+       	addSequential(new AutoAlign(100.5,0.0001, .01)); 
     
+       	
+       	//Augur system used to be down here
+      
+    	//original value: addSequential(new AutonDrive(.3,13.0, 1.0,.0008,.1));
+      
+    	addSequential(new AutonDrive(.6,5.0,.58));
+//SEE IF NEEDED addSequential(new AutoAlign(true));
     	//addSequential(new AutonDrive(.3.0));
 
     	

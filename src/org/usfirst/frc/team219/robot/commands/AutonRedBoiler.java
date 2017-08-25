@@ -40,11 +40,17 @@ public class AutonRedBoiler extends CommandGroup
 //    	addSequential(new Delay(8.5));
 //    	addSequential(new AutonShooterDrive(-.8,.55,1.5));
 //    	addSequential(new AutonShooterDrive(-.55,-.60,1.3));
-    	addParallel(new ToggleShooter(10.2));
-    	addSequential(new Delay(1.5));
+    	addParallel(new ToggleShooter(15.5));
+    	//original values: .3,89,3.0,0.0008,.1
+    	//.6, .45
+    	addSequential(new AutonDrive(-.7, 47.5, 1.5,0.0008,.1));
+    	//addParallel(new ToggleShooter(10.2));
+    	addSequential(new Delay(.75));
     	addParallel(new Augurs_System());
-    	addSequential(new Delay(8.5));
-    	addSequential(new AutonShooterDrive(.5,.50,.3));
-    	addSequential(new AutonShooterDrive(-.55,-.7,1.3));
-    }
+    	addSequential(new Delay(7.5));
+//    	addSequential(new AutonShooterDrive(.5,.50,.3));
+//    	//addSequential(new AutonShooterDrive(-.55,-.7,1.8));
+    	addSequential(new AutoAlign(10,0.0002));
+//    	addSequential(new AutonShooterDrive(-.5,-.50,2));
+   }
 }
